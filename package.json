@@ -1,0 +1,15 @@
+{
+  "name": "yeah-store",
+  "version": "1.0.0",
+  "private": true,
+  "description": "YEAH! — tienda de plug-ins DCTL para DaVinci Resolve. Sitio estático + funciones serverless de Netlify para Stripe, MercadoPago, PayPal y transferencia bancaria.",
+  "scripts": {
+    "dev": "netlify dev"
+  },
+  "dependencies": {
+    "stripe": "^17.0.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YEAH! — Plug-ins DCTL para DaVinci Resolve</title>
+<meta name="description" content="Plug-ins DCTL y productos digitales para filmmakers. Descarga inmediata, licencia comercial incluida.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="#top" class="logo">
+      <span class="logo-word">YEAH</span>
+      <span class="logo-dot"></span>
+    </a>
+    <nav class="main-nav">
+      <a href="#tienda">Tienda</a>
+      <a href="#testimonios">Testimonios</a>
+      <a href="#blog">Blog</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="spacer"></div>
+    <span class="header-tag">DCTL / DAVINCI RESOLVE</span>
+    <button type="button" class="cart-btn" id="openCartBtn">
+      <span class="cart-icon"></span>
+      <span>Carrito (<span id="cartCount">0</span>)</span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+<section id="tienda" class="wrap section-tienda">
+  <div class="shop-panel">
+
+    <div class="hero-row">
+      <h1 class="hero-title">Todo</h1>
+      <span class="hero-badge" id="productCountBadge">4</span>
+      <div class="hero-desc">
+        <p>Plug-ins DCTL y productos digitales para filmmakers. Descarga inmediata, licencia comercial incluida.</p>
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <div class="chips" id="chips"></div>
+      <div class="spacer"></div>
+      <div class="search-box">
+        <span class="search-dot"></span>
+        <input type="text" id="searchInput" placeholder="Buscar" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="product-grid" id="productGrid"></div>
+
+    <p class="no-results" id="noResults" hidden>Sin resultados para esa búsqueda.</p>
+
+  </div>
+</section>
+
+<div class="marquee-strip" id="marquesina">
+  <div class="marquee-track">
+    <span class="marquee-text">DESCARGA INMEDIATA — LICENCIA COMERCIAL — DAVINCI RESOLVE 17+ — SOPORTE POR WHATSAPP — YEAH! — DESCARGA INMEDIATA — LICENCIA COMERCIAL — DAVINCI RESOLVE 17+ — SOPORTE POR WHATSAPP — YEAH! — </span>
+    <span class="marquee-text">DESCARGA INMEDIATA — LICENCIA COMERCIAL — DAVINCI RESOLVE 17+ — SOPORTE POR WHATSAPP — YEAH! — DESCARGA INMEDIATA — LICENCIA COMERCIAL — DAVINCI RESOLVE 17+ — SOPORTE POR WHATSAPP — YEAH! — </span>
+  </div>
+</div>
+
+<section id="testimonios" class="wrap section-block">
+  <div class="section-head">
+    <h2>Testimonios</h2>
+    <span class="section-count">03</span>
+  </div>
+  <div class="testimonial-grid">
+    <div class="testimonial-card">
+      <p>&ldquo;Reemplacé tres nodos de OFX por un solo DCTL. El render bajó de 40 a 12 minutos.&rdquo;</p>
+      <div class="testimonial-attr"><span class="dot-mark"></span><span>CAMILA RÍOS — COLORISTA, SANTIAGO</span></div>
+    </div>
+    <div class="testimonial-card">
+      <p>&ldquo;El grano responde por densidad, no como una capa encima. Es lo más cerca del negativo que probé dentro de Resolve.&rdquo;</p>
+      <div class="testimonial-attr"><span class="dot-mark"></span><span>ANDRÉS MELO — DIT</span></div>
+    </div>
+    <div class="testimonial-card">
+      <p>&ldquo;Instalación en dos minutos y la licencia comercial resuelta desde el primer proyecto de cliente.&rdquo;</p>
+      <div class="testimonial-attr"><span class="dot-mark"></span><span>LUCÍA VEGA — DIRECTORA DE FOTOGRAFÍA</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="blog" class="wrap section-block">
+  <div class="section-head">
+    <h2>Blog</h2>
+    <span class="section-count">NOTAS TÉCNICAS</span>
+  </div>
+  <div class="blog-grid">
+    <a href="#blog" class="blog-card">
+      <div class="blog-thumb"><span>[ imagen del artículo ]</span></div>
+      <div class="blog-date">12.08.2026</div>
+      <h3>Cómo se comporta la halation en negativo real</h3>
+    </a>
+    <a href="#blog" class="blog-card">
+      <div class="blog-thumb"><span>[ imagen del artículo ]</span></div>
+      <div class="blog-date">29.07.2026</div>
+      <h3>DCTL o OFX: dónde conviene cada uno</h3>
+    </a>
+    <a href="#blog" class="blog-card">
+      <div class="blog-thumb"><span>[ imagen del artículo ]</span></div>
+      <div class="blog-date">04.07.2026</div>
+      <h3>Grano: el orden correcto en el árbol de nodos</h3>
+    </a>
+  </div>
+</section>
+
+<section id="faq" class="wrap section-block">
+  <div class="faq-layout">
+    <div class="faq-intro">
+      <h2>Preguntas</h2>
+      <p>Si falta algo, escribinos por WhatsApp. Respondemos en horario de Chile.</p>
+    </div>
+    <div class="faq-list" id="faqList">
+      <div class="faq-item" data-faq="1">
+        <button type="button" class="faq-q">
+          <span class="faq-q-text">¿Cómo instalo un DCTL en DaVinci Resolve?</span>
+          <span class="faq-plus">+</span>
+        </button>
+        <p class="faq-a">Copiá el archivo .dctl a la carpeta LUT de Resolve, reiniciá el programa y aplicalo desde el nodo DCTL. En el ZIP viene un PDF con la ruta exacta en macOS, Windows y Linux.</p>
+      </div>
+      <div class="faq-item" data-faq="2">
+        <button type="button" class="faq-q">
+          <span class="faq-q-text">¿Qué versión de Resolve necesito?</span>
+          <span class="faq-plus">+</span>
+        </button>
+        <p class="faq-a">Resolve 17 o superior. Todo se probó en 18.6 y 19, en macOS (Metal) y Windows (CUDA). Studio no es obligatorio para los DCTL, pero rinde mejor en timelines largos.</p>
+      </div>
+      <div class="faq-item" data-faq="3">
+        <button type="button" class="faq-q">
+          <span class="faq-q-text">¿Qué permite la licencia?</span>
+          <span class="faq-plus">+</span>
+        </button>
+        <p class="faq-a">Uso comercial ilimitado en proyectos propios y de clientes, sin límite de entregas ni de tiempo. La reventa, redistribución o inclusión en packs de terceros está prohibida.</p>
+      </div>
+      <div class="faq-item" data-faq="4">
+        <button type="button" class="faq-q">
+          <span class="faq-q-text">¿Hay reembolso?</span>
+          <span class="faq-plus">+</span>
+        </button>
+        <p class="faq-a">Sí, dentro de 14 días si el archivo no fue descargado. Si algo no funciona en tu equipo, primero lo revisamos por WhatsApp: casi siempre es una ruta de carpeta.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer id="contacto" class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <div class="footer-logo">YEAH!</div>
+      <p class="footer-tagline">PLUG-INS DCTL<br>PRODUCTOS DIGITALES<br>PARA FILMMAKERS</p>
+    </div>
+    <div class="footer-col">
+      <a href="#tienda">Tienda</a>
+      <a href="#blog">Blog</a>
+      <a href="#testimonios">Testimonios</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="footer-col">
+      <a id="footerWa" href="https://wa.me/56943801816" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="#contacto">Instagram</a>
+      <a href="#contacto">Licencia</a>
+      <a href="#contacto">Reembolsos</a>
+    </div>
+    <div class="footer-news">
+      <div class="footer-news-label">Novedades y drops</div>
+      <form class="newsletter-form" id="newsletterForm">
+        <input type="email" placeholder="TU EMAIL" required autocomplete="email">
+        <button type="submit" aria-label="Suscribirme">→</button>
+      </form>
+      <p class="footer-news-note">SIN SPAM. SOLO LANZAMIENTOS.</p>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>© 2026 YEAH! — TODOS LOS DERECHOS RESERVADOS</span>
+    <div class="spacer"></div>
+    <span>PRODUCTO DIGITAL / DESCARGA INMEDIATA</span>
+    <span>SANTIAGO, CL</span>
+  </div>
+  <div class="footer-marquee-word"><div>YEAH!YEAH!</div></div>
+</footer>
+
+<div class="edge-diffusion" id="difusion"></div>
+
+<div class="wa-float">
+  <span class="wa-bubble-tag">¿DUDAS? ESCRÍBENOS</span>
+  <a id="waFloat" href="https://wa.me/56943801816" target="_blank" rel="noopener" aria-label="Contacto por WhatsApp" class="wa-fab">
+    <span class="wa-ring"></span>
+    <svg width="27" height="27" viewBox="0 0 24 24" fill="#0B0B0A" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2Zm5.8 14.02c-.24.68-1.4 1.3-1.93 1.35-.53.05-1.03.24-2.9-.61-2.26-1.03-3.68-3.4-3.79-3.55-.11-.16-.9-1.24-.9-2.36 0-1.12.58-1.67.79-1.9.2-.23.44-.29.59-.29h.42c.14 0 .32-.03.5.38.18.42.63 1.54.68 1.65.05.11.09.24.01.39-.08.16-.15.26-.29.41-.14.16-.3.35-.43.47-.14.14-.29.29-.13.56.16.27.71 1.17 1.53 1.9 1.05.94 1.93 1.23 2.2 1.37.27.14.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.27.13.44.2.51.31.06.11.06.66-.18 1.34Z"/></svg>
+  </a>
+</div>
+
+<div class="overlay-scrim" id="cartScrim" hidden></div>
+<aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+  <div class="drawer-head">
+    <span class="drawer-title" id="drawerTitle">Carrito</span>
+    <div class="spacer"></div>
+    <button type="button" class="round-btn" id="closeCartBtn" aria-label="Cerrar">×</button>
+  </div>
+
+  <div class="drawer-step" id="stepCart">
+    <div class="drawer-scroll" id="cartLines"></div>
+    <div class="drawer-foot">
+      <div class="totals-row">
+        <span class="totals-label">Subtotal</span>
+        <div class="dotted-line"></div>
+        <span class="totals-value" id="cartTotal">$0 USD</span>
+      </div>
+      <p class="fine-print">IMPUESTOS INCLUIDOS · ENLACE DE DESCARGA INMEDIATO</p>
+      <button type="button" class="btn-primary-dark" id="goPayBtn">Ir a pagar</button>
+    </div>
+  </div>
+
+  <div class="drawer-step" id="stepPay" hidden>
+    <div class="drawer-scroll">
+      <p class="drawer-label">MÉTODO DE PAGO</p>
+      <div class="pay-methods" id="payMethods"></div>
+      <div id="payMethodPanel"></div>
+      <div class="license-note">
+        <p>LICENCIA COMERCIAL INCLUIDA<br>REVENTA Y REDISTRIBUCIÓN PROHIBIDAS<br>REEMBOLSO 14 DÍAS SIN DESCARGA</p>
+      </div>
+    </div>
+    <div class="drawer-foot">
+      <div class="totals-row">
+        <span class="totals-label">Total</span>
+        <div class="dotted-line"></div>
+        <span class="totals-value" id="payTotal">$0 USD</span>
+      </div>
+      <div class="pay-actions">
+        <button type="button" class="btn-outline" id="backCartBtn">Volver</button>
+        <button type="button" class="btn-primary-lime" id="confirmPayBtn">Confirmar pago</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="drawer-step" id="stepDone" hidden>
+    <div class="done-panel">
+      <span class="done-check" id="doneCheck">✓</span>
+      <h3 id="doneTitle">Pago<br>confirmado</h3>
+      <p id="doneMsg">Te enviamos el enlace de descarga y la licencia por correo. Cualquier problema de instalación, escribinos por WhatsApp.</p>
+      <div class="done-actions">
+        <a href="https://wa.me/56943801816" target="_blank" rel="noopener" class="btn-outline btn-block">Soporte por WhatsApp</a>
+        <button type="button" class="btn-primary-dark" id="doneCloseBtn">Seguir comprando</button>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div class="overlay-scrim" id="modalScrim" hidden></div>
+<div class="product-modal" id="productModal" aria-hidden="true">
+  <div class="modal-inner">
+    <div class="modal-head">
+      <span class="modal-sku" id="modalSku"></span>
+      <div class="spacer"></div>
+      <button type="button" class="round-btn" id="closeModalBtn" aria-label="Cerrar">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-gallery">
+        <div class="modal-main-img" id="modalMainImg"><span id="modalMainLabel"></span></div>
+        <div class="modal-thumbs" id="modalThumbs"></div>
+      </div>
+      <div class="modal-info">
+        <div class="cat-badge" id="modalCat"></div>
+        <h2 id="modalName"></h2>
+        <div class="modal-price-row">
+          <span class="modal-price" id="modalPrice"></span>
+          <span class="modal-instant">DESCARGA INMEDIATA</span>
+        </div>
+        <p class="modal-desc" id="modalDesc"></p>
+        <div class="modal-actions">
+          <button type="button" class="btn-primary-dark f1" id="modalAddBtn">Agregar al carrito</button>
+          <button type="button" class="btn-primary-lime" id="modalBuyBtn">Pagar ahora</button>
+        </div>
+        <div class="modal-specs">
+          <p class="drawer-label">DETALLES TÉCNICOS</p>
+          <div id="modalSpecs"></div>
+        </div>
+        <div class="license-box">
+          <div class="license-box-head"><span class="dot-mark"></span><span>Detalles de licencia</span></div>
+          <div class="license-lines">
+            <div><span class="ok">✓</span><span>Uso comercial ilimitado, en proyectos propios y de clientes. Sin límite de entregas ni vencimiento.</span></div>
+            <div><span class="ok">✓</span><span>Un usuario, hasta dos equipos. Para equipos más grandes hay licencia de estudio.</span></div>
+            <div><span class="no">✕</span><span>Reventa, redistribución o inclusión en packs de terceros: prohibida.</span></div>
+          </div>
+          <a href="https://wa.me/56943801816" target="_blank" rel="noopener" class="license-link">Consultar licencia de estudio</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden>Agregado al carrito</div>
+
+<script src="js/app.js" defer></script>
+<script src="js/payments.js" defer></script>
+</body>
+</html>
