@@ -72,7 +72,9 @@
       confirmBtn.hidden = false;
       setBusy(false);
     } else if (selectedMethod === 'paypal') {
-      panelEl.innerHTML = '<div id="paypal-buttons-container"></div><p class="pay-status" id="paypalStatus"></p>';
+      panelEl.innerHTML =
+        '<div class="method-panel"><p>PayPal no opera en pesos chilenos: el cobro se hace por el equivalente en dólares. El monto exacto en USD te lo muestra PayPal antes de confirmar.</p></div>' +
+        '<div id="paypal-buttons-container"></div><p class="pay-status" id="paypalStatus"></p>';
       confirmBtn.hidden = true;
       mountPaypalButtons();
     } else if (selectedMethod === 'transferencia') {

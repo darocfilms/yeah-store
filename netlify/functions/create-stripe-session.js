@@ -25,8 +25,11 @@ exports.handler = async (event) => {
       line_items: lines.map(({ product, qty }) => ({
         quantity: qty,
         price_data: {
-          currency: 'usd',
-          unit_amount: Math.round(product.price * 100),
+          currency: 'clp',
+          // CLP es una moneda "zero-decimal" en Stripe: unit_amount se manda en
+          // pesos enteros, NO en centésimos. Multiplicar por 100 aquí cobraría
+          // 100 veces de más.
+          unit_amount: Math.round(product.price),
           product_data: { name: product.name, description: product.sku }
         }
       })),

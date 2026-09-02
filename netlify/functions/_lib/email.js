@@ -27,8 +27,10 @@ async function sendEmail({ to, subject, html }) {
   return res.json();
 }
 
+// CLP: sin decimales, miles separados con punto → $22.900 CLP
+const clpFormat = new Intl.NumberFormat('es-CL');
 function formatMoney(n) {
-  return `$${n} USD`;
+  return `$${clpFormat.format(n)} CLP`;
 }
 
 function escapeHtml(s) {

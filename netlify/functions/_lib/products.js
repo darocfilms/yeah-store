@@ -23,4 +23,20 @@ function computeTotal(lines) {
   return lines.reduce((sum, l) => sum + l.product.price * l.qty, 0);
 }
 
-module.exports = { products, getProduct, priceLineItems, computeTotal };
+// La tienda cobra en CLP, pero PayPal no acepta CLP como moneda de transacción,
+// así que ese método cobra el equivalente en USD. La tasa es fija y se define en
+// USD_CLP_RATE — revísala periódicamente: si el dólar se mueve mucho y no la
+// actualizas, cobrarás de más o de menos por PayPal.
+const DEFAULT_USD_CLP_RATE = 936;
+
+function usdClpRate() {
+  const raw = parseFloat(process.env.USD_CLP_RATE);
+  return Number.isFinite(raw) && raw > 0 ? raw : DEFAULT_USD_CLP_RATE;
+}
+
+// Devuelve un string con 2 decimales, que es lo que espera la API de PayPal.
+function clpToUsd(amountClp) {
+  return (amountClp / usdClpRate()).toFixed(2);
+}
+
+module.exports = { products, getProduct, priceLineItems, computeTotal, clpToUsd, usdClpRate };

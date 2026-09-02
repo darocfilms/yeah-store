@@ -4,8 +4,8 @@
     "sku": "YEAH-DCTL-001",
     "name": "Halation DCTL",
     "cat": "DCTL",
-    "price": 24,
-    "currency": "USD",
+    "price": 22900,
+    "currency": "CLP",
     "hoverLabel": "img 01 — halation dctl",
     "desc": "Halation óptica calculada dentro de Resolve: la luz roja se difunde alrededor de las altas luces como en el negativo, con control de umbral, radio y tinte. Un solo nodo DCTL, sin capas ni composiciones externas.",
     "specs": [
@@ -22,8 +22,8 @@
     "sku": "YEAH-DCTL-002",
     "name": "Film Grain Engine",
     "cat": "DCTL",
-    "price": 32,
-    "currency": "USD",
+    "price": 29900,
+    "currency": "CLP",
     "hoverLabel": "img 01 — film grain engine",
     "desc": "Grano procedural por canal que responde a la densidad de la imagen: crece en los medios, se contiene en las altas luces. Sin texturas externas ni archivos de video, así que no cambia con la resolución del timeline.",
     "specs": [
@@ -40,8 +40,8 @@
     "sku": "YEAH-LUT-003",
     "name": "Print Film Pack",
     "cat": "LUTS",
-    "price": 48,
-    "currency": "USD",
+    "price": 44900,
+    "currency": "CLP",
     "hoverLabel": "img 01 — print film pack",
     "desc": "24 LUTs .cube de emulación de película de impresión, medidas sobre tres stocks distintos. Vienen en versión display y en versión para trabajar antes del nodo de contraste.",
     "specs": [
@@ -58,8 +58,8 @@
     "sku": "YEAH-DCTL-004",
     "name": "Gate Weave + Flicker",
     "cat": "DCTL",
-    "price": 18,
-    "currency": "USD",
+    "price": 16900,
+    "currency": "CLP",
     "hoverLabel": "img 01 — gate weave + flicker",
     "desc": "Inestabilidad de puerta y parpadeo de proyección, animados por frame y con semilla configurable. Pensado para el final del árbol de nodos, después del grano.",
     "specs": [

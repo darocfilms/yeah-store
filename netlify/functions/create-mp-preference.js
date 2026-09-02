@@ -22,7 +22,7 @@ exports.handler = async (event) => {
         title: product.name,
         quantity: qty,
         unit_price: product.price,
-        currency_id: 'USD'
+        currency_id: 'CLP'
       })),
       metadata: {
         order_items: JSON.stringify(lines.map(({ product, qty }) => ({ id: product.id, qty })))

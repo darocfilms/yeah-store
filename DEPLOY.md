@@ -56,13 +56,9 @@ PayPal, transferencia bancaria y entrega automática por email.
 3. No hace falta configurar el webhook manualmente en el panel: la función
    `create-mp-preference` ya envía `notification_url` apuntando a
    `/.netlify/functions/mercadopago-webhook` en cada preferencia creada.
-4. **Importante — moneda**: el código pide pagos en `USD`. Muchas cuentas de
-   MercadoPago (incluida Chile) operan nativamente en moneda local (CLP) y
-   pueden rechazar o convertir `USD` de forma inesperada. Antes de lanzar,
-   revisa en el panel de MercadoPago qué moneda acepta tu cuenta y, si hace
-   falta, ajusta `currency_id` y los precios en
-   `netlify/functions/create-mp-preference.js` (y en `public/products.json`
-   si quieres mostrar precios en CLP en el sitio).
+4. **Moneda**: la tienda cobra en **CLP** (pesos chilenos), que es la moneda
+   nativa de una cuenta MercadoPago Chile. Los precios viven en
+   `public/products.json` y se muestran con formato chileno (`$22.900 CLP`).
 
 ### 3.1 Revisar pagos manualmente (list-mp-payments)
 
@@ -91,6 +87,12 @@ MercadoPago, hay una función protegida:
    para Live) → variables `PAYPAL_CLIENT_ID` y `PAYPAL_CLIENT_SECRET`.
 3. Variable `PAYPAL_ENV`: déjala en `sandbox` mientras pruebas, cámbiala a
    `live` (y usa las credenciales *Live*) cuando quieras cobrar de verdad.
+4. **PayPal y la moneda**: PayPal no acepta CLP como moneda de transacción, así
+   que ese método cobra el equivalente en **USD** usando la tasa fija de la
+   variable `USD_CLP_RATE` (por defecto 936). Consecuencia práctica: si el
+   dólar se mueve y no actualizas esa variable, por PayPal cobrarás de más o
+   de menos. Revísala cada cierto tiempo, o elimina PayPal como método si
+   prefieres no lidiar con eso.
 4. Prueba con una [cuenta sandbox de comprador](https://developer.paypal.com/dashboard/accounts)
    antes de pasar a `live`.
 

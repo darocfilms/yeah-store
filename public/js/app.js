@@ -37,7 +37,9 @@
   }
 
   // ---------- helpers ----------
-  function fmt(n, currency) { return '$' + n + ' ' + (currency || 'USD'); }
+  // CLP no usa decimales y separa miles con punto: $22.900 CLP
+  var clpFormat = new Intl.NumberFormat('es-CL');
+  function fmt(n, currency) { return '$' + clpFormat.format(n) + ' ' + (currency || 'CLP'); }
   function getProduct(id) { return state.products.find(function (p) { return p.id === id; }); }
   function visibleProducts() {
     var q = state.query.trim().toLowerCase();
@@ -160,7 +162,7 @@
     }).join('');
   }
   function renderTotals() {
-    var total = fmt(cartTotal(), 'USD');
+    var total = fmt(cartTotal(), 'CLP');
     els.cartTotal.textContent = total;
     els.payTotal.textContent = total;
   }
