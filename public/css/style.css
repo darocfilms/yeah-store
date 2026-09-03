@@ -426,3 +426,14 @@ p { text-wrap: pretty; }
   .shop-panel { padding: 32px 20px 40px; }
   .wa-bubble-tag { display: none; }
 }
+
+/* ---------- Imágenes reales de producto ----------
+   Cuando un producto tiene foto cargada, la capa lleva .has-img: se apaga la
+   textura placeholder y la imagen llena el cuadro. Sin foto, todo sigue
+   funcionando con los bloques de textura originales. */
+.product-media .has-img,
+.modal-main-img.has-img,
+.modal-thumb.has-img { background-image: none; display: block; overflow: hidden; }
+.product-media img,
+.modal-main-img img,
+.modal-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }

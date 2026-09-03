@@ -109,6 +109,16 @@
     }).join('');
   }
 
+  // Devuelve una capa del producto: <img> real si hay foto cargada, o el
+  // bloque placeholder con textura diagonal si todavía no la hay.
+  function mediaLayer(cls, src, alt, label) {
+    if (src) {
+      return '<div class="' + cls + ' has-img"><img src="' + escapeHtml(src) +
+        '" alt="' + escapeHtml(alt) + '" loading="lazy"></div>';
+    }
+    return '<div class="' + cls + '"><span>' + escapeHtml(label) + '</span></div>';
+  }
+
   // ---------- rendering: product grid ----------
   function renderGrid() {
     var visible = visibleProducts();
@@ -116,8 +126,8 @@
       return (
         '<article class="product-card">' +
           '<div class="product-media" data-id="' + p.id + '">' +
-            '<div class="ph-main"><span>IMG 02 / HOVER</span></div>' +
-            '<div class="ph-hover"><span>[ ' + escapeHtml(p.hoverLabel || p.name) + ' ]</span></div>' +
+            mediaLayer('ph-main', p.imageHover, p.name + ' — vista alternativa', 'IMG 02 / HOVER') +
+            mediaLayer('ph-hover', p.image, p.name, '[ ' + (p.hoverLabel || p.name) + ' ]') +
           '</div>' +
           '<div class="product-foot">' +
             '<div>' +
@@ -237,11 +247,26 @@
     $('modalName').textContent = p.name;
     $('modalPrice').textContent = fmt(p.price, p.currency);
     $('modalDesc').textContent = p.desc;
-    $('modalMainLabel').textContent = '[ img 0' + (state.gallery + 1) + ' — ' + p.name.toLowerCase() + ' ]';
-    $('modalThumbs').innerHTML = [0, 1, 2, 3].map(function (i) {
-      var active = state.gallery === i ? ' active' : '';
-      return '<button type="button" class="modal-thumb' + active + '" data-gallery="' + i + '"><span>0' + (i + 1) + '</span></button>';
-    }).join('');
+    var gallery = Array.isArray(p.gallery) && p.gallery.length ? p.gallery : null;
+    var mainImg = $('modalMainImg');
+    if (gallery) {
+      var idx = Math.min(state.gallery, gallery.length - 1);
+      mainImg.classList.add('has-img');
+      mainImg.innerHTML = '<img src="' + escapeHtml(gallery[idx]) + '" alt="' + escapeHtml(p.name) + '">';
+      $('modalThumbs').innerHTML = gallery.map(function (src, i) {
+        var active = idx === i ? ' active' : '';
+        return '<button type="button" class="modal-thumb has-img' + active + '" data-gallery="' + i +
+          '"><img src="' + escapeHtml(src) + '" alt=""></button>';
+      }).join('');
+    } else {
+      mainImg.classList.remove('has-img');
+      mainImg.innerHTML = '<span id="modalMainLabel">[ img 0' + (state.gallery + 1) + ' — ' +
+        escapeHtml(p.name.toLowerCase()) + ' ]</span>';
+      $('modalThumbs').innerHTML = [0, 1, 2, 3].map(function (i) {
+        var active = state.gallery === i ? ' active' : '';
+        return '<button type="button" class="modal-thumb' + active + '" data-gallery="' + i + '"><span>0' + (i + 1) + '</span></button>';
+      }).join('');
+    }
     $('modalSpecs').innerHTML = p.specs.map(function (row) {
       return '<div class="spec-row"><span class="spec-k">' + escapeHtml(row[0]) + '</span><span class="spec-v">' + escapeHtml(row[1]) + '</span></div>';
     }).join('');
