@@ -8,15 +8,15 @@
     { key: 'transferencia', name: 'Transferencia bancaria', note: 'CL' }
   ];
 
-  // TODO: reemplaza estos datos por los datos bancarios reales de la tienda.
-  // No son datos reales — no los muestres a clientes hasta completarlos.
+  // Datos reales de la cuenta de destino. Se muestran al comprador en el
+  // checkout, así que son públicos por diseño.
   var BANK_INFO = {
-    bank: 'PENDIENTE — completar en js/payments.js',
-    accountType: 'PENDIENTE',
-    accountNumber: 'PENDIENTE',
-    rut: 'PENDIENTE',
-    holder: 'PENDIENTE',
-    email: 'PENDIENTE'
+    holder: 'Daniel Isaac Román Moya',
+    rut: '20.178.851-K',
+    bank: 'Mercado Pago',
+    accountType: 'Cuenta Vista',
+    accountNumber: '1081889407',
+    email: 'darocfilms@gmail.com'
   };
 
   var methodEl, panelEl, confirmBtn, statusText;
@@ -82,12 +82,12 @@
       panelEl.innerHTML =
         '<div class="method-panel">' +
           '<h4>Datos para transferir</h4>' +
+          '<div class="bank-row"><span>Titular</span><span>' + BANK_INFO.holder + '</span></div>' +
+          '<div class="bank-row"><span>RUT</span><span>' + BANK_INFO.rut + '</span></div>' +
           '<div class="bank-row"><span>Banco</span><span>' + BANK_INFO.bank + '</span></div>' +
           '<div class="bank-row"><span>Tipo de cuenta</span><span>' + BANK_INFO.accountType + '</span></div>' +
           '<div class="bank-row"><span>N° de cuenta</span><span>' + BANK_INFO.accountNumber + '</span></div>' +
-          '<div class="bank-row"><span>RUT</span><span>' + BANK_INFO.rut + '</span></div>' +
-          '<div class="bank-row"><span>Titular</span><span>' + BANK_INFO.holder + '</span></div>' +
-          '<div class="bank-row"><span>Email para comprobante</span><span>' + BANK_INFO.email + '</span></div>' +
+          '<div class="bank-row"><span>Email</span><span>' + BANK_INFO.email + '</span></div>' +
           '<div class="bank-row"><span>Referencia de tu pedido</span><span class="ref-code">' + orderRef + '</span></div>' +
         '</div>' +
         '<div class="method-panel">' +

@@ -1,6 +1,7 @@
 const { PAYPAL_API, getAccessToken } = require('./_lib/paypal');
 const { getProduct, computeTotal } = require('./_lib/products');
 const { sendDeliveryEmail, sendStoreNotification } = require('./_lib/email');
+const { crearEntrega } = require('./_lib/entrega');
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method not allowed' };
@@ -30,7 +31,8 @@ exports.handler = async (event) => {
     const customerEmail = capture.payer?.email_address;
 
     if (customerEmail && lines.length) {
-      await sendDeliveryEmail({ to: customerEmail, lines, total, orderRef: orderID });
+      const token = await crearEntrega({ email: customerEmail, lines, orderRef: orderID, provider: 'paypal' });
+      await sendDeliveryEmail({ to: customerEmail, lines, total, orderRef: orderID, token });
     }
     await sendStoreNotification({
       subject: 'Nueva venta (PayPal) en YEAH!',

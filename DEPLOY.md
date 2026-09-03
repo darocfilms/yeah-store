@@ -4,21 +4,16 @@ Este documento explica cómo poner en línea la tienda: sitio estático (`public
 funciones serverless de Netlify (`netlify/functions/`) para Stripe, MercadoPago,
 PayPal, transferencia bancaria y entrega automática por email.
 
-## 0. Qué es real y qué es placeholder ahora mismo
+## 0. Qué falta para vender
 
-- **El sitio y el carrito**: completos y funcionales.
-- **Los pagos**: el código está completo y listo para cobrar de verdad, pero
-  **no tienes credenciales configuradas todavía**. Hasta que las agregues,
-  los botones de Stripe/MercadoPago/PayPal mostrarán un error controlado
-  ("no se pudo iniciar el pago") en vez de romper la página.
-- **Los archivos digitales** (`public/downloads/*.zip`): son placeholders de
-  texto, no los productos reales. Reemplázalos antes de vender de verdad.
-- **Los datos bancarios** (transferencia): están marcados como `PENDIENTE` en
-  `js/payments.js` — nadie debería transferir dinero hasta que los completes
-  con tus datos reales.
+- **El sitio, el carrito y la entrega**: completos y funcionales.
+- **Los datos bancarios** (transferencia): cargados y reales.
+- **Las credenciales de pago**: pendientes. Hasta que las cargues, los botones
+  de Stripe/MercadoPago/PayPal muestran un error controlado en vez de romper.
+- **El archivo que se vende**: hay que subirlo a Blobs una vez (ver 5.1).
+  Mientras no esté, el enlace del correo responde "archivo no disponible".
 - **El email de entrega**: usa [Resend](https://resend.com). Sin
-  `RESEND_API_KEY` configurada, el pago se procesa igual pero no se envía
-  ningún correo (queda solo un log de advertencia).
+  `RESEND_API_KEY`, el pago se procesa igual pero no sale ningún correo.
 
 ## 1. Desplegar el sitio en Netlify
 
@@ -87,7 +82,7 @@ MercadoPago, hay una función protegida:
    para Live) → variables `PAYPAL_CLIENT_ID` y `PAYPAL_CLIENT_SECRET`.
 3. Variable `PAYPAL_ENV`: déjala en `sandbox` mientras pruebas, cámbiala a
    `live` (y usa las credenciales *Live*) cuando quieras cobrar de verdad.
-4. **PayPal y la moneda**: PayPal no acepta CLP como moneda de transacción, así
+5. **PayPal y la moneda**: PayPal no acepta CLP como moneda de transacción, así
    que ese método cobra el equivalente en **USD** usando la tasa fija de la
    variable `USD_CLP_RATE` (por defecto 936). Consecuencia práctica: si el
    dólar se mueve y no actualizas esa variable, por PayPal cobrarás de más o
@@ -109,18 +104,65 @@ MercadoPago, hay una función protegida:
    de cada pedido pendiente por transferencia (por defecto
    `darocfilms@gmail.com`, cámbiala si quieres otra bandeja).
 
+## 5.1 Entrega automática de los archivos
+
+Los `.zip` **ya no viven en el sitio público**: están en Netlify Blobs, un
+almacén privado que solo tocan las funciones. Nadie puede bajarlos adivinando
+una URL.
+
+### Cómo funciona una compra
+
+1. El comprador paga (Stripe, MercadoPago o PayPal).
+2. El webhook confirma el pago contra la pasarela.
+3. Se genera un **token de descarga único** para esa compra: guarda el email,
+   qué archivos incluye, vencimiento a 30 días y tope de 10 descargas.
+4. Sale el correo con un enlace personal por producto.
+5. El comprador hace clic y el archivo baja directo desde Blobs.
+
+Entre el pago confirmado y el correo enviado pasan segundos, sin intervención
+tuya.
+
+> **Detalle técnico que hace que esto no falle:** el almacén de tokens usa
+> consistencia **fuerte** (`consistency: 'strong'`). Con la consistencia
+> eventual que trae Blobs por defecto, un token recién escrito por el webhook
+> puede tardar hasta 60 segundos en propagarse — y el comprador que hace clic
+> de inmediato vería "enlace no válido" justo después de pagar. Es el error
+> clásico de este patrón.
+
+### Subir el archivo que se vende
+
+Una sola vez por producto (y cada vez que lo actualices):
+
+```bash
+curl -X POST "https://TU-SITIO.netlify.app/.netlify/functions/admin-subir-producto?f=filter-lab-fx.zip" \
+     -H "x-admin-token: $ADMIN_TOKEN" \
+     --data-binary @filter-lab-fx.zip
+```
+
+El nombre en `?f=` tiene que coincidir con `downloadFile` en `products.json`.
+Para ver qué hay subido, el mismo endpoint con `GET`.
+
+### Transferencias: liberar la entrega a mano
+
+La transferencia no se puede verificar automáticamente. Cuando confirmes el
+comprobante:
+
+```bash
+curl -X POST "https://TU-SITIO.netlify.app/.netlify/functions/admin-entregar" \
+     -H "x-admin-token: $ADMIN_TOKEN" -H "Content-Type: application/json" \
+     -d '{"email":"cliente@correo.com","items":[{"id":5,"qty":1}],"orderRef":"YEAH-XXXX"}'
+```
+
+El cliente recibe exactamente el mismo correo que una compra automática.
+
 ## 6. Completar antes de vender de verdad
 
-- [ ] Reemplazar los `.zip` placeholder en `public/downloads/` por los
-      archivos reales (mismo nombre que `downloadFile` en `products.json`).
-- [ ] **Seguridad de las descargas**: hoy cualquiera que adivine la URL de un
-      `.zip` en `/downloads/` puede bajarlo sin haber pagado, porque son
-      archivos estáticos públicos. Para una tienda real, la mejora recomendada
-      es generar enlaces firmados/de un solo uso (por ejemplo con [Netlify
-      Blobs](https://docs.netlify.com/blobs/overview/) + un token aleatorio
-      por compra) en vez de sacar directo desde `public/downloads/`.
-- [ ] Completar `BANK_INFO` en `public/js/payments.js` con los datos
-      bancarios reales (hoy dice `PENDIENTE` a propósito).
+- [ ] Subir el `.zip` real de Filter LAB FX con `admin-subir-producto`
+      (ver 5.1). Sin esto, el enlace del correo responde "archivo no
+      disponible".
+- [x] ~~Seguridad de las descargas~~ — resuelto: archivos privados en Blobs
+      con enlaces por token, vencimiento y tope de descargas.
+- [x] ~~Datos bancarios~~ — cargados en `public/js/payments.js`.
 - [ ] Reemplazar las imágenes placeholder de producto (bloques con textura
       diagonal) por fotos reales en `public/index.html` / `public/css/style.css`.
 - [ ] Revisar la moneda de MercadoPago (punto 3.4).

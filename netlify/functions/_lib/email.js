@@ -49,17 +49,19 @@ function orderLinesHtml(lines) {
     .join('');
 }
 
-function downloadLinksHtml(lines) {
+const { urlDescarga, DIAS_VALIDEZ } = require('./entrega');
+
+function downloadLinksHtml(lines, token) {
   return lines
     .map(({ product }) => {
-      const url = SITE_URL ? `${SITE_URL}/downloads/${product.downloadFile}` : `/downloads/${product.downloadFile}`;
-      return `<li><a href="${url}">${escapeHtml(product.name)}</a></li>`;
+      const url = urlDescarga(SITE_URL, token, product.downloadFile);
+      return `<li style="margin-bottom:8px;"><a href="${url}" style="font-weight:bold;">Descargar ${escapeHtml(product.name)}</a></li>`;
     })
     .join('');
 }
 
-async function sendDeliveryEmail({ to, lines, total, orderRef }) {
-  if (!lines.length) return { skipped: true };
+async function sendDeliveryEmail({ to, lines, total, orderRef, token }) {
+  if (!lines.length || !token) return { skipped: true };
   const html = `
     <div style="font-family:Arial,Helvetica,sans-serif;color:#0B0B0A;max-width:560px;margin:0 auto;">
       <h1 style="font-size:20px;">¡Gracias por tu compra en YEAH!</h1>
@@ -67,7 +69,8 @@ async function sendDeliveryEmail({ to, lines, total, orderRef }) {
       <table style="width:100%;border-collapse:collapse;margin:16px 0;">${orderLinesHtml(lines)}</table>
       <p><strong>Total: ${formatMoney(total)}</strong></p>
       <h2 style="font-size:15px;">Descargas</h2>
-      <ul>${downloadLinksHtml(lines)}</ul>
+      <ul>${downloadLinksHtml(lines, token)}</ul>
+      <p style="font-size:12px;color:#5F5C53;">Tus enlaces son personales y estan activos ${DIAS_VALIDEZ} dias.</p>
       <h2 style="font-size:15px;">Licencia</h2>
       <p style="font-size:13px;line-height:1.6;color:#5F5C53;">
         Uso comercial ilimitado en proyectos propios y de clientes, sin límite de entregas ni de tiempo.

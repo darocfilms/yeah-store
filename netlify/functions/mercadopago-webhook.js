@@ -1,5 +1,6 @@
 const { getProduct, computeTotal } = require('./_lib/products');
 const { sendDeliveryEmail, sendStoreNotification } = require('./_lib/email');
+const { crearEntrega } = require('./_lib/entrega');
 
 exports.handler = async (event) => {
   const accessToken = process.env.MP_ACCESS_TOKEN;
@@ -39,7 +40,8 @@ exports.handler = async (event) => {
     const customerEmail = payment.payer?.email;
 
     if (customerEmail && lines.length) {
-      await sendDeliveryEmail({ to: customerEmail, lines, total, orderRef: String(payment.id) });
+      const token = await crearEntrega({ email: customerEmail, lines, orderRef: String(payment.id), provider: 'mercadopago' });
+      await sendDeliveryEmail({ to: customerEmail, lines, total, orderRef: String(payment.id), token });
     }
     await sendStoreNotification({
       subject: 'Nueva venta (MercadoPago) en YEAH!',

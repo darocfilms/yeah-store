@@ -1,6 +1,7 @@
 const Stripe = require('stripe');
 const { getProduct, computeTotal } = require('./_lib/products');
 const { sendDeliveryEmail, sendStoreNotification } = require('./_lib/email');
+const { crearEntrega } = require('./_lib/entrega');
 
 exports.handler = async (event) => {
   const secretKey = process.env.STRIPE_SECRET_KEY;
@@ -30,7 +31,8 @@ exports.handler = async (event) => {
       const customerEmail = session.customer_details?.email || session.customer_email;
 
       if (customerEmail && lines.length) {
-        await sendDeliveryEmail({ to: customerEmail, lines, total, orderRef: session.id });
+        const token = await crearEntrega({ email: customerEmail, lines, orderRef: session.id, provider: 'stripe' });
+        await sendDeliveryEmail({ to: customerEmail, lines, total, orderRef: session.id, token });
       }
       await sendStoreNotification({
         subject: 'Nueva venta (Stripe) en YEAH!',

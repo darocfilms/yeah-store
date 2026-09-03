@@ -51,7 +51,8 @@
         "type": "text",
         "text": "Lo que sí conviene evitar siempre es aplicar difusión antes y después en la misma cadena. No se suma de forma predecible y termina comiéndose el detalle sin que sepas cuál de los dos nodos lo hizo."
       }
-    ]
+    ],
+    "image": "img/blog/blog-nodos.jpg"
   },
   {
     "id": 2,
@@ -105,7 +106,8 @@
         "type": "text",
         "text": "Miralo siempre al 100%, nunca en ajuste a ventana. Al escalar la imagen hacia abajo, el visor promedia píxeles y esconde tanto el suavizado como el grano — vas a subestimar sistemáticamente cuánta difusión pusiste. Es la causa número uno de material que llega al cliente más blando de lo que se pretendía."
       }
-    ]
+    ],
+    "image": "img/blog/blog-densidad.jpg"
   },
   {
     "id": 3,
@@ -147,7 +149,8 @@
         "type": "text",
         "text": "Un error común es sumar dos difusores buscando más efecto. No se acumulan de forma lineal: dos a 1/4 no dan un 1/2, dan una imagen sucia donde el detalle fino ya se perdió pero el bloom todavía no llegó. Si querés más, subí la densidad de uno solo."
       }
-    ]
+    ],
+    "image": "img/blog/blog-difusores.jpg"
   },
   {
     "id": 4,
@@ -193,7 +196,8 @@
         "type": "text",
         "text": "El error más frecuente es aplicarla al final, sobre valores ya recortados. Si las altas luces están clipeadas, la halation no tiene gradiente del cual alimentarse y produce un anillo duro alrededor del blanco plano, que es exactamente lo que la delata. Aplicala antes del recorte."
       }
-    ]
+    ],
+    "image": "img/blog/blog-halation.jpg"
   },
   {
     "id": 5,
@@ -243,7 +247,8 @@
         "type": "text",
         "text": "Un detalle que ayuda a que se sienta real: hacé que la temperatura del destello converse con la luz de la escena. Un streak azul sobre una escena de tungsteno cálido se lee inmediatamente como agregado en post."
       }
-    ]
+    ],
+    "image": "img/blog/blog-streaks.jpg"
   },
   {
     "id": 6,
@@ -301,6 +306,7 @@
         "type": "text",
         "text": "Si el nodo se pone negro o rojo al aplicarlo, no es un problema de instalación sino de compilación en tu GPU. Escribinos por WhatsApp con el modelo de tu placa y la versión de Resolve y lo revisamos."
       }
-    ]
+    ],
+    "image": "img/blog/blog-instalacion.jpg"
   }
 ]
