@@ -21,7 +21,10 @@ p{font-size:15px;line-height:1.6;color:#5F5C53}a{color:#0B0B0A}</style></head>
 <p><a href="https://wa.me/56943801816">Escribinos por WhatsApp</a></p></div></body></html>`;
 }
 
+const { conectarBlobs } = require('./_lib/blobs');
+
 exports.handler = async (event) => {
+  conectarBlobs(event);
   const { t: token, f: archivo } = event.queryStringParameters || {};
 
   try {

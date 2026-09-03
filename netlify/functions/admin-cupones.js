@@ -2,7 +2,10 @@
 const A = require('./_lib/auth');
 const { guardarCupon, listarCupones, eliminarCupon } = require('./_lib/cupones');
 
+const { conectarBlobs } = require('./_lib/blobs');
+
 exports.handler = async (event) => {
+  conectarBlobs(event);
   const { error } = await A.requiereAdmin(event);
   if (error) return error;
 

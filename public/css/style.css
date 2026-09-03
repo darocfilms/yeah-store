@@ -113,7 +113,10 @@ p { text-wrap: pretty; }
 .search-dot { width: 10px; height: 10px; border: 1.4px solid var(--ink); border-radius: 50%; display: block; flex: none; }
 .search-box input { border: none; background: none; font-size: 12px; letter-spacing: .02em; width: 100%; color: var(--ink); }
 
-.product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 30px 26px; margin-top: 34px; }
+/* auto-fill, no auto-fit: con auto-fit las pistas vacías se colapsan y un
+   solo producto se estira a todo el ancho de la grilla. Con auto-fill las
+   pistas se mantienen y la tarjeta conserva su tamaño, haya uno o doce. */
+.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 30px 26px; margin-top: 34px; }
 .product-card { display: flex; flex-direction: column; }
 .product-media {
   position: relative; aspect-ratio: 1/1; overflow: hidden;
@@ -576,6 +579,17 @@ p { text-wrap: pretty; }
 .cuenta-alt { font-size: 13px; color: var(--muted-1); margin: 18px 0 0; text-align: center; }
 .cuenta-alt button { font-size: 13px; font-weight: 700; text-decoration: underline; }
 .cuenta-admin-link { display: block; text-align: center; margin-bottom: 18px; }
+.cuenta-msg.ok { color: var(--ink); }
+
+/* Cambiar contraseña va plegado: es una acción rara, no compite con lo que
+   la persona vino a hacer. */
+.cuenta-clave { border-top: 1px solid rgba(11, 11, 10, .14); margin: 18px 0; padding-top: 14px; }
+.cuenta-clave summary {
+  cursor: pointer; font-family: var(--font-mono); font-size: 10.5px;
+  letter-spacing: .09em; text-transform: uppercase; color: var(--muted-1);
+}
+.cuenta-clave summary:hover { color: var(--ink); }
+.cuenta-clave form { margin-top: 14px; }
 .cuenta-seccion {
   font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase;
   color: var(--muted-3); margin: 24px 0 10px; padding-top: 18px; border-top: 1.3px solid rgba(11, 11, 10, .18);

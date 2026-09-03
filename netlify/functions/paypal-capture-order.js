@@ -1,11 +1,11 @@
 const { PAYPAL_API, getAccessToken } = require('./_lib/paypal');
 const { getProduct, computeTotal } = require('./_lib/products');
-const { sendDeliveryEmail, sendStoreNotification } = require('./_lib/email');
-const { crearEntrega } = require('./_lib/entrega');
-const { guardarPedido } = require('./_lib/pedidos');
-const { registrarUso } = require('./_lib/cupones');
+const { completarPedido } = require('./_lib/completar');
+
+const { conectarBlobs } = require('./_lib/blobs');
 
 exports.handler = async (event) => {
+  conectarBlobs(event);
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method not allowed' };
 
   try {
@@ -38,19 +38,14 @@ exports.handler = async (event) => {
     const total = computeTotal(lines);
     const customerEmail = capture.payer?.email_address;
 
-    await guardarPedido({ orderRef: orderID, email: customerEmail, lines, total: total - descuento, provider: 'paypal', cupon: codigoCupon || null, descuento });
-    if (codigoCupon) await registrarUso(codigoCupon);
-
-    if (customerEmail && lines.length) {
-      const token = await crearEntrega({ email: customerEmail, lines, orderRef: orderID, provider: 'paypal' });
-      await sendDeliveryEmail({ to: customerEmail, lines, total, orderRef: orderID, token });
-    }
-    await sendStoreNotification({
-      subject: 'Nueva venta (PayPal) en YEAH!',
-      lines,
-      total,
+    await completarPedido({
       orderRef: orderID,
-      customerEmail
+      email: customerEmail,
+      lines,
+      total: total - descuento,
+      provider: 'paypal',
+      cupon: codigoCupon || null,
+      descuento
     });
 
     return { statusCode: 200, body: JSON.stringify({ status: 'COMPLETED' }) };

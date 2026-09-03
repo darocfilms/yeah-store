@@ -281,7 +281,7 @@
     fetch('/.netlify/functions/notify-bank-transfer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: cartItemsPayload(), email: email, reference: orderRef })
+      body: JSON.stringify({ items: cartItemsPayload(), email: email, reference: orderRef, cupon: cuponPayload() })
     })
       .then(function (r) {
         if (!r.ok) throw new Error('HTTP ' + r.status);

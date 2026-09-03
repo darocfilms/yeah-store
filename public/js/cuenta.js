@@ -58,8 +58,17 @@
         '<p class="cuenta-dato">' + esc(usuario.email) + (usuario.rol === 'admin' ? ' · <strong>ADMIN</strong>' : '') + '</p>' +
         (usuario.rol === 'admin' ? '<a href="admin.html" class="btn-primary-lime cuenta-admin-link">Ir al panel</a>' : '') +
         '<div id="misCompras"><p class="cuenta-cargando">Cargando tus compras…</p></div>' +
+        '<details class="cuenta-clave"><summary>Cambiar contraseña</summary>' +
+          '<form id="formClave">' +
+            campo('claveActual', 'Contraseña actual', 'password', 'autocomplete="current-password" required') +
+            campo('claveNueva', 'Contraseña nueva', 'password', 'autocomplete="new-password" minlength="8" required') +
+            '<p class="cuenta-msg" id="claveMsg"></p>' +
+            '<button type="submit" class="btn-outline btn-block">Guardar contraseña</button>' +
+          '</form>' +
+        '</details>' +
         '<button type="button" class="btn-outline btn-block" id="btnSalir">Cerrar sesión</button>';
       $('btnSalir').addEventListener('click', salir);
+      $('formClave').addEventListener('submit', cambiarClave);
       cargarCompras();
       return;
     }
@@ -93,6 +102,32 @@
       '<p class="cuenta-alt">¿No tienes cuenta? <button type="button" id="irRegistro">Crear una</button></p>';
     $('irRegistro').addEventListener('click', function () { vista = 'registro'; render(); });
     $('formCuenta').addEventListener('submit', entrar);
+  }
+
+  function cambiarClave(e) {
+    e.preventDefault();
+    var btn = e.target.querySelector('button[type=submit]');
+    var msg = $('claveMsg');
+    btn.disabled = true; btn.textContent = 'Guardando…';
+    msg.textContent = ''; msg.className = 'cuenta-msg';
+    api('cuenta-clave', {
+      method: 'POST',
+      body: JSON.stringify({ actual: $('claveActual').value, nueva: $('claveNueva').value })
+    }).then(function (r) {
+      btn.disabled = false; btn.textContent = 'Guardar contraseña';
+      if (!r.ok) {
+        msg.textContent = r.datos.error || 'No se pudo cambiar.';
+        msg.className = 'cuenta-msg error';
+        return;
+      }
+      e.target.reset();
+      msg.textContent = 'Contraseña actualizada.';
+      msg.className = 'cuenta-msg ok';
+    }).catch(function () {
+      btn.disabled = false; btn.textContent = 'Guardar contraseña';
+      msg.textContent = 'No se pudo conectar.';
+      msg.className = 'cuenta-msg error';
+    });
   }
 
   function mostrarError(texto) {

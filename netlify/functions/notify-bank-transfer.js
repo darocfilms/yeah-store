@@ -1,7 +1,11 @@
 const { priceLineItems, computeTotal } = require('./_lib/products');
 const { sendEmail, sendStoreNotification } = require('./_lib/email');
+const { guardarPedido, storePedidos } = require('./_lib/pedidos');
+const { evaluarCupon } = require('./_lib/cupones');
+const { conectarBlobs } = require('./_lib/blobs');
 
 exports.handler = async (event) => {
+  conectarBlobs(event);
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method not allowed' };
 
   try {
@@ -16,7 +20,23 @@ exports.handler = async (event) => {
       return { statusCode: 400, body: JSON.stringify({ error: 'Email inválido.' }) };
     }
     const reference = String(body.reference || '').slice(0, 60) || 'SIN-REF';
-    const total = computeTotal(lines);
+    const subtotal = computeTotal(lines);
+    // El descuento se recalcula acá, igual que en las pasarelas: el navegador
+    // manda un código, nunca un monto.
+    const cupon = await evaluarCupon(body.cupon, subtotal).catch(() => ({ valido: false }));
+    const descuento = cupon.valido ? cupon.descuento : 0;
+    const total = subtotal - descuento;
+
+    // Queda registrado como PENDIENTE. No es una venta hasta que se vea el
+    // comprobante: el panel lo muestra en la bandeja de conciliación y desde
+    // ahí se confirma, lo que recién entonces dispara la entrega.
+    const pedido = await guardarPedido({
+      orderRef: reference, email, lines, total,
+      provider: 'transferencia',
+      cupon: cupon.valido ? cupon.codigo : null,
+      descuento
+    });
+    await storePedidos().setJSON(pedido.id, { ...pedido, estado: 'pendiente' });
 
     // Esto NO confirma un pago real — la transferencia bancaria no se puede
     // verificar automáticamente. Solo registra el pedido como pendiente y
@@ -27,7 +47,7 @@ exports.handler = async (event) => {
       total,
       orderRef: reference,
       customerEmail: email,
-      extra: 'Verifica el comprobante y responde al cliente por WhatsApp o email con el enlace de descarga.'
+      extra: 'Queda pendiente en el panel, pestaña Pedidos. Al confirmar el comprobante ahí, la entrega sale sola.'
     });
 
     await sendEmail({

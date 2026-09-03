@@ -68,6 +68,24 @@
     toastTimer = setTimeout(function () { els.toast.hidden = true; }, 1900);
   }
 
+  // ---------- embudo ----------
+  // Un contador anónimo por paso. Sin cookies, sin identificador, sin esperar
+  // la respuesta: si el envío falla, la página ni se entera.
+  var pasosVistos = {};
+  function marcarPaso(paso) {
+    if (pasosVistos[paso]) return;   // una vez por visita: mide personas, no clics
+    pasosVistos[paso] = true;
+    try {
+      fetch('/.netlify/functions/evento', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ paso: paso }),
+        keepalive: true
+      }).catch(function () {});
+    } catch (e) { /* sin métricas se sigue vendiendo igual */ }
+  }
+  window.YEAHEmbudo = marcarPaso;
+
   // ---------- cart mutations ----------
   function addToCart(id, openDrawer) {
     var hit = state.cart.find(function (c) { return c.id === id; });
@@ -75,6 +93,7 @@
     else state.cart.push({ id: id, qty: 1 });
     saveCart();
     renderCartCount();
+    marcarPaso('carrito');
     if (openDrawer) {
       state.step = 'cart';
       openCart();
@@ -209,6 +228,7 @@
   }
   function goPay() {
     if (state.cart.length === 0) return;
+    marcarPaso('pago');
     setStep('pay');
     if (window.YEAHPayments) window.YEAHPayments.onEnterPay();
   }
@@ -224,12 +244,14 @@
     state.cart = [];
     saveCart();
     renderCartCount();
+    marcarPaso('carrito');
     renderCartLines();
     renderTotals();
   }
 
   // ---------- product modal ----------
   function openModal(id) {
+    marcarPaso('producto');
     state.modalId = id;
     state.gallery = 0;
     renderModal();
@@ -473,6 +495,7 @@
   function init() {
     cacheEls();
     bindEvents();
+    marcarPaso('visita');
     initFaq();
     renderCartCount();
     renderTotals();

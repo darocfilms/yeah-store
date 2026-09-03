@@ -1,10 +1,10 @@
 const { getProduct, computeTotal } = require('./_lib/products');
-const { sendDeliveryEmail, sendStoreNotification } = require('./_lib/email');
-const { crearEntrega } = require('./_lib/entrega');
-const { guardarPedido } = require('./_lib/pedidos');
-const { registrarUso } = require('./_lib/cupones');
+const { completarPedido } = require('./_lib/completar');
+
+const { conectarBlobs } = require('./_lib/blobs');
 
 exports.handler = async (event) => {
+  conectarBlobs(event);
   const accessToken = process.env.MP_ACCESS_TOKEN;
   if (!accessToken) {
     console.error('[YEAH] mercadopago-webhook: falta MP_ACCESS_TOKEN');
@@ -43,19 +43,14 @@ exports.handler = async (event) => {
 
     const codigoCupon = payment.metadata?.cupon || null;
     const descuento = Number(payment.metadata?.descuento || 0);
-    await guardarPedido({ orderRef: String(payment.id), email: customerEmail, lines, total: total - descuento, provider: 'mercadopago', cupon: codigoCupon, descuento });
-    if (codigoCupon) await registrarUso(codigoCupon);
-
-    if (customerEmail && lines.length) {
-      const token = await crearEntrega({ email: customerEmail, lines, orderRef: String(payment.id), provider: 'mercadopago' });
-      await sendDeliveryEmail({ to: customerEmail, lines, total, orderRef: String(payment.id), token });
-    }
-    await sendStoreNotification({
-      subject: 'Nueva venta (MercadoPago) en YEAH!',
-      lines,
-      total,
+    await completarPedido({
       orderRef: String(payment.id),
-      customerEmail
+      email: customerEmail,
+      lines,
+      total: total - descuento,
+      provider: 'mercadopago',
+      cupon: codigoCupon,
+      descuento
     });
 
     return { statusCode: 200, body: 'ok' };

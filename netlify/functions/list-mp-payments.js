@@ -14,7 +14,10 @@ const { requiereAdminOToken } = require('./_lib/auth-admin');
 
 const ALLOWED_PARAMS = ['sort', 'criteria', 'external_reference', 'status', 'begin_date', 'end_date', 'offset', 'limit'];
 
+const { conectarBlobs } = require('./_lib/blobs');
+
 exports.handler = async (event) => {
+  conectarBlobs(event);
   if (event.httpMethod !== 'GET') return { statusCode: 405, body: 'Method not allowed' };
 
   const guard = await requiereAdminOToken(event);

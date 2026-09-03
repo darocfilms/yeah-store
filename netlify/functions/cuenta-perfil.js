@@ -3,7 +3,10 @@
 const A = require('./_lib/auth');
 const { listarPedidosDe } = require('./_lib/pedidos');
 
+const { conectarBlobs } = require('./_lib/blobs');
+
 exports.handler = async (event) => {
+  conectarBlobs(event);
   const { usuario, error } = await A.requiereSesion(event);
   if (error) return error;
   try {

@@ -1,6 +1,9 @@
 const A = require('./_lib/auth');
 
+const { conectarBlobs } = require('./_lib/blobs');
+
 exports.handler = async (event) => {
+  conectarBlobs(event);
   if (event.httpMethod !== 'POST') return A.json(405, { error: 'Método no permitido.' });
   try {
     const b = JSON.parse(event.body || '{}');
@@ -11,7 +14,10 @@ exports.handler = async (event) => {
       return A.json(429, { error: 'Demasiados intentos fallidos. Espera unos minutos.' });
     }
 
-    const usuario = await A.storeUsuarios().get(email, { type: 'json' });
+    // Si es el correo de administración y todavía no existe, se crea acá con
+    // ADMIN_INITIAL_PASSWORD. Devuelve null en cualquier otro caso.
+    const usuario = (await A.storeUsuarios().get(email, { type: 'json' }))
+      || (await A.asegurarAdmin(email, b.clave));
     // Mismo mensaje exista o no la cuenta: no revelamos qué correos están registrados.
     const ok = usuario && await A.verificarClave(b.clave, usuario.salt, usuario.hash);
     if (!ok) {
@@ -24,6 +30,9 @@ exports.handler = async (event) => {
     return A.json(200, { usuario: A.publico(usuario) }, { 'Set-Cookie': A.cookieSesion(token) });
   } catch (err) {
     console.error('[YEAH] cuenta-login error:', err);
-    return A.json(500, { error: 'No se pudo iniciar sesión.' });
+    return A.json(500, {
+      error: 'No se pudo iniciar sesión.',
+      codigo: String((err && err.name) || 'error_desconocido')
+    });
   }
 };

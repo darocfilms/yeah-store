@@ -1,7 +1,10 @@
 const { priceLineItems, computeTotal } = require('./_lib/products');
 const { evaluarCupon } = require('./_lib/cupones');
 
+const { conectarBlobs } = require('./_lib/blobs');
+
 exports.handler = async (event) => {
+  conectarBlobs(event);
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method not allowed' };
 
   const accessToken = process.env.MP_ACCESS_TOKEN;

@@ -1,11 +1,11 @@
 const Stripe = require('stripe');
 const { getProduct, computeTotal } = require('./_lib/products');
-const { sendDeliveryEmail, sendStoreNotification } = require('./_lib/email');
-const { crearEntrega } = require('./_lib/entrega');
-const { guardarPedido } = require('./_lib/pedidos');
-const { registrarUso } = require('./_lib/cupones');
+const { completarPedido } = require('./_lib/completar');
+
+const { conectarBlobs } = require('./_lib/blobs');
 
 exports.handler = async (event) => {
+  conectarBlobs(event);
   const secretKey = process.env.STRIPE_SECRET_KEY;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
   if (!secretKey || !webhookSecret) {
@@ -34,19 +34,15 @@ exports.handler = async (event) => {
 
       const codigoCupon = session.metadata?.cupon || null;
       const descuento = Number(session.metadata?.descuento || 0);
-      await guardarPedido({ orderRef: session.id, email: customerEmail, lines, total: total - descuento, provider: 'stripe', cupon: codigoCupon, descuento });
-      if (codigoCupon) await registrarUso(codigoCupon);
 
-      if (customerEmail && lines.length) {
-        const token = await crearEntrega({ email: customerEmail, lines, orderRef: session.id, provider: 'stripe' });
-        await sendDeliveryEmail({ to: customerEmail, lines, total, orderRef: session.id, token });
-      }
-      await sendStoreNotification({
-        subject: 'Nueva venta (Stripe) en YEAH!',
-        lines,
-        total,
+      await completarPedido({
         orderRef: session.id,
-        customerEmail
+        email: customerEmail,
+        lines,
+        total: total - descuento,
+        provider: 'stripe',
+        cupon: codigoCupon,
+        descuento
       });
     } catch (err) {
       console.error('[YEAH] stripe-webhook fulfillment error:', err);

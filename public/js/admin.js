@@ -87,6 +87,55 @@
     }).join('');
   }
 
+  // Embudo: cuatro escalones. Lo que importa no es el número absoluto sino
+  // dónde cae la gente, así que cada paso muestra su retención respecto del
+  // anterior — no respecto del total.
+  function embudo(e) {
+    if (!e || !e.visita) {
+      return '<p class="figura-vacia">Todavía no hay visitas registradas.</p>';
+    }
+    var pasos = [
+      { clave: 'visita', nombre: 'Visitó la tienda' },
+      { clave: 'producto', nombre: 'Abrió el producto' },
+      { clave: 'carrito', nombre: 'Agregó al carrito' },
+      { clave: 'pago', nombre: 'Llegó al pago' }
+    ];
+    return pasos.map(function (paso, i) {
+      var v = e[paso.clave] || 0;
+      var previo = i ? (e[pasos[i - 1].clave] || 0) : 0;
+      var pct = Math.max(2, (v / e.visita) * 100);
+      var retencion = i && previo ? Math.round((v / previo) * 100) + '% del paso anterior' : '';
+      return '<div class="barra-fila">' +
+        '<div class="barra-nombre">' + paso.nombre + '</div>' +
+        '<div class="barra-pista"><div class="barra" style="width:' + pct + '%;background:' + SERIES[0] + '"></div></div>' +
+        '<div class="barra-valor">' + nf.format(v) + (retencion ? ' <span class="barra-nota">' + retencion + '</span>' : '') + '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  // Pulso de pasarelas: si una dejó de confirmar mientras las demás siguen,
+  // el problema es de integración, no de clientes.
+  var DIA_MS = 24 * 3600 * 1000;
+  function pulsos(lista) {
+    if (!lista || !lista.length) {
+      return '<p class="figura-vacia">Ninguna pasarela ha confirmado un pago todavía.</p>';
+    }
+    var masReciente = lista[0].ultima;
+    return '<div class="tabla-wrap"><table class="admin-tabla"><thead><tr>' +
+      '<th>Pasarela</th><th>Última confirmación</th><th style="text-align:right">Confirmaciones</th><th></th>' +
+      '</tr></thead><tbody>' + lista.map(function (p) {
+        // Se compara contra la pasarela que sí está viva, no contra el reloj:
+        // una tienda sin ventas en tres días no tiene nada roto.
+        var atrasada = masReciente - p.ultima > 7 * DIA_MS;
+        return '<tr><td><span class="pill">' + esc(p.provider) + '</span></td>' +
+          '<td>' + fecha(p.ultima) + '</td>' +
+          '<td class="num">' + p.confirmaciones + '</td>' +
+          '<td style="text-align:right">' + (atrasada
+            ? '<span class="pill alerta">revisar</span>'
+            : '<span class="pill">al día</span>') + '</td></tr>';
+      }).join('') + '</tbody></table></div>';
+  }
+
   function pintarResumen() {
     var m = datos.metricas;
     var variacion = m.variacion30 == null ? '' :
@@ -98,35 +147,100 @@
         stat('Últimos 7 días', clp(m.ingresos7), m.pedidos7 + ' pedidos') +
         stat('Ticket promedio', clp(m.ticketPromedio), m.descuentoTotal ? clp(m.descuentoTotal) + ' en descuentos' : '') +
       '</div>' +
+      (datos.pendientes
+        ? '<div class="aviso">' + datos.pendientes + ' transferencia' + (datos.pendientes > 1 ? 's' : '') +
+          ' esperando confirmación en la pestaña Pedidos.</div>'
+        : '') +
       '<div class="figura"><h3>Ingresos diarios</h3><p class="sub">Últimos 30 días, en pesos</p>' +
         graficoLinea(datos.serie) + '</div>' +
       '<div class="figura"><h3>Por pasarela de pago</h3><p class="sub">Ingresos acumulados</p>' +
         graficoBarras(datos.porPasarela, 'pasarela', 'ingresos') + '</div>' +
       '<div class="figura"><h3>Por producto</h3><p class="sub">Ingresos acumulados</p>' +
-        graficoBarras(datos.porProducto, 'nombre', 'ingresos') + '</div>';
+        graficoBarras(datos.porProducto, 'nombre', 'ingresos') + '</div>' +
+      '<div class="figura"><h3>Embudo de conversión</h3><p class="sub">Últimos 30 días · conteo anónimo, sin cookies</p>' +
+        embudo(datos.embudo) + '</div>' +
+      '<div class="figura"><h3>Pulso de las pasarelas</h3><p class="sub">Cuándo confirmó cada una por última vez</p>' +
+        pulsos(datos.pulsos) + '</div>';
   }
 
   // ---------- pedidos ----------
+  // Estado de la entrega en palabras, no en números sueltos: distingue al que
+  // nunca pudo bajar el archivo del que ya lo tiene y quiere otra copia.
+  function estadoEntrega(o) {
+    if (o.estado === 'pendiente') return '<span class="pill alerta">esperando pago</span>';
+    if (!o.entrega) return '<span class="pill">sin entrega</span>';
+    if (o.entrega.estado === 'sin-registro') return '<span class="pill alerta">enlace perdido</span>';
+    if (o.entrega.estado === 'vencida') return '<span class="pill alerta">enlace vencido</span>';
+    if (!o.entrega.descargas) return '<span class="pill">nunca descargó</span>';
+    return '<span class="pill lima">' + o.entrega.descargas + ' de ' + o.entrega.maxDescargas + '</span>' +
+      (o.entrega.ultima ? '<span class="celda-nota">' + fecha(o.entrega.ultima) + '</span>' : '');
+  }
+
   function pintarPedidos() {
     var p = datos.pedidos;
-    $('tab-pedidos').innerHTML = !p.length
+    $('tab-pedidos').innerHTML =
+      '<div class="acciones-barra">' +
+        '<a class="btn-mini" href="/.netlify/functions/admin-exportar?tipo=pedidos">Exportar CSV</a>' +
+        '<span class="admin-msg" id="pMsg"></span>' +
+      '</div>' +
+      (!p.length
       ? '<div class="tabla-wrap"><p class="vacio">Todavía no hay pedidos.</p></div>'
       : '<div class="tabla-wrap"><table class="admin-tabla"><thead><tr>' +
-        '<th>Fecha</th><th>Cliente</th><th>Productos</th><th>Pasarela</th><th>Cupón</th><th style="text-align:right">Total</th>' +
+        '<th>Fecha</th><th>Cliente</th><th>Productos</th><th>Pasarela</th><th>Cupón</th>' +
+        '<th>Entrega</th><th style="text-align:right">Total</th><th></th>' +
         '</tr></thead><tbody>' + p.map(function (o) {
-          return '<tr><td>' + fecha(o.fecha) + '</td>' +
+          var pendiente = o.estado === 'pendiente';
+          return '<tr' + (pendiente ? ' class="fila-pendiente"' : '') + '><td>' + fecha(o.fecha) + '</td>' +
             '<td>' + esc(o.email || '—') + '</td>' +
             '<td>' + o.items.map(function (i) { return esc(i.nombre) + (i.qty > 1 ? ' ×' + i.qty : ''); }).join(', ') + '</td>' +
             '<td><span class="pill">' + esc(o.provider || '—') + '</span></td>' +
             '<td>' + (o.cupon ? '<span class="pill lima">' + esc(o.cupon) + '</span>' : '—') + '</td>' +
-            '<td class="num">' + clp(o.total) + '</td></tr>';
-        }).join('') + '</tbody></table></div>';
+            '<td>' + estadoEntrega(o) + '</td>' +
+            '<td class="num">' + clp(o.total) + '</td>' +
+            '<td style="text-align:right">' + (o.email
+              ? '<button type="button" class="btn-mini" data-pedido="' + esc(o.id) + '" data-accion="' +
+                (pendiente ? 'confirmar' : 'reenviar') + '">' +
+                (pendiente ? 'Confirmar pago' : 'Reenviar') + '</button>'
+              : '') + '</td></tr>';
+        }).join('') + '</tbody></table></div>');
+
+    Array.prototype.forEach.call(document.querySelectorAll('[data-pedido]'), function (b) {
+      b.addEventListener('click', function () {
+        accionPedido(b, b.getAttribute('data-pedido'), b.getAttribute('data-accion'));
+      });
+    });
+  }
+
+  function accionPedido(btn, id, accion) {
+    var pregunta = accion === 'confirmar'
+      ? '¿Confirmar que la transferencia llegó? Se envía la descarga al cliente.'
+      : '¿Reenviar la descarga? El enlace anterior deja de servir.';
+    if (!window.confirm(pregunta)) return;
+
+    var msg = $('pMsg');
+    btn.disabled = true; btn.textContent = '…';
+    api('admin-pedido', { method: 'POST', body: JSON.stringify({ id: id, accion: accion }) })
+      .then(function (r) {
+        if (!r.ok) {
+          btn.disabled = false;
+          btn.textContent = accion === 'confirmar' ? 'Confirmar pago' : 'Reenviar';
+          msg.textContent = r.datos.error || 'No se pudo completar.';
+          msg.className = 'admin-msg error';
+          return;
+        }
+        msg.textContent = accion === 'confirmar' ? 'Pago confirmado y descarga enviada.' : 'Descarga reenviada.';
+        msg.className = 'admin-msg ok';
+        cargar();
+      });
   }
 
   // ---------- usuarios ----------
   function pintarUsuarios() {
     var u = datos.usuarios;
-    $('tab-usuarios').innerHTML = !u.length
+    $('tab-usuarios').innerHTML =
+      '<div class="acciones-barra">' +
+        '<a class="btn-mini" href="/.netlify/functions/admin-exportar?tipo=usuarios">Exportar CSV</a>' +
+      '</div>' + (!u.length
       ? '<div class="tabla-wrap"><p class="vacio">Todavía no hay usuarios registrados.</p></div>'
       : '<div class="tabla-wrap"><table class="admin-tabla"><thead><tr>' +
         '<th>Nombre</th><th>Correo</th><th>Nacimiento</th><th>Alta</th><th style="text-align:right">Compras</th><th style="text-align:right">Gastado</th>' +
@@ -135,7 +249,7 @@
             '<td>' + esc(x.email) + '</td><td>' + esc(x.nacimiento || '—') + '</td>' +
             '<td>' + fecha(x.creado) + '</td>' +
             '<td class="num">' + x.compras + '</td><td class="num">' + clp(x.gastado) + '</td></tr>';
-        }).join('') + '</tbody></table></div>';
+        }).join('') + '</tbody></table></div>');
   }
 
   // ---------- cupones ----------

@@ -131,6 +131,45 @@ function publico(usuario) {
   };
 }
 
+// ---------- cuenta de administrador ----------
+// El correo de administración es exclusivo: no se puede registrar desde el
+// formulario público (si no, cualquiera que lo escribiera primero se quedaría
+// con el rol admin). La cuenta se crea sola en el primer inicio de sesión
+// correcto contra ADMIN_INITIAL_PASSWORD, y desde ahí es una cuenta normal:
+// la contraseña se cambia en el perfil y la variable deja de usarse.
+async function asegurarAdmin(email, clave) {
+  if (!esAdmin(email)) return null;
+  if (await storeUsuarios().get(email, { type: 'json' })) return null;
+
+  const inicial = process.env.ADMIN_INITIAL_PASSWORD;
+  if (!inicial || clave !== inicial) return null;
+
+  const { salt, hash } = await hashearClave(clave);
+  const usuario = {
+    email: normalizarEmail(email),
+    nombre: process.env.ADMIN_NOMBRE || 'Daniel Román',
+    nacimiento: process.env.ADMIN_NACIMIENTO || null,
+    salt, hash, creado: Date.now()
+  };
+  await storeUsuarios().setJSON(usuario.email, usuario);
+  console.log('[YEAH] cuenta de administración creada en el primer inicio de sesión');
+  return usuario;
+}
+
+// Cambio de contraseña: exige la actual, así una sesión robada no basta.
+async function cambiarClave(email, actual, nueva) {
+  const usuario = await storeUsuarios().get(normalizarEmail(email), { type: 'json' });
+  if (!usuario) return { error: 'No encontramos la cuenta.' };
+  if (!(await verificarClave(actual, usuario.salt, usuario.hash))) {
+    return { error: 'La contraseña actual no coincide.' };
+  }
+  const err = validarClave(nueva);
+  if (err) return { error: err };
+  const { salt, hash } = await hashearClave(nueva);
+  await storeUsuarios().setJSON(usuario.email, { ...usuario, salt, hash, claveCambiada: Date.now() });
+  return { ok: true };
+}
+
 const json = (statusCode, body, headers) => ({
   statusCode,
   headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', ...(headers || {}) },
@@ -157,5 +196,6 @@ module.exports = {
   intentosFallidos, registrarFallo, limpiarIntentos, MAX_INTENTOS,
   crearSesion, revocarSesion, cookieSesion, cookieBorrada, leerCookie,
   usuarioActual, publico, esAdmin, normalizarEmail,
+  asegurarAdmin, cambiarClave, ADMIN_EMAIL,
   requiereSesion, requiereAdmin, json
 };

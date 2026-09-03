@@ -6,7 +6,9 @@
 const A = require('./_lib/auth');
 const { listarPedidos } = require('./_lib/pedidos');
 const { listarCupones } = require('./_lib/cupones');
-const { storeProductos } = require('./_lib/entrega');
+const { storeProductos, storeTokens } = require('./_lib/entrega');
+const { listarPulsos } = require('./_lib/completar');
+const { resumen: resumenEmbudo } = require('./_lib/embudo');
 const productos = require('../../public/products.json');
 
 const DIA = 24 * 3600 * 1000;
@@ -73,20 +75,47 @@ function porProducto(pedidos) {
   return Object.values(acc).sort((a, b) => b.ingresos - a.ingresos);
 }
 
+const { conectarBlobs } = require('./_lib/blobs');
+
 exports.handler = async (event) => {
+  conectarBlobs(event);
   const { error } = await A.requiereAdmin(event);
   if (error) return error;
 
   try {
-    const pedidos = await listarPedidos();
+    const todos = await listarPedidos();
+    // Una transferencia sin confirmar no es una venta: no entra en ingresos.
+    const pedidos = todos.filter((p) => p.estado !== 'pendiente');
+    const pendientes = todos.filter((p) => p.estado === 'pendiente');
 
-    const [usuariosRaw, cupones, archivos] = await Promise.all([
+    const [usuariosRaw, cupones, archivos, pulsos, embudo] = await Promise.all([
       A.storeUsuarios().list().then(({ blobs }) =>
         Promise.all(blobs.map((b) => A.storeUsuarios().get(b.key, { type: 'json' }).catch(() => null)))
       ),
       listarCupones(),
-      storeProductos().list().then(({ blobs }) => blobs.map((b) => b.key)).catch(() => [])
+      storeProductos().list().then(({ blobs }) => blobs.map((b) => b.key)).catch(() => []),
+      listarPulsos().catch(() => []),
+      resumenEmbudo(30).catch(() => null)
     ]);
+
+    // Estado de descargas: se cruza el token que guarda cada pedido con el
+    // registro de entrega. Distingue al que nunca pudo bajar el archivo del
+    // que ya lo tiene y solo quiere otra copia.
+    const conDescargas = await Promise.all(todos.slice(0, 200).map(async (p) => {
+      if (!p.token) return p;
+      const reg = await storeTokens().get(p.token, { type: 'json' }).catch(() => null);
+      if (!reg) return { ...p, entrega: { estado: 'sin-registro' } };
+      return {
+        ...p,
+        entrega: {
+          estado: Date.now() > reg.vence ? 'vencida' : 'vigente',
+          descargas: reg.descargas,
+          maxDescargas: reg.maxDescargas,
+          ultima: reg.ultima || null,
+          vence: reg.vence
+        }
+      };
+    }));
 
     // publico() recorta salt y hash: nunca salen del servidor.
     const usuarios = usuariosRaw.filter(Boolean).map((u) => {
@@ -103,7 +132,10 @@ exports.handler = async (event) => {
       serie: serieDiaria(pedidos, 30),
       porPasarela: porPasarela(pedidos),
       porProducto: porProducto(pedidos),
-      pedidos: pedidos.slice(0, 200),
+      pedidos: conDescargas,
+      pendientes: pendientes.length,
+      pulsos,
+      embudo,
       usuarios,
       cupones,
       productos,

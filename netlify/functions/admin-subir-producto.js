@@ -7,7 +7,10 @@
 const { storeProductos } = require('./_lib/entrega');
 const { requiereAdminOToken } = require('./_lib/auth-admin');
 
+const { conectarBlobs } = require('./_lib/blobs');
+
 exports.handler = async (event) => {
+  conectarBlobs(event);
   // Dos vías de acceso: sesión de admin (el panel) o ADMIN_TOKEN (scripts y
   // curl). Cualquiera de las dos, nunca ninguna.
   const guard = await requiereAdminOToken(event);
