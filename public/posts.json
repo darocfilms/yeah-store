@@ -4,11 +4,11 @@
     "title": "Dónde va cada filtro en el árbol de nodos",
     "dateLabel": "02.09.2026",
     "kicker": "FLUJO DE TRABAJO",
-    "excerpt": "Un filtro físico actúa antes del sensor. Si lo aplicás al final de la cadena, el resultado no es el mismo — y se nota en las altas luces.",
+    "excerpt": "Un filtro físico actúa antes del sensor. Si lo aplicas al final de la cadena, el resultado no es el mismo — y se nota en las altas luces.",
     "body": [
       {
         "type": "text",
-        "text": "La regla es una sola y sale de la física: un filtro de vidrio va montado delante del lente, así que modifica la luz antes de que toque el sensor y mucho antes de que vos toques una rueda de color. Si querés que el DCTL se comporte como el vidrio, tiene que ocupar ese mismo lugar en la cadena."
+        "text": "La regla es una sola y sale de la física: un filtro de vidrio va montado delante del lente, así que modifica la luz antes de que toque el sensor y mucho antes de que toques una rueda de color. Si quieres que el DCTL se comporte como el vidrio, tiene que ocupar ese mismo lugar en la cadena."
       },
       {
         "type": "heading",
@@ -63,14 +63,14 @@
     "body": [
       {
         "type": "text",
-        "text": "La escala de densidad viene directo de los filtros físicos, donde el número indica cuánta partícula difusora tiene el vidrio. Mantener la misma nomenclatura no es nostalgia: si ya sabés qué hace un Black Pro Mist 1/4 en set, sabés qué esperar acá."
+        "text": "La escala de densidad viene directo de los filtros físicos, donde el número indica cuánta partícula difusora tiene el vidrio. Mantener la misma nomenclatura no es nostalgia: si ya sabes qué hace un Black Pro Mist 1/4 en set, sabes qué esperar acá."
       },
       {
         "type": "list",
         "items": [
           {
             "term": "1/8",
-            "text": "Apenas perceptible. Saca el filo digital sin que nadie pueda señalar qué cambió. Es el que usás cuando no querés que se note."
+            "text": "Apenas perceptible. Saca el filo digital sin que nadie pueda señalar qué cambió. Es el que usas cuando no quieres que se note."
           },
           {
             "term": "1/4",
@@ -96,7 +96,7 @@
       },
       {
         "type": "text",
-        "text": "En la práctica: si la entrega final es YouTube, Instagram o cualquier plataforma con recompresión agresiva, subí un escalón respecto de lo que se ve bien en tu master. Un 1/4 que en el timeline es perfecto puede llegar como un 1/8 apenas insinuado. Para cine o entregas con códec de alta tasa, dejalo donde te gustó."
+        "text": "En la práctica: si la entrega final es YouTube, Instagram o cualquier plataforma con recompresión agresiva, sube un escalón respecto de lo que se ve bien en tu master. Un 1/4 que en el timeline es perfecto puede llegar como un 1/8 apenas insinuado. Para cine o entregas con códec de alta tasa, dejalo donde te gustó."
       },
       {
         "type": "heading",
@@ -143,11 +143,11 @@
       },
       {
         "type": "text",
-        "text": "Si después vas a hacer un grade fuerte, usá CineBloom: al conservar contraste te deja margen para trabajar. Si querés el look horneado y decidido desde el principio, Black Mist. Si la escena tiene fuentes de luz visibles en cuadro y querés que se sientan cálidas y envolventes, Pro Mist."
+        "text": "Si después vas a hacer un grade fuerte, usa CineBloom: al conservar contraste te deja margen para trabajar. Si quieres el look horneado y decidido desde el principio, Black Mist. Si la escena tiene fuentes de luz visibles en cuadro y quieres que se sientan cálidas y envolventes, Pro Mist."
       },
       {
         "type": "text",
-        "text": "Un error común es sumar dos difusores buscando más efecto. No se acumulan de forma lineal: dos a 1/4 no dan un 1/2, dan una imagen sucia donde el detalle fino ya se perdió pero el bloom todavía no llegó. Si querés más, subí la densidad de uno solo."
+        "text": "Un error común es sumar dos difusores buscando más efecto. No se acumulan de forma lineal: dos a 1/4 no dan un 1/2, dan una imagen sucia donde el detalle fino ya se perdió pero el bloom todavía no llegó. Si quieres más, sube la densidad de uno solo."
       }
     ],
     "image": "img/blog/blog-difusores.jpg"
@@ -172,7 +172,7 @@
         "items": [
           {
             "term": "Umbral",
-            "text": "Define desde qué nivel de luminancia empieza a dispararse. Si lo bajás mucho, medios tonos que no son luces empiezan a sangrar y la imagen entera se enturbia."
+            "text": "Define desde qué nivel de luminancia empieza a dispararse. Si lo bajas mucho, medios tonos que no son luces empiezan a sangrar y la imagen entera se enturbia."
           },
           {
             "term": "Radio",
@@ -284,7 +284,7 @@
       },
       {
         "type": "text",
-        "text": "Podés crear una subcarpeta dentro de LUT para mantenerlos ordenados — Resolve la lee igual y te aparecen agrupados. En el ZIP del producto viene un PDF con estas mismas rutas por si tu instalación está en una ubicación distinta a la estándar."
+        "text": "Puedes crear una subcarpeta dentro de LUT para mantenerlos ordenados — Resolve la lee igual y te aparecen agrupados. En el ZIP del producto viene un PDF con estas mismas rutas por si tu instalación está en una ubicación distinta a la estándar."
       },
       {
         "type": "heading",
@@ -292,7 +292,7 @@
       },
       {
         "type": "text",
-        "text": "Reiniciá Resolve para que reconstruya la lista. En la página Color, creá un nodo serial, abrí el panel de efectos y buscá DCTL dentro de ResolveFX Color. Arrastralo al nodo y elegí el archivo desde el menú desplegable del efecto. Los parámetros del filtro aparecen ahí mismo."
+        "text": "Reinicia Resolve para que reconstruya la lista. En la página Color, creá un nodo serial, abrí el panel de efectos y buscá DCTL dentro de ResolveFX Color. Arrastralo al nodo y elige el archivo desde el menú desplegable del efecto. Los parámetros del filtro aparecen ahí mismo."
       },
       {
         "type": "heading",
@@ -300,11 +300,11 @@
       },
       {
         "type": "text",
-        "text": "Casi siempre es una de dos cosas: el archivo quedó en la carpeta equivocada, o Resolve no se reinició. Sin reiniciar, también podés hacer clic derecho en el panel de LUTs y elegir actualizar listas. Si sigue sin aparecer, revisá que el archivo tenga extensión .dctl real y no .dctl.txt — algunos navegadores y descompresores la agregan sin avisar."
+        "text": "Casi siempre es una de dos cosas: el archivo quedó en la carpeta equivocada, o Resolve no se reinició. Sin reiniciar, también puedes hacer clic derecho en el panel de LUTs y elegir actualizar listas. Si sigue sin aparecer, revisa que el archivo tenga extensión .dctl real y no .dctl.txt — algunos navegadores y descompresores la agregan sin avisar."
       },
       {
         "type": "text",
-        "text": "Si el nodo se pone negro o rojo al aplicarlo, no es un problema de instalación sino de compilación en tu GPU. Escribinos por WhatsApp con el modelo de tu placa y la versión de Resolve y lo revisamos."
+        "text": "Si el nodo se pone negro o rojo al aplicarlo, no es un problema de instalación sino de compilación en tu GPU. Escríbenos por WhatsApp con el modelo de tu placa y la versión de Resolve y lo revisamos."
       }
     ],
     "image": "img/blog/blog-instalacion.jpg"

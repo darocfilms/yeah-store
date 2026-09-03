@@ -1,0 +1,682 @@
+<title>Brandbook YEAH!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ------------------------------------------------------------------
+   Brandbook YEAH! — construido con la propia marca.
+   Un brandbook que no se ve como la marca no sirve de referencia, así
+   que esta página usa exactamente los tokens que documenta: son los
+   mismos valores de public/css/style.css, no una copia aproximada.
+   Por eso se compromete con un solo mundo visual (crema) y pinta todo
+   explícitamente, para que se sostenga sobre cualquier fondo anfitrión.
+   ------------------------------------------------------------------ */
+:root {
+  --crema: #EDEBE4;
+  --crema-2: #E5E2D9;
+  --tinta: #0B0B0A;
+  --lima: #D2FF3C;
+  --gris: #5F5C53;
+  --gris-2: #7A7669;
+  --gris-fuerte: #3D3B35;
+  --rojo: #B4442F;
+  --linea: rgba(11, 11, 10, .14);
+  --linea-fuerte: rgba(11, 11, 10, .3);
+
+  --display: Anton, 'Arial Narrow', Impact, sans-serif;
+  --body: Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --mono: 'IBM Plex Mono', Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--crema);
+  color: var(--tinta);
+  font-family: var(--body);
+  font-size: 15.5px;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--lima); color: var(--tinta); }
+a { color: var(--tinta); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--tinta); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* ---------- Portada ---------- */
+.portada {
+  border-bottom: 2px solid var(--tinta);
+  padding: 56px 30px 40px;
+}
+.portada-wrap { max-width: 1240px; margin: 0 auto; }
+.marca-fila { display: flex; align-items: baseline; gap: 9px; }
+.marca-word { font-family: var(--display); font-size: 34px; line-height: 1; letter-spacing: -.02em; }
+.marca-punto {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--lima); border: 1.5px solid var(--tinta);
+  display: inline-block; flex: none;
+}
+.portada h1 {
+  font-family: var(--display);
+  font-size: clamp(50px, 9vw, 118px);
+  line-height: .82;
+  letter-spacing: -.035em;
+  text-transform: uppercase;
+  margin: 30px 0 0;
+  text-wrap: balance;
+}
+.portada-pie {
+  display: flex; flex-wrap: wrap; gap: 10px 34px;
+  margin-top: 28px; padding-top: 18px;
+  border-top: 1px solid var(--linea);
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: .09em; text-transform: uppercase; color: var(--gris);
+}
+
+/* ---------- Banda ---------- */
+.banda {
+  background: var(--tinta); overflow: hidden; padding: 13px 0;
+  border-bottom: 2px solid var(--tinta);
+}
+.banda-pista { display: flex; width: max-content; animation: correr 26s linear infinite; }
+.banda-txt {
+  font-family: var(--display); font-size: 26px; letter-spacing: .01em;
+  color: var(--lima); text-transform: uppercase; white-space: nowrap; padding-right: 26px;
+}
+@keyframes correr { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ---------- Estructura ---------- */
+.libro {
+  max-width: 1240px; margin: 0 auto; padding: 0 30px 90px;
+  display: grid; grid-template-columns: 186px minmax(0, 1fr); gap: 54px;
+  align-items: start;
+}
+.indice { position: sticky; top: 28px; padding-top: 46px; }
+.indice-titulo {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--gris-2); margin-bottom: 14px;
+}
+.indice a {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 0; text-decoration: none;
+  font-size: 13.5px; color: var(--gris-fuerte);
+}
+.indice a::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%; flex: none;
+  border: 1.5px solid var(--linea-fuerte); background: transparent;
+}
+.indice a:hover { color: var(--tinta); }
+.indice a:hover::before { background: var(--lima); border-color: var(--tinta); }
+
+.cuerpo { padding-top: 46px; min-width: 0; }
+section { padding-bottom: 62px; scroll-margin-top: 24px; }
+section + section { border-top: 1px solid var(--linea); padding-top: 44px; }
+.eyebrow {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--gris-2); margin: 0 0 10px;
+}
+h2 {
+  font-family: var(--display); font-size: clamp(32px, 4.4vw, 54px);
+  line-height: .9; letter-spacing: -.03em; text-transform: uppercase;
+  margin: 0 0 18px; text-wrap: balance;
+}
+h3 {
+  font-size: 15px; font-weight: 700; letter-spacing: -.005em;
+  margin: 30px 0 10px;
+}
+p { margin: 0 0 14px; max-width: 66ch; text-wrap: pretty; }
+.guia { font-size: 17px; line-height: 1.55; color: var(--gris-fuerte); max-width: 60ch; }
+strong { font-weight: 700; }
+code {
+  font-family: var(--mono); font-size: .87em;
+  background: var(--crema-2); padding: 1.5px 5px; border-radius: 4px;
+}
+
+/* ---------- Color ---------- */
+.paleta { display: grid; grid-template-columns: repeat(auto-fit, minmax(272px, 1fr)); gap: 14px; margin: 22px 0 8px; }
+.tono { border: 1.5px solid var(--tinta); border-radius: 12px; overflow: hidden; }
+.tono-muestra { height: 92px; }
+.tono-datos { padding: 11px 13px 13px; background: var(--crema); border-top: 1.5px solid var(--tinta); }
+.tono-nombre { font-size: 13.5px; font-weight: 700; }
+.tono-rol { font-size: 12px; color: var(--gris); margin-top: 1px; }
+.tono-hex {
+  font-family: var(--mono); font-size: 11px; letter-spacing: .04em;
+  color: var(--gris-fuerte); margin-top: 8px;
+}
+
+.proporcion { margin: 26px 0 6px; }
+.barra-prop { display: flex; height: 46px; border: 1.5px solid var(--tinta); border-radius: 10px; overflow: hidden; }
+.barra-prop span { display: block; }
+.leyenda-prop {
+  display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: 9px;
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--gris);
+}
+.leyenda-prop i { font-style: normal; display: inline-flex; align-items: center; gap: 6px; }
+.punto-leyenda { width: 9px; height: 9px; border-radius: 2px; border: 1px solid var(--tinta); display: inline-block; }
+
+/* ---------- Sí / no ---------- */
+.dupla { display: grid; grid-template-columns: repeat(auto-fit, minmax(258px, 1fr)); gap: 16px; margin: 20px 0 4px; }
+.caso { border-radius: 12px; padding: 17px 19px 19px; background: var(--crema-2); }
+.caso.si { box-shadow: inset 3px 0 0 var(--tinta); }
+.caso.no { box-shadow: inset 3px 0 0 var(--rojo); }
+.caso-tag {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
+  text-transform: uppercase; margin-bottom: 8px; display: block;
+}
+.caso.si .caso-tag { color: var(--gris-fuerte); }
+.caso.no .caso-tag { color: var(--rojo); }
+.caso p { margin: 0; font-size: 14.5px; }
+.caso p + p { margin-top: 9px; color: var(--gris); font-size: 13px; }
+
+/* ---------- Tablas de especificación ---------- */
+.tabla-envoltura { overflow-x: auto; margin: 20px 0 6px; }
+table { border-collapse: collapse; width: 100%; min-width: 460px; }
+th, td { text-align: left; padding: 11px 14px 11px 0; border-bottom: 1px solid var(--linea); vertical-align: top; }
+th {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--gris-2); font-weight: 500;
+  border-bottom: 1.5px solid var(--tinta);
+}
+td { font-size: 14px; }
+td.num, td.mono { font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; color: var(--gris-fuerte); white-space: nowrap; }
+
+/* ---------- Muestras tipográficas ---------- */
+.tipo-fila { border-bottom: 1px solid var(--linea); padding: 20px 0; }
+.tipo-fila:last-child { border-bottom: none; }
+.tipo-meta {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--gris-2); margin-bottom: 9px;
+}
+.m-display { font-family: var(--display); font-size: clamp(40px, 7vw, 76px); line-height: .84; letter-spacing: -.035em; text-transform: uppercase; }
+.m-titulo { font-family: var(--display); font-size: clamp(28px, 4vw, 44px); line-height: .9; letter-spacing: -.03em; text-transform: uppercase; }
+.m-cuerpo { font-size: 15.5px; line-height: 1.62; max-width: 62ch; }
+.m-etiqueta { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; }
+
+/* ---------- Logo ---------- */
+.logo-lienzos { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin: 22px 0 6px; }
+.lienzo {
+  border: 1.5px solid var(--tinta); border-radius: 12px;
+  height: 132px; display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.lienzo-pie {
+  position: absolute; left: 12px; bottom: 9px;
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: .09em; text-transform: uppercase;
+}
+.logo-muestra { display: flex; align-items: baseline; gap: 7px; font-family: var(--display); font-size: 30px; line-height: 1; letter-spacing: -.02em; }
+.logo-muestra i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex: none; font-style: normal; }
+
+/* ---------- Formatos sociales ---------- */
+.formatos { display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-end; margin: 22px 0 6px; }
+.formato { text-align: left; }
+.formato-caja {
+  border: 1.5px solid var(--tinta); border-radius: 8px; background: var(--crema-2);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .08em; color: var(--gris);
+}
+.formato-nota {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--gris-2); margin-top: 8px;
+}
+
+/* ---------- Lista de reglas ---------- */
+ul.reglas { list-style: none; padding: 0; margin: 14px 0 4px; max-width: 66ch; }
+ul.reglas li { padding: 8px 0 8px 22px; position: relative; border-bottom: 1px solid var(--linea); font-size: 14.5px; }
+ul.reglas li:last-child { border-bottom: none; }
+ul.reglas li::before {
+  content: ''; position: absolute; left: 0; top: 15px;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--lima); border: 1.5px solid var(--tinta);
+}
+
+/* ---------- Bloque de archivo ---------- */
+.arbol {
+  font-family: var(--mono); font-size: 12.5px; line-height: 1.85;
+  background: var(--tinta); color: var(--crema);
+  border-radius: 12px; padding: 20px 22px; margin: 18px 0 6px;
+  overflow-x: auto; white-space: pre;
+}
+.arbol b { color: var(--lima); font-weight: 400; }
+
+/* ---------- Cierre ---------- */
+.cierre { border-top: 2px solid var(--tinta); padding: 34px 30px 60px; }
+.cierre-wrap { max-width: 1240px; margin: 0 auto; }
+.cierre p { font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--gris); margin: 0; }
+
+@media (max-width: 860px) {
+  .libro { grid-template-columns: 1fr; gap: 0; }
+  .indice {
+    position: static; padding: 26px 0 0;
+    display: flex; flex-wrap: wrap; gap: 4px 16px;
+    border-bottom: 1px solid var(--linea); padding-bottom: 18px;
+  }
+  .indice-titulo { width: 100%; margin-bottom: 6px; }
+  .cuerpo { padding-top: 32px; }
+}
+</style>
+
+<header class="portada">
+  <div class="portada-wrap">
+    <div class="marca-fila"><span class="marca-word">YEAH</span><span class="marca-punto"></span></div>
+    <h1>Cómo se ve,<br>cómo suena,<br>cómo se entrega</h1>
+    <div class="portada-pie">
+      <span>Brandbook · v1.0</span>
+      <span>Daroc Films · Santiago, CL</span>
+      <span>Plug-ins DCTL para DaVinci Resolve</span>
+      <span>Septiembre 2026</span>
+    </div>
+  </div>
+</header>
+
+<div class="banda" aria-hidden="true">
+  <div class="banda-pista">
+    <span class="banda-txt">SIN VUELTAS — SIN JERGA — SIN ESPERA — YEAH! — SIN VUELTAS — SIN JERGA — SIN ESPERA — YEAH! —</span>
+    <span class="banda-txt">SIN VUELTAS — SIN JERGA — SIN ESPERA — YEAH! — SIN VUELTAS — SIN JERGA — SIN ESPERA — YEAH! —</span>
+  </div>
+</div>
+
+<div class="libro">
+  <nav class="indice" aria-label="Índice del brandbook">
+    <div class="indice-titulo">Índice</div>
+    <a href="#marca">La marca</a>
+    <a href="#logo">Logotipo</a>
+    <a href="#color">Color</a>
+    <a href="#tipografia">Tipografía</a>
+    <a href="#voz">Voz</a>
+    <a href="#redes">Redes sociales</a>
+    <a href="#producto">Sistema de producto</a>
+    <a href="#aplicacion">Aplicación</a>
+  </nav>
+
+  <main class="cuerpo">
+
+    <section id="marca">
+      <p class="eyebrow">Fundamento</p>
+      <h2>La marca</h2>
+      <p class="guia">YEAH! le vende herramientas de color a gente que está atrasada con una entrega. Todo lo que hacemos se mide contra eso: cuánto tarda alguien en entender qué hace el producto, comprarlo y tenerlo funcionando dentro de Resolve.</p>
+
+      <h3>A quién le hablamos</h3>
+      <p>Coloristas y filmmakers de habla hispana que trabajan solos o en equipos chicos, que ya saben lo que es un nodo y no necesitan que les expliquen qué es un LUT. No son principiantes y no toleran que les hablen como si lo fueran.</p>
+
+      <h3>Los tres compromisos</h3>
+      <ul class="reglas">
+        <li><strong>Sin vueltas.</strong> Del clic a la descarga no hay formularios, ni cuentas obligatorias, ni esperas de aprobación manual. Si un paso se puede sacar, se saca.</li>
+        <li><strong>Sin jerga.</strong> Explicamos qué hace un filtro con física, no con adjetivos. «Difunde las altas luces según su densidad» dice algo; «look cinematográfico premium» no dice nada.</li>
+        <li><strong>Sin humo.</strong> Mostramos el efecto real, a densidad real, sobre material real. Nunca un antes/después maquillado con un grade distinto en cada lado.</li>
+      </ul>
+
+      <h3>Lo que la marca no es</h3>
+      <p>No es una marca de lujo ni una startup. No usa palabras como «revolucionario», «potenciar» o «desbloquear tu creatividad». No promete resultados; entrega herramientas y explica cómo funcionan.</p>
+    </section>
+
+    <section id="logo">
+      <p class="eyebrow">Identidad</p>
+      <h2>Logotipo</h2>
+      <p class="guia">La palabra <strong>YEAH</strong> en Anton, y a la derecha un punto lima con contorno de tinta. El punto es la parte que no se negocia: es lo que hace reconocible la marca a 16 píxeles, cuando la palabra ya no se lee.</p>
+
+      <div class="logo-lienzos">
+        <div class="lienzo" style="background: var(--crema);">
+          <span class="logo-muestra" style="color: var(--tinta);">YEAH<i style="background: var(--lima); border: 1.5px solid var(--tinta);"></i></span>
+          <span class="lienzo-pie" style="color: var(--gris);">Principal · sobre crema</span>
+        </div>
+        <div class="lienzo" style="background: var(--tinta);">
+          <span class="logo-muestra" style="color: var(--crema);">YEAH<i style="background: var(--lima); border: 1.5px solid var(--lima);"></i></span>
+          <span class="lienzo-pie" style="color: var(--gris-2);">Invertido · sobre tinta</span>
+        </div>
+        <div class="lienzo" style="background: var(--lima);">
+          <span class="logo-muestra" style="color: var(--tinta);">YEAH<i style="background: var(--tinta); border: 1.5px solid var(--tinta);"></i></span>
+          <span class="lienzo-pie" style="color: var(--gris-fuerte);">Sobre lima · punto en tinta</span>
+        </div>
+      </div>
+
+      <h3>Construcción</h3>
+      <div class="tabla-envoltura">
+        <table>
+          <thead><tr><th>Variable</th><th>Valor</th><th>Por qué</th></tr></thead>
+          <tbody>
+            <tr><td>Tipografía</td><td class="mono">Anton Regular</td><td>Única pesada disponible; el logo nunca se falsea en negrita.</td></tr>
+            <tr><td>Interletrado</td><td class="mono">−0.02em</td><td>Anton ya viene apretada; más que esto empasta las letras.</td></tr>
+            <tr><td>Diámetro del punto</td><td class="mono">33 % de la altura de X</td><td>A 27 px de logo son 9 px de punto.</td></tr>
+            <tr><td>Separación</td><td class="mono">Mitad del diámetro del punto</td><td>Se lee como parte de la palabra, no como viñeta suelta.</td></tr>
+            <tr><td>Contorno del punto</td><td class="mono">1.5 px</td><td>Sin contorno, el lima sobre crema desaparece.</td></tr>
+            <tr><td>Área de resguardo</td><td class="mono">Altura de la «Y» en los cuatro lados</td><td>Nada entra ahí: ni texto, ni bordes, ni otro logo.</td></tr>
+            <tr><td>Tamaño mínimo</td><td class="mono">20 px de alto en pantalla · 8 mm impreso</td><td>Bajo eso el punto se cierra y se ve como una mancha.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Lo que rompe el logo</h3>
+      <div class="dupla">
+        <div class="caso si">
+          <span class="caso-tag">Sí</span>
+          <p>El punto siempre lleva contorno cuando va sobre crema o sobre cualquier fondo claro.</p>
+          <p>Sobre tinta el contorno se vuelve lima: el punto queda sólido y limpio.</p>
+        </div>
+        <div class="caso no">
+          <span class="caso-tag">No</span>
+          <p>Estirar, inclinar, rotar, poner sombra, contornear la palabra o rellenarla con degradado.</p>
+          <p>Cambiar el punto por otro color, sacarlo, o ponerlo sobre una foto sin caja de fondo.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="color">
+      <p class="eyebrow">Sistema</p>
+      <h2>Color</h2>
+      <p class="guia">Un solo acento. El lima es la marca; el crema y la tinta son el escenario. Todo lo demás son grises con la misma temperatura cálida del crema, nunca grises neutros de sistema.</p>
+
+      <div class="paleta">
+        <div class="tono">
+          <div class="tono-muestra" style="background: #D2FF3C;"></div>
+          <div class="tono-datos">
+            <div class="tono-nombre">Lima</div>
+            <div class="tono-rol">Acento único</div>
+            <div class="tono-hex">#D2FF3C · 210 255 60</div>
+          </div>
+        </div>
+        <div class="tono">
+          <div class="tono-muestra" style="background: #EDEBE4;"></div>
+          <div class="tono-datos">
+            <div class="tono-nombre">Crema</div>
+            <div class="tono-rol">Fondo por defecto</div>
+            <div class="tono-hex">#EDEBE4 · 237 235 228</div>
+          </div>
+        </div>
+        <div class="tono">
+          <div class="tono-muestra" style="background: #0B0B0A;"></div>
+          <div class="tono-datos">
+            <div class="tono-nombre">Tinta</div>
+            <div class="tono-rol">Texto y contornos</div>
+            <div class="tono-hex">#0B0B0A · 11 11 10</div>
+          </div>
+        </div>
+        <div class="tono">
+          <div class="tono-muestra" style="background: #5F5C53;"></div>
+          <div class="tono-datos">
+            <div class="tono-nombre">Gris</div>
+            <div class="tono-rol">Texto secundario</div>
+            <div class="tono-hex">#5F5C53 · 95 92 83</div>
+          </div>
+        </div>
+        <div class="tono">
+          <div class="tono-muestra" style="background: #E5E2D9;"></div>
+          <div class="tono-datos">
+            <div class="tono-nombre">Crema 2</div>
+            <div class="tono-rol">Superficies internas</div>
+            <div class="tono-hex">#E5E2D9 · 229 226 217</div>
+          </div>
+        </div>
+        <div class="tono">
+          <div class="tono-muestra" style="background: #B4442F;"></div>
+          <div class="tono-datos">
+            <div class="tono-nombre">Rojo</div>
+            <div class="tono-rol">Solo errores y vencimientos</div>
+            <div class="tono-hex">#B4442F · 180 68 47</div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Proporción: la regla del 5 %</h3>
+      <p>El lima ocupa alrededor de un veinteavo de cualquier pieza. Cuando aparece más, deja de significar «acá se hace clic» y pasa a ser decoración.</p>
+      <div class="proporcion">
+        <div class="barra-prop">
+          <span style="background: #EDEBE4; flex: 70;"></span>
+          <span style="background: #0B0B0A; flex: 25;"></span>
+          <span style="background: #D2FF3C; flex: 5;"></span>
+        </div>
+        <div class="leyenda-prop">
+          <i><span class="punto-leyenda" style="background: #EDEBE4;"></span>Crema 70 %</i>
+          <i><span class="punto-leyenda" style="background: #0B0B0A;"></span>Tinta 25 %</i>
+          <i><span class="punto-leyenda" style="background: #D2FF3C;"></span>Lima 5 %</i>
+        </div>
+      </div>
+
+      <h3>Contraste</h3>
+      <p>El lima es un color de fondo, nunca de texto. Sobre crema alcanza 1.03:1 de contraste — es invisible. La única forma correcta de usarlo con texto es al revés: tinta sobre lima.</p>
+      <div class="tabla-envoltura">
+        <table>
+          <thead><tr><th>Combinación</th><th>Contraste</th><th>Uso</th></tr></thead>
+          <tbody>
+            <tr><td>Tinta sobre crema</td><td class="num">16.5:1</td><td>Texto general</td></tr>
+            <tr><td>Tinta sobre lima</td><td class="num">17.0:1</td><td>Botón primario, píldoras, resaltados</td></tr>
+            <tr><td>Lima sobre tinta</td><td class="num">17.0:1</td><td>Marquesina, acentos en modo oscuro</td></tr>
+            <tr><td>Gris sobre crema</td><td class="num">5.6:1</td><td>Texto secundario y notas al pie</td></tr>
+            <tr><td>Lima sobre crema</td><td class="num">1.03:1</td><td>Prohibido para texto de cualquier tamaño</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="tipografia">
+      <p class="eyebrow">Sistema</p>
+      <h2>Tipografía</h2>
+      <p class="guia">Tres familias con un trabajo cada una. Anton grita, Archivo explica, IBM Plex Mono etiqueta. Ninguna hace el trabajo de otra.</p>
+
+      <div class="tipo-fila">
+        <div class="tipo-meta">Anton Regular · display · −0.035em · interlínea 0.82</div>
+        <div class="m-display">Filtros de vidrio<br>dentro de Resolve</div>
+      </div>
+      <div class="tipo-fila">
+        <div class="tipo-meta">Anton Regular · títulos de sección · −0.03em · interlínea 0.9</div>
+        <div class="m-titulo">Preguntas frecuentes</div>
+      </div>
+      <div class="tipo-fila">
+        <div class="tipo-meta">Archivo 400/700 · cuerpo · 15.5 px · interlínea 1.62</div>
+        <div class="m-cuerpo">Los quince filtros vienen como archivos .dctl independientes, así que aplicas solo el que necesitas y lo combinas en el árbol de nodos como quieras. Todos tienen densidad continua, equivalente a la escala física 1/8, 1/4, 1/2, 1 y 2 de los filtros de vidrio.</div>
+      </div>
+      <div class="tipo-fila">
+        <div class="tipo-meta">IBM Plex Mono 400/500 · etiquetas y datos · +0.1em · versalitas</div>
+        <div class="m-etiqueta">SKU YEAH-DCTL-005 · DAVINCI RESOLVE 17+ · $49.990 CLP</div>
+      </div>
+
+      <h3>Reglas</h3>
+      <ul class="reglas">
+        <li>Anton va <strong>siempre en mayúsculas</strong> y nunca en párrafos: es una tipografía de titular, en bloques de texto se vuelve ilegible.</li>
+        <li>Los títulos llevan interlínea <strong>menor que 1</strong>. Es lo que le da la densidad de póster que define el sitio.</li>
+        <li>El mono nunca pasa de <strong>12 px</strong> ni se usa para leer: es para SKU, precios, fechas, rutas de archivo y etiquetas.</li>
+        <li>Los precios van siempre en mono con formato chileno: <code>$49.990 CLP</code>, punto de miles, sin decimales.</li>
+        <li>El cuerpo de texto no pasa de <strong>66 caracteres</strong> por línea.</li>
+      </ul>
+    </section>
+
+    <section id="voz">
+      <p class="eyebrow">Verbal</p>
+      <h2>Voz</h2>
+      <p class="guia">Español latino neutro, con tuteo. Cercano pero no confianzudo, técnico pero no acartonado. Le hablamos a un colega que está trabajando, no a un cliente en una reunión.</p>
+
+      <h3>Registro</h3>
+      <p>Tuteo neutro: <em>tú, tienes, puedes, aplica, descarga</em>. Nada de voseo rioplatense (<em>tenés, apretá, guardate</em>) ni de modismos chilenos (<em>al tiro, cachar, bacán</em>) ni de usted. La tienda vende a toda Latinoamérica desde Santiago: la voz tiene que funcionar igual en Ciudad de México, Bogotá y Buenos Aires.</p>
+
+      <h3>Cómo se escribe</h3>
+      <ul class="reglas">
+        <li><strong>Frases cortas.</strong> Si una oración necesita dos comas para respirar, son dos oraciones.</li>
+        <li><strong>Verbo primero.</strong> «Copia el archivo a la carpeta LUT», no «El archivo debe ser copiado a la carpeta LUT».</li>
+        <li><strong>Números concretos.</strong> «Instalación en dos minutos» le gana a «instalación rápida».</li>
+        <li><strong>El error dice qué pasó y qué hacer.</strong> Nunca «Ups, algo salió mal».</li>
+        <li><strong>Cero signos de exclamación</strong> fuera del nombre de la marca. El entusiasmo va en el contenido, no en la puntuación.</li>
+      </ul>
+
+      <h3>Ejemplos reales</h3>
+      <div class="dupla">
+        <div class="caso si">
+          <span class="caso-tag">Así</span>
+          <p>«Sin esperas, sin trámites. Aprieta el botón y empieza a colorear.»</p>
+          <p>Correo de entrega. Dos frases, verbo primero, promesa verificable.</p>
+        </div>
+        <div class="caso no">
+          <span class="caso-tag">Así no</span>
+          <p>«Sin esperas, sin trámites. Apretá el botón y empezá a colorear.»</p>
+          <p>Mismo mensaje en voseo: excluye a media región sin ganar nada.</p>
+        </div>
+        <div class="caso si">
+          <span class="caso-tag">Así</span>
+          <p>«Si el nodo se pone negro o rojo al aplicarlo, no es un problema de instalación sino de compilación en tu GPU.»</p>
+          <p>FAQ. Nombra el síntoma exacto y descarta la causa equivocada.</p>
+        </div>
+        <div class="caso no">
+          <span class="caso-tag">Así no</span>
+          <p>«¿Problemas con la instalación? ¡No te preocupes! Nuestro equipo está aquí para ayudarte.»</p>
+          <p>No dice nada, y promete un equipo que somos una persona.</p>
+        </div>
+      </div>
+
+      <h3>Vocabulario fijo</h3>
+      <div class="tabla-envoltura">
+        <table>
+          <thead><tr><th>Se dice</th><th>No se dice</th></tr></thead>
+          <tbody>
+            <tr><td>plug-in</td><td class="mono">plugin, complemento, extensión</td></tr>
+            <tr><td>DCTL</td><td class="mono">dctl, Dctl, «filtro digital»</td></tr>
+            <tr><td>árbol de nodos</td><td class="mono">flujo, pipeline de nodos</td></tr>
+            <tr><td>densidad</td><td class="mono">intensidad, fuerza, potencia</td></tr>
+            <tr><td>licencia comercial</td><td class="mono">licencia pro, licencia premium</td></tr>
+            <tr><td>descarga</td><td class="mono">acceso, entrega digital</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="redes">
+      <p class="eyebrow">Aplicación</p>
+      <h2>Redes sociales</h2>
+      <p class="guia">Instagram y TikTok son donde se vende un DCTL, porque el producto solo se entiende viéndolo aplicado. La regla que ordena todo: el video muestra el efecto, el diseño solo lo enmarca.</p>
+
+      <div class="formatos">
+        <div class="formato">
+          <div class="formato-caja" style="width: 108px; height: 192px;">1080×1920</div>
+          <div class="formato-nota">Reel · Story</div>
+        </div>
+        <div class="formato">
+          <div class="formato-caja" style="width: 130px; height: 162px;">1080×1350</div>
+          <div class="formato-nota">Feed · Carrusel</div>
+        </div>
+        <div class="formato">
+          <div class="formato-caja" style="width: 132px; height: 132px;">1080×1080</div>
+          <div class="formato-nota">Miniatura de producto</div>
+        </div>
+      </div>
+
+      <h3>Portada de reel</h3>
+      <ul class="reglas">
+        <li>Fotograma del material <strong>con el efecto aplicado</strong>, a sangre completa. Nunca una imagen de stock ni un render abstracto.</li>
+        <li>Titular en Anton mayúsculas sobre el tercio inferior, tinta sobre una banda crema o crema sobre una banda tinta — nunca texto suelto sobre la foto.</li>
+        <li>El logo va arriba a la izquierda, a la altura del área de resguardo. Siempre el mismo lugar, en todas las piezas.</li>
+        <li>Los primeros tres segundos muestran el antes/después. El nombre del producto aparece <strong>después</strong>, no antes.</li>
+      </ul>
+
+      <h3>Antes / después</h3>
+      <p>Es la pieza más importante de la marca y la más fácil de arruinar. Las condiciones son innegociables:</p>
+      <ul class="reglas">
+        <li><strong>Mismo grade en los dos lados.</strong> Lo único que cambia entre A y B es el DCTL. Si el «después» además tiene más contraste, es publicidad engañosa.</li>
+        <li><strong>Se declara la densidad</strong> en mono, en una esquina: <code>CINEBLOOM 1/4</code>. Sin eso, el ejemplo no es reproducible.</li>
+        <li><strong>Corte vertical al centro</strong> o barrido horizontal, sin efectos de transición. La línea divisoria va en tinta, 2 px.</li>
+        <li>Nada de flechas, brillos ni emojis señalando la diferencia. Si hay que señalarla, el ejemplo estaba mal elegido.</li>
+      </ul>
+
+      <h3>Carrusel</h3>
+      <p>Estructura fija de cinco láminas: <strong>1)</strong> el problema en una frase, <strong>2)</strong> el fotograma sin tratar, <strong>3)</strong> el fotograma tratado con la densidad declarada, <strong>4)</strong> el porqué físico en dos o tres líneas, <strong>5)</strong> el nombre del producto con el punto lima. La última lámina es la única que puede llevar precio.</p>
+    </section>
+
+    <section id="producto">
+      <p class="eyebrow">Sistema</p>
+      <h2>Sistema de producto</h2>
+      <p class="guia">Cada plug-in es una herramienta con especificación, no una experiencia. Se nombra, se numera y se empaca siempre igual, para que el catálogo se lea como una línea de productos y no como una colección de archivos sueltos.</p>
+
+      <h3>Nomenclatura</h3>
+      <div class="tabla-envoltura">
+        <table>
+          <thead><tr><th>Campo</th><th>Patrón</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr><td>Nombre comercial</td><td>Familia + LAB + sufijo, en caja mixta</td><td class="mono">Filter LAB FX</td></tr>
+            <tr><td>SKU</td><td><code>YEAH-DCTL-NNN</code>, correlativo, no se reutiliza</td><td class="mono">YEAH-DCTL-005</td></tr>
+            <tr><td>Archivo de entrega</td><td>minúsculas, guiones, sin versión en el nombre</td><td class="mono">filter-lab-fx.zip</td></tr>
+            <tr><td>Efecto individual</td><td>nombre del filtro físico que emula, tal cual</td><td class="mono">CineBloom · Black Mist · Halation</td></tr>
+            <tr><td>Densidad</td><td>escala física de filtros de vidrio</td><td class="mono">1/8 · 1/4 · 1/2 · 1 · 2</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Qué lleva el ZIP por dentro</h3>
+      <p>La estructura no cambia entre productos. Alguien que compró dos plug-ins encuentra las cosas en el mismo lugar las dos veces.</p>
+      <div class="arbol"><b>filter-lab-fx.zip</b>
+├── DCTL/
+│   ├── Filter LAB FX - CineBloom.dctl
+│   ├── Filter LAB FX - Black Mist.dctl
+│   └── … un archivo por efecto
+├── LEEME.pdf          <b>rutas de instalación por sistema</b>
+├── LICENCIA.txt       <b>uso comercial, sin reventa</b>
+└── EJEMPLOS/
+    └── antes-despues.jpg</div>
+
+      <h3>Rutas de instalación que van en el LEEME</h3>
+      <div class="tabla-envoltura">
+        <table>
+          <thead><tr><th>Sistema</th><th>Carpeta LUT de DaVinci Resolve</th></tr></thead>
+          <tbody>
+            <tr><td>macOS</td><td class="mono">/Library/Application Support/Blackmagic Design/DaVinci Resolve/LUT</td></tr>
+            <tr><td>Windows</td><td class="mono">C:\ProgramData\Blackmagic Design\DaVinci Resolve\Support\LUT</td></tr>
+            <tr><td>Linux</td><td class="mono">/home/resolve/LUT</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Imágenes del producto</h3>
+      <ul class="reglas">
+        <li>Miniatura de catálogo <strong>cuadrada 1:1</strong>, siempre. La galería del modal usa la misma proporción.</li>
+        <li>JPG progresivo, calidad 82, lado mayor 1600 px. Ninguna imagen del sitio pasa de <strong>400 KB</strong>.</li>
+        <li>Nombres en minúscula con guiones: <code>filter-lab-fx-halation.jpg</code>. El nombre del archivo describe el efecto que muestra.</li>
+        <li>Las capturas de Resolve se recortan al panel relevante. Nunca una captura de pantalla completa con la barra de menús.</li>
+      </ul>
+    </section>
+
+    <section id="aplicacion">
+      <p class="eyebrow">Control</p>
+      <h2>Aplicación</h2>
+      <p class="guia">La tienda y el correo de entrega ya están construidos con este sistema. Esta sección es la lista contra la que se revisa cualquier cambio futuro, para que no se desalineen con el tiempo.</p>
+
+      <h3>Tienda</h3>
+      <div class="tabla-envoltura">
+        <table>
+          <thead><tr><th>Elemento</th><th>Regla de marca</th></tr></thead>
+          <tbody>
+            <tr><td>Botón primario</td><td>Lima con contorno de tinta, radio completo, texto en versalitas con +0.09em</td></tr>
+            <tr><td>Botón secundario</td><td>Solo contorno de tinta sobre crema, mismo radio</td></tr>
+            <tr><td>Tarjetas</td><td>Contorno de 1.5 px, radio 12–18 px, sin sombra</td></tr>
+            <tr><td>Marquesina</td><td>Fondo tinta, texto lima en Anton, única zona donde el lima ocupa más del 5 %</td></tr>
+            <tr><td>Etiquetas y precios</td><td>Mono, máximo 12 px, versalitas</td></tr>
+            <tr><td>Panel de administración</td><td>Mismos tokens; el color de los gráficos es funcional y no cuenta como acento de marca</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Correo de entrega</h3>
+      <p>Los clientes de correo ignoran flexbox, grid y hojas externas, así que la marca ahí se sostiene con color, tipografía condensada y tono — no con maquetación. Todo va en tablas con estilos en línea.</p>
+      <ul class="reglas">
+        <li>Asunto en minúsculas, sin signos de exclamación: <em>«Listo — tu descarga de YEAH! está adentro»</em>.</li>
+        <li>Titular en dos líneas cortas, Anton mayúsculas: <em>«Listo. / Es tuyo.»</em></li>
+        <li>Un botón lima por producto. Nunca un enlace de texto suelto como acción principal.</li>
+        <li>La caducidad del enlace y el tope de descargas se dicen en el correo, en mono y en gris. No son letra chica.</li>
+        <li>Pie con la fórmula fija: <em>YEAH! · Plug-ins DCTL para filmmakers · Santiago, CL</em>.</li>
+      </ul>
+
+      <h3>Antes de publicar cualquier pieza</h3>
+      <ul class="reglas">
+        <li>¿El lima ocupa cerca del 5 % y marca algo accionable?</li>
+        <li>¿Hay algún texto en lima sobre fondo claro? Es el error más frecuente y el más caro.</li>
+        <li>¿El titular está en Anton mayúsculas con interlínea menor que 1?</li>
+        <li>¿La voz está en tuteo neutro, sin voseo ni modismos locales?</li>
+        <li>¿Cada afirmación sobre el producto es verificable con un fotograma?</li>
+        <li>¿El punto lima del logo está presente, con contorno y en su lugar de siempre?</li>
+      </ul>
+    </section>
+
+  </main>
+</div>
+
+<footer class="cierre">
+  <div class="cierre-wrap">
+    <p>Brandbook YEAH! v1.0 · Daroc Films · Los valores de color y tipografía de este documento son los mismos de public/css/style.css</p>
+  </div>
+</footer>

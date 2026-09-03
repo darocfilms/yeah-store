@@ -50,7 +50,7 @@
       },
       {
         "type": "text",
-        "text": "Los quince filtros vienen como archivos .dctl independientes, así que aplicás solo el que necesitás y lo combinás en el árbol de nodos como quieras. Todos tienen densidad continua, equivalente a la escala física 1/8, 1/4, 1/2, 1 y 2 de los filtros de vidrio."
+        "text": "Los quince filtros vienen como archivos .dctl independientes, así que aplicas solo el que necesitas y lo combinas en el árbol de nodos como quieras. Todos tienen densidad continua, equivalente a la escala física 1/8, 1/4, 1/2, 1 y 2 de los filtros de vidrio."
       },
       {
         "type": "image",
@@ -95,7 +95,7 @@
           },
           {
             "term": "Soft FX",
-            "text": "Suavizador de detalle fino: ataca la textura de la piel sin tocar prácticamente las altas luces ni el contraste general. Es el filtro de belleza puro, para cuando querés suavizar sin agregar brillo."
+            "text": "Suavizador de detalle fino: ataca la textura de la piel sin tocar prácticamente las altas luces ni el contraste general. Es el filtro de belleza puro, para cuando quieres suavizar sin agregar brillo."
           }
         ]
       },

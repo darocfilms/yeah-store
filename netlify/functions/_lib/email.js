@@ -101,12 +101,12 @@ async function sendDeliveryEmail({ to, lines, total, orderRef, token }) {
         text-transform:uppercase;font-weight:800;color:${TINTA};">Listo.<br>Es tuyo.</h1>
 
       <p style="margin:0 0 28px;font-family:${SANS};font-size:15.5px;line-height:1.6;color:${TINTA};">
-        Sin esperas, sin trámites. Apretá el botón y empezá a colorear.</p>
+        Sin esperas, sin trámites. Aprieta el botón y empieza a colorear.</p>
 
       ${botones}
 
       <p style="margin:14px 0 30px;font-family:${MONO};font-size:10.5px;line-height:1.6;color:${GRIS};">
-        Tus enlaces son personales y viven ${DIAS_VALIDEZ} días. Guardate el archivo apenas lo bajes.</p>
+        Tus enlaces son personales y viven ${DIAS_VALIDEZ} días. Guarda el archivo apenas lo bajes.</p>
 
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
         style="border-top:2px solid ${TINTA};margin-bottom:6px;">
@@ -128,9 +128,9 @@ async function sendDeliveryEmail({ to, lines, total, orderRef, token }) {
         Lo único que no se puede: revenderlo o meterlo en packs de terceros.</p>
 
       <p style="margin:0 0 22px;font-family:${SANS};font-size:13.5px;line-height:1.65;color:${GRIS};">
-        ¿Se te complicó la instalación? Escribinos por
+        ¿Se te complicó la instalación? Escríbenos por
         <a href="https://wa.me/56943801816" style="color:${TINTA};font-weight:700;">WhatsApp</a>
-        y lo vemos al toque — casi siempre es una ruta de carpeta.</p>
+        y lo vemos enseguida — casi siempre es una ruta de carpeta.</p>
     </td></tr>
 
     <tr><td style="border-top:1px solid rgba(11,11,10,.16);padding:18px 4px 0;">

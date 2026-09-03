@@ -217,7 +217,7 @@
     opts = opts || {};
     els.doneCheck.textContent = opts.icon || '✓';
     els.doneTitle.innerHTML = opts.title || 'Pago<br>confirmado';
-    els.doneMsg.textContent = opts.message || 'Te enviamos el enlace de descarga y la licencia por correo. Cualquier problema de instalación, escribinos por WhatsApp.';
+    els.doneMsg.textContent = opts.message || 'Te enviamos el enlace de descarga y la licencia por correo. Cualquier problema de instalación, escríbenos por WhatsApp.';
     setStep('done');
   }
   function finishOrder() {
