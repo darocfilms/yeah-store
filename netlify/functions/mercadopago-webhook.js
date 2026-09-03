@@ -1,6 +1,8 @@
 const { getProduct, computeTotal } = require('./_lib/products');
 const { sendDeliveryEmail, sendStoreNotification } = require('./_lib/email');
 const { crearEntrega } = require('./_lib/entrega');
+const { guardarPedido } = require('./_lib/pedidos');
+const { registrarUso } = require('./_lib/cupones');
 
 exports.handler = async (event) => {
   const accessToken = process.env.MP_ACCESS_TOKEN;
@@ -38,6 +40,11 @@ exports.handler = async (event) => {
     const lines = items.map((it) => ({ product: getProduct(it.id), qty: it.qty })).filter((l) => l.product);
     const total = computeTotal(lines);
     const customerEmail = payment.payer?.email;
+
+    const codigoCupon = payment.metadata?.cupon || null;
+    const descuento = Number(payment.metadata?.descuento || 0);
+    await guardarPedido({ orderRef: String(payment.id), email: customerEmail, lines, total: total - descuento, provider: 'mercadopago', cupon: codigoCupon, descuento });
+    if (codigoCupon) await registrarUso(codigoCupon);
 
     if (customerEmail && lines.length) {
       const token = await crearEntrega({ email: customerEmail, lines, orderRef: String(payment.id), provider: 'mercadopago' });

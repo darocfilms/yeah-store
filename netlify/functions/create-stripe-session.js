@@ -1,5 +1,6 @@
 const Stripe = require('stripe');
-const { priceLineItems } = require('./_lib/products');
+const { priceLineItems, computeTotal } = require('./_lib/products');
+const { evaluarCupon } = require('./_lib/cupones');
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method not allowed' };
@@ -19,6 +20,14 @@ exports.handler = async (event) => {
 
     const siteUrl = process.env.SITE_URL || `https://${event.headers.host}`;
 
+    // El descuento se recalcula acá: del cliente solo llega el código.
+    // Se aplica prorrateado sobre el precio unitario, igual que en MercadoPago
+    // y PayPal — un solo criterio para las tres pasarelas, sin crear objetos
+    // de cupón en Stripe por cada compra.
+    const subtotal = computeTotal(lines);
+    const cupon = await evaluarCupon(body.cupon, subtotal);
+    const factor = cupon.valido ? (subtotal - cupon.descuento) / subtotal : 1;
+
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       payment_method_types: ['card'],
@@ -29,12 +38,14 @@ exports.handler = async (event) => {
           // CLP es una moneda "zero-decimal" en Stripe: unit_amount se manda en
           // pesos enteros, NO en centésimos. Multiplicar por 100 aquí cobraría
           // 100 veces de más.
-          unit_amount: Math.round(product.price),
+          unit_amount: Math.max(1, Math.round(product.price * factor)),
           product_data: { name: product.name, description: product.sku }
         }
       })),
       metadata: {
-        order_items: JSON.stringify(lines.map(({ product, qty }) => ({ id: product.id, qty })))
+        order_items: JSON.stringify(lines.map(({ product, qty }) => ({ id: product.id, qty }))),
+        cupon: cupon.valido ? cupon.cupon.codigo : '',
+        descuento: cupon.valido ? String(cupon.descuento) : '0'
       },
       success_url: `${siteUrl}/gracias.html?provider=stripe&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/#tienda`

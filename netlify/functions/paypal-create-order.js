@@ -1,5 +1,6 @@
 const { PAYPAL_API, getAccessToken } = require('./_lib/paypal');
 const { priceLineItems, computeTotal, clpToUsd } = require('./_lib/products');
+const { evaluarCupon } = require('./_lib/cupones');
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method not allowed' };
@@ -11,8 +12,11 @@ exports.handler = async (event) => {
       return { statusCode: 400, body: JSON.stringify({ error: 'Carrito vacío o inválido.' }) };
     }
 
+    const subtotal = computeTotal(lines);
+    const cupon = await evaluarCupon(body.cupon, subtotal);
+    const totalClp = cupon.valido ? subtotal - cupon.descuento : subtotal;
     // PayPal no acepta CLP: cobramos el equivalente en USD (ver clpToUsd).
-    const totalUsd = clpToUsd(computeTotal(lines));
+    const totalUsd = clpToUsd(totalClp);
     const token = await getAccessToken();
 
     const res = await fetch(`${PAYPAL_API}/v2/checkout/orders`, {
@@ -23,7 +27,11 @@ exports.handler = async (event) => {
         purchase_units: [
           {
             amount: { currency_code: 'USD', value: totalUsd },
-            custom_id: JSON.stringify(lines.map(({ product, qty }) => ({ id: product.id, qty })))
+            custom_id: JSON.stringify({
+              i: lines.map(({ product, qty }) => ({ id: product.id, qty })),
+              c: cupon.valido ? cupon.cupon.codigo : '',
+              d: cupon.valido ? cupon.descuento : 0
+            })
           }
         ]
       })

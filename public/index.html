@@ -27,6 +27,7 @@
     </nav>
     <div class="spacer"></div>
     <span class="header-tag">DCTL / DAVINCI RESOLVE</span>
+    <button type="button" class="cuenta-btn" id="cuentaBtn">Ingresar</button>
     <button type="button" class="cart-btn" id="openCartBtn">
       <span class="cart-icon"></span>
       <span>Carrito (<span id="cartCount">0</span>)</span>
@@ -209,6 +210,7 @@
 
   <div class="drawer-step" id="stepPay" hidden>
     <div class="drawer-scroll">
+      <div class="cupon-box" id="cuponBox"></div>
       <p class="drawer-label">MÉTODO DE PAGO</p>
       <div class="pay-methods" id="payMethods"></div>
       <div id="payMethodPanel"></div>
@@ -303,9 +305,22 @@
   </article>
 </div>
 
+<div class="overlay-scrim" id="cuentaScrim" hidden></div>
+<div class="cuenta-modal" id="cuentaModal" aria-hidden="true">
+  <div class="cuenta-inner">
+    <div class="modal-head">
+      <span class="modal-sku" id="cuentaKicker">CUENTA</span>
+      <div class="spacer"></div>
+      <button type="button" class="round-btn" id="cerrarCuenta" aria-label="Cerrar">×</button>
+    </div>
+    <div class="cuenta-body" id="cuentaBody"></div>
+  </div>
+</div>
+
 <div class="toast" id="toast" hidden>Agregado al carrito</div>
 
 <script src="js/app.js" defer></script>
 <script src="js/payments.js" defer></script>
+<script src="js/cuenta.js" defer></script>
 </body>
 </html>

@@ -2,6 +2,8 @@ const Stripe = require('stripe');
 const { getProduct, computeTotal } = require('./_lib/products');
 const { sendDeliveryEmail, sendStoreNotification } = require('./_lib/email');
 const { crearEntrega } = require('./_lib/entrega');
+const { guardarPedido } = require('./_lib/pedidos');
+const { registrarUso } = require('./_lib/cupones');
 
 exports.handler = async (event) => {
   const secretKey = process.env.STRIPE_SECRET_KEY;
@@ -29,6 +31,11 @@ exports.handler = async (event) => {
       const lines = items.map((it) => ({ product: getProduct(it.id), qty: it.qty })).filter((l) => l.product);
       const total = computeTotal(lines);
       const customerEmail = session.customer_details?.email || session.customer_email;
+
+      const codigoCupon = session.metadata?.cupon || null;
+      const descuento = Number(session.metadata?.descuento || 0);
+      await guardarPedido({ orderRef: session.id, email: customerEmail, lines, total: total - descuento, provider: 'stripe', cupon: codigoCupon, descuento });
+      if (codigoCupon) await registrarUso(codigoCupon);
 
       if (customerEmail && lines.length) {
         const token = await crearEntrega({ email: customerEmail, lines, orderRef: session.id, provider: 'stripe' });

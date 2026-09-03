@@ -8,13 +8,14 @@
 const { priceLineItems, computeTotal } = require('./_lib/products');
 const { sendDeliveryEmail } = require('./_lib/email');
 const { crearEntrega } = require('./_lib/entrega');
+const { guardarPedido } = require('./_lib/pedidos');
+const { requiereAdminOToken } = require('./_lib/auth-admin');
 
 exports.handler = async (event) => {
-  const adminToken = process.env.ADMIN_TOKEN;
-  if (!adminToken) return { statusCode: 500, body: JSON.stringify({ error: 'ADMIN_TOKEN no configurado.' }) };
-  if ((event.headers['x-admin-token'] || '') !== adminToken) {
-    return { statusCode: 401, body: JSON.stringify({ error: 'No autorizado.' }) };
-  }
+  // Dos vías de acceso: sesión de admin (el panel) o ADMIN_TOKEN (scripts y
+  // curl). Cualquiera de las dos, nunca ninguna.
+  const guard = await requiereAdminOToken(event);
+  if (guard.error) return guard.error;
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method not allowed' };
 
   try {
@@ -27,8 +28,10 @@ exports.handler = async (event) => {
     if (!lines.length) return { statusCode: 400, body: JSON.stringify({ error: 'items inválido.' }) };
 
     const orderRef = String(body.orderRef || '').slice(0, 60) || null;
+    const total = computeTotal(lines);
+    await guardarPedido({ orderRef, email, lines, total, provider: 'transferencia' });
     const token = await crearEntrega({ email, lines, orderRef, provider: 'transferencia' });
-    await sendDeliveryEmail({ to: email, lines, total: computeTotal(lines), orderRef, token });
+    await sendDeliveryEmail({ to: email, lines, total, orderRef, token });
 
     return { statusCode: 200, body: JSON.stringify({ ok: true, email, orderRef, archivos: lines.map((l) => l.product.downloadFile) }) };
   } catch (err) {

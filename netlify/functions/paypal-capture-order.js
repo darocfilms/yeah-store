@@ -2,6 +2,8 @@ const { PAYPAL_API, getAccessToken } = require('./_lib/paypal');
 const { getProduct, computeTotal } = require('./_lib/products');
 const { sendDeliveryEmail, sendStoreNotification } = require('./_lib/email');
 const { crearEntrega } = require('./_lib/entrega');
+const { guardarPedido } = require('./_lib/pedidos');
+const { registrarUso } = require('./_lib/cupones');
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method not allowed' };
@@ -23,12 +25,21 @@ exports.handler = async (event) => {
     }
 
     const purchaseUnit = capture.purchase_units?.[0];
-    let orderItems = [];
-    try { orderItems = JSON.parse(purchaseUnit?.custom_id || '[]'); } catch (e) { orderItems = []; }
+    let orderItems = [], codigoCupon = '', descuento = 0;
+    try {
+      const meta = JSON.parse(purchaseUnit?.custom_id || '{}');
+      // Compras anteriores guardaban un array plano en custom_id.
+      orderItems = Array.isArray(meta) ? meta : (meta.i || []);
+      codigoCupon = Array.isArray(meta) ? '' : (meta.c || '');
+      descuento = Array.isArray(meta) ? 0 : (meta.d || 0);
+    } catch (e) { orderItems = []; }
 
     const lines = orderItems.map((it) => ({ product: getProduct(it.id), qty: it.qty })).filter((l) => l.product);
     const total = computeTotal(lines);
     const customerEmail = capture.payer?.email_address;
+
+    await guardarPedido({ orderRef: orderID, email: customerEmail, lines, total: total - descuento, provider: 'paypal', cupon: codigoCupon || null, descuento });
+    if (codigoCupon) await registrarUso(codigoCupon);
 
     if (customerEmail && lines.length) {
       const token = await crearEntrega({ email: customerEmail, lines, orderRef: orderID, provider: 'paypal' });

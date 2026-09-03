@@ -24,6 +24,7 @@
   var paypalSdkPromise = null;
   var paypalButtonsInstance = null;
   var orderRef = null;
+  var cuponAplicado = null;   // { codigo, descuento, total }
 
   function Y() { return window.YEAH; }
 
@@ -35,6 +36,74 @@
 
   function cartItemsPayload() {
     return Y().state.cart.map(function (c) { return { id: c.id, qty: c.qty }; });
+  }
+
+  // Solo se manda el código. El descuento lo calcula el servidor en cada
+  // pasarela — lo que se muestra acá es informativo.
+  function cuponPayload() {
+    return cuponAplicado ? cuponAplicado.codigo : null;
+  }
+
+  function renderCupon() {
+    var host = $('cuponBox');
+    if (!host) return;
+    if (cuponAplicado) {
+      host.innerHTML =
+        '<div class="cupon-ok">' +
+          '<div><span class="cupon-codigo">' + cuponAplicado.codigo + '</span>' +
+          '<span class="cupon-detalle">−' + Y().fmt(cuponAplicado.descuento) + '</span></div>' +
+          '<button type="button" id="quitarCupon" class="cupon-quitar">QUITAR</button>' +
+        '</div>';
+      $('quitarCupon').addEventListener('click', function () {
+        cuponAplicado = null; renderCupon(); actualizarTotal();
+      });
+    } else {
+      host.innerHTML =
+        '<label class="cupon-label" for="cuponInput">¿Tienes un cupón?</label>' +
+        '<div class="cupon-row">' +
+          '<input type="text" id="cuponInput" placeholder="CÓDIGO" autocomplete="off" spellcheck="false">' +
+          '<button type="button" id="aplicarCupon">Aplicar</button>' +
+        '</div><p class="cupon-msg" id="cuponMsg"></p>';
+      $('aplicarCupon').addEventListener('click', aplicarCupon);
+      $('cuponInput').addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { e.preventDefault(); aplicarCupon(); }
+      });
+    }
+  }
+
+  function aplicarCupon() {
+    var input = $('cuponInput'), msg = $('cuponMsg'), btn = $('aplicarCupon');
+    var codigo = (input.value || '').trim();
+    if (!codigo) { msg.textContent = 'Ingresa un código.'; msg.className = 'cupon-msg error'; return; }
+    btn.disabled = true; btn.textContent = '…';
+    msg.textContent = ''; msg.className = 'cupon-msg';
+
+    fetch('/.netlify/functions/cupon-validar', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: cartItemsPayload(), cupon: codigo })
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data && data.valido) {
+          cuponAplicado = { codigo: data.codigo, descuento: data.descuento, total: data.total };
+          renderCupon(); actualizarTotal();
+        } else {
+          btn.disabled = false; btn.textContent = 'Aplicar';
+          msg.textContent = (data && data.mensaje) || 'Cupón no válido.';
+          msg.className = 'cupon-msg error';
+        }
+      })
+      .catch(function () {
+        btn.disabled = false; btn.textContent = 'Aplicar';
+        msg.textContent = 'No se pudo validar el cupón.';
+        msg.className = 'cupon-msg error';
+      });
+  }
+
+  function actualizarTotal() {
+    var el = $('payTotal');
+    if (!el) return;
+    el.textContent = Y().fmt(cuponAplicado ? cuponAplicado.total : Y().cartTotal());
   }
 
   function setStatus(msg, isError) {
@@ -112,7 +181,7 @@
     fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: cartItemsPayload() })
+      body: JSON.stringify({ items: cartItemsPayload(), cupon: cuponPayload() })
     })
       .then(function (r) {
         if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -159,7 +228,7 @@
             return fetch('/.netlify/functions/paypal-create-order', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ items: cartItemsPayload() })
+              body: JSON.stringify({ items: cartItemsPayload(), cupon: cuponPayload() })
             })
               .then(function (r) { return r.json(); })
               .then(function (data) {
@@ -265,6 +334,8 @@
     onEnterPay: function () {
       setBusy(false);
       setStatus('');
+      renderCupon();
+      actualizarTotal();
       renderPanel();
     }
   };

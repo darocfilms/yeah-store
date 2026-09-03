@@ -10,22 +10,15 @@
 //   curl -H "x-admin-token: $ADMIN_TOKEN" \
 //     "https://TU-SITIO.netlify.app/.netlify/functions/list-mp-payments?status=approved&limit=20"
 
+const { requiereAdminOToken } = require('./_lib/auth-admin');
+
 const ALLOWED_PARAMS = ['sort', 'criteria', 'external_reference', 'status', 'begin_date', 'end_date', 'offset', 'limit'];
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'GET') return { statusCode: 405, body: 'Method not allowed' };
 
-  const adminToken = process.env.ADMIN_TOKEN;
-  if (!adminToken) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'ADMIN_TOKEN no está configurado. Este endpoint expone datos de pago y no puede quedar abierto — ver DEPLOY.md.' })
-    };
-  }
-  const provided = event.headers['x-admin-token'] || event.headers['X-Admin-Token'];
-  if (provided !== adminToken) {
-    return { statusCode: 401, body: JSON.stringify({ error: 'No autorizado.' }) };
-  }
+  const guard = await requiereAdminOToken(event);
+  if (guard.error) return guard.error;
 
   const accessToken = process.env.MP_ACCESS_TOKEN;
   if (!accessToken) {

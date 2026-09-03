@@ -5,13 +5,13 @@
 //        -H "x-admin-token: $ADMIN_TOKEN" \
 //        --data-binary @filter-lab-fx.zip
 const { storeProductos } = require('./_lib/entrega');
+const { requiereAdminOToken } = require('./_lib/auth-admin');
 
 exports.handler = async (event) => {
-  const adminToken = process.env.ADMIN_TOKEN;
-  if (!adminToken) return { statusCode: 500, body: JSON.stringify({ error: 'ADMIN_TOKEN no configurado.' }) };
-  if ((event.headers['x-admin-token'] || '') !== adminToken) {
-    return { statusCode: 401, body: JSON.stringify({ error: 'No autorizado.' }) };
-  }
+  // Dos vías de acceso: sesión de admin (el panel) o ADMIN_TOKEN (scripts y
+  // curl). Cualquiera de las dos, nunca ninguna.
+  const guard = await requiereAdminOToken(event);
+  if (guard.error) return guard.error;
 
   const archivo = (event.queryStringParameters || {}).f;
   if (!archivo || !/^[a-zA-Z0-9._-]+$/.test(archivo)) {

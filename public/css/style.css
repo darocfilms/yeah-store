@@ -510,3 +510,79 @@ p { text-wrap: pretty; }
   .post-inner { max-height: 100vh; height: 100vh; border-radius: 0; border-left: none; border-right: none; }
   .post-body { padding: 26px 18px 36px; }
 }
+
+/* ---------- Cupón en el checkout ---------- */
+.cupon-box { margin-bottom: 22px; }
+.cupon-label { display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; color: var(--muted-3); margin-bottom: 8px; }
+.cupon-row { display: flex; gap: 8px; }
+.cupon-row input {
+  flex: 1; min-width: 0; border: 1.3px solid rgba(11, 11, 10, .3); border-radius: 999px;
+  padding: 11px 16px; font-size: 12px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; background: var(--bg); color: var(--ink);
+}
+.cupon-row input:focus { border-color: var(--ink); }
+.cupon-row button {
+  border: 1.3px solid var(--ink); border-radius: 999px; padding: 11px 20px;
+  font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  transition: background .25s, color .25s; flex: none;
+}
+.cupon-row button:hover { background: var(--ink); color: var(--bg); }
+.cupon-row button:disabled { opacity: .5; cursor: default; }
+.cupon-msg { font-family: var(--font-mono); font-size: 10.5px; margin: 8px 0 0; color: var(--muted-3); }
+.cupon-msg.error { color: var(--red); }
+.cupon-ok {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--lime); border: 1.4px solid var(--ink); border-radius: 12px; padding: 13px 16px;
+}
+.cupon-ok > div { flex: 1; display: flex; align-items: baseline; gap: 10px; }
+.cupon-codigo { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.cupon-detalle { font-family: var(--font-mono); font-size: 12px; }
+.cupon-quitar { font-family: var(--font-mono); font-size: 10px; letter-spacing: .06em; text-decoration: underline; }
+
+/* ---------- Cuenta ---------- */
+.cuenta-btn {
+  border: 1.4px solid var(--ink); border-radius: 999px; padding: 8px 16px;
+  font-size: 11px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+  background: var(--bg); transition: background .25s, color .25s; white-space: nowrap;
+}
+.cuenta-btn:hover { background: var(--ink); color: var(--bg); }
+.cuenta-btn.activo { background: var(--lime); }
+.cuenta-modal { position: fixed; inset: 0; z-index: 96; display: none; place-items: center; padding: 16px; }
+.cuenta-modal.open { display: grid; }
+.cuenta-inner {
+  position: relative; width: min(440px, 100%); max-height: calc(100vh - 32px); overflow-y: auto;
+  background: var(--bg); border: 1.6px solid var(--ink); border-radius: 20px;
+  animation: popIn .45s cubic-bezier(.16, 1, .3, 1) both; box-shadow: 0 40px 90px rgba(11, 11, 10, .32);
+}
+.cuenta-body { padding: 26px 30px 34px; }
+.cuenta-body h2 {
+  font-family: var(--font-display); font-size: 34px; line-height: .95; letter-spacing: -.03em;
+  margin: 0 0 14px; text-transform: uppercase;
+}
+.cuenta-intro { font-size: 13.5px; line-height: 1.55; color: var(--muted-1); margin: 0 0 22px; }
+.cuenta-dato { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted-1); margin: 0 0 20px; }
+.campo { display: block; margin-bottom: 14px; }
+.campo span {
+  display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--muted-3); margin-bottom: 6px;
+}
+.campo input {
+  width: 100%; border: 1.3px solid rgba(11, 11, 10, .3); border-radius: 10px;
+  padding: 12px 14px; font-size: 14px; background: var(--bg); color: var(--ink);
+}
+.campo input:focus { border-color: var(--ink); }
+.cuenta-msg { font-family: var(--font-mono); font-size: 10.5px; margin: 0 0 12px; min-height: 14px; color: var(--muted-3); }
+.cuenta-msg.error { color: var(--red); }
+.cuenta-alt { font-size: 13px; color: var(--muted-1); margin: 18px 0 0; text-align: center; }
+.cuenta-alt button { font-size: 13px; font-weight: 700; text-decoration: underline; }
+.cuenta-admin-link { display: block; text-align: center; margin-bottom: 18px; }
+.cuenta-seccion {
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--muted-3); margin: 24px 0 10px; padding-top: 18px; border-top: 1.3px solid rgba(11, 11, 10, .18);
+}
+.cuenta-vacio, .cuenta-cargando { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted-3); margin: 22px 0; }
+.compra { display: flex; align-items: baseline; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(11, 11, 10, .12); }
+.compra-fecha { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted-3); flex: none; }
+.compra-items { flex: 1; font-size: 13px; }
+.compra-total { font-family: var(--font-mono); font-size: 12px; }
+.cuenta-body .btn-outline { margin-top: 22px; }

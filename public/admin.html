@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel — YEAH!</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body data-palette="#2266C4,#C25A12,#00855C,#A02A96">
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="index.html" class="logo"><span class="logo-word">YEAH</span><span class="logo-dot"></span></a>
+    <span class="header-tag">PANEL DE ADMINISTRACIÓN</span>
+    <div class="spacer"></div>
+    <span class="header-tag" id="adminEmail"></span>
+    <button type="button" class="cuenta-btn" id="btnSalirAdmin">Salir</button>
+  </div>
+</header>
+
+<main class="wrap admin-main">
+  <div id="adminEstado" class="admin-estado">Verificando acceso…</div>
+
+  <div id="adminPanel" hidden>
+    <nav class="admin-tabs" id="adminTabs">
+      <button type="button" class="admin-tab active" data-tab="resumen">Resumen</button>
+      <button type="button" class="admin-tab" data-tab="pedidos">Pedidos</button>
+      <button type="button" class="admin-tab" data-tab="usuarios">Usuarios</button>
+      <button type="button" class="admin-tab" data-tab="cupones">Cupones</button>
+      <button type="button" class="admin-tab" data-tab="productos">Productos</button>
+    </nav>
+
+    <section class="admin-panel" id="tab-resumen"></section>
+    <section class="admin-panel" id="tab-pedidos" hidden></section>
+    <section class="admin-panel" id="tab-usuarios" hidden></section>
+    <section class="admin-panel" id="tab-cupones" hidden></section>
+    <section class="admin-panel" id="tab-productos" hidden></section>
+  </div>
+</main>
+
+<script src="js/admin.js" defer></script>
+</body>
+</html>

@@ -1,4 +1,5 @@
-const { priceLineItems } = require('./_lib/products');
+const { priceLineItems, computeTotal } = require('./_lib/products');
+const { evaluarCupon } = require('./_lib/cupones');
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method not allowed' };
@@ -17,15 +18,23 @@ exports.handler = async (event) => {
 
     const siteUrl = process.env.SITE_URL || `https://${event.headers.host}`;
 
+    // MercadoPago no acepta ítems de monto negativo, así que el descuento se
+    // reparte proporcionalmente sobre el precio unitario de cada línea.
+    const subtotal = computeTotal(lines);
+    const cupon = await evaluarCupon(body.cupon, subtotal);
+    const factor = cupon.valido ? (subtotal - cupon.descuento) / subtotal : 1;
+
     const preference = {
       items: lines.map(({ product, qty }) => ({
         title: product.name,
         quantity: qty,
-        unit_price: product.price,
+        unit_price: Math.max(1, Math.round(product.price * factor)),
         currency_id: 'CLP'
       })),
       metadata: {
-        order_items: JSON.stringify(lines.map(({ product, qty }) => ({ id: product.id, qty })))
+        order_items: JSON.stringify(lines.map(({ product, qty }) => ({ id: product.id, qty }))),
+        cupon: cupon.valido ? cupon.cupon.codigo : '',
+        descuento: cupon.valido ? String(cupon.descuento) : '0'
       },
       back_urls: {
         success: `${siteUrl}/gracias.html?provider=mercadopago`,
