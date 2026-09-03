@@ -226,6 +226,8 @@
     state.modalId = id;
     state.gallery = 0;
     renderModal();
+    var inner = els.productModal.querySelector('.modal-inner');
+    if (inner) inner.scrollTop = 0;
     els.modalScrim.hidden = false;
     els.productModal.classList.add('open');
     els.productModal.setAttribute('aria-hidden', 'false');
@@ -239,6 +241,30 @@
     if (els.cartDrawer.classList.contains('open')) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = '';
   }
+  // Sección editorial libre debajo de la ficha: bloques de texto, títulos e
+  // imágenes que se muestran en su proporción original (sin recorte).
+  function renderDetails(p) {
+    var host = $('modalDetails');
+    var blocks = Array.isArray(p.details) ? p.details : [];
+    if (!blocks.length) { host.hidden = true; host.innerHTML = ''; return; }
+    host.hidden = false;
+    host.innerHTML =
+      '<div class="modal-details-head"><h3>Detalles del producto</h3>' +
+      '<span>' + escapeHtml(p.sku) + '</span></div>' +
+      blocks.map(function (b) {
+        if (!b || !b.type) return '';
+        if (b.type === 'heading') return '<h4 class="detail-heading">' + escapeHtml(b.text || '') + '</h4>';
+        if (b.type === 'text') return '<p class="detail-text">' + escapeHtml(b.text || '') + '</p>';
+        if (b.type === 'image') {
+          return '<figure class="detail-image"><img src="' + escapeHtml(b.src || '') +
+            '" alt="' + escapeHtml(b.alt || '') + '" loading="lazy">' +
+            (b.caption ? '<figcaption class="detail-caption">' + escapeHtml(b.caption) + '</figcaption>' : '') +
+            '</figure>';
+        }
+        return '';
+      }).join('');
+  }
+
   function renderModal() {
     var p = getProduct(state.modalId);
     if (!p) return;
@@ -270,6 +296,7 @@
     $('modalSpecs').innerHTML = p.specs.map(function (row) {
       return '<div class="spec-row"><span class="spec-k">' + escapeHtml(row[0]) + '</span><span class="spec-v">' + escapeHtml(row[1]) + '</span></div>';
     }).join('');
+    renderDetails(p);
   }
 
   // ---------- FAQ ----------

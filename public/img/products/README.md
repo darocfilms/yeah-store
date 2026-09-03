@@ -26,3 +26,40 @@ cargar las fotos de a poco sin romper nada.
 - **Tamaño**: 1000×1000 px basta; más grande solo hace la página más lenta.
 - **Peso**: comprime a JPG de calidad ~80 (apunta a menos de 300 KB por imagen).
 - La galería del modal admite cualquier cantidad de imágenes, no solo 4.
+
+---
+
+## Sección "Detalles del producto"
+
+Debajo de la ficha, dentro de la misma ventana, cada producto puede tener una
+sección editorial libre. Se arma con el campo `details` en `/products.json`,
+como una lista de bloques que se muestran en el orden que los escribas:
+
+```json
+"details": [
+  { "type": "heading", "text": "Cómo se instala" },
+  { "type": "text",    "text": "Copiá el archivo .dctl a la carpeta LUT..." },
+  { "type": "image",
+    "src": "img/products/halation-antes-despues.jpg",
+    "alt": "Comparación antes y después",
+    "caption": "Antes / después sobre negativo 500T" },
+  { "type": "text", "text": "Otro párrafo, y así cuantos quieras." }
+]
+```
+
+### Tipos de bloque
+
+| `type`    | Campos                       | Para qué sirve                          |
+|-----------|------------------------------|-----------------------------------------|
+| `heading` | `text`                       | Subtítulo dentro de la sección          |
+| `text`    | `text`                       | Párrafo                                 |
+| `image`   | `src`, `alt`, `caption`      | Imagen a ancho completo (`caption` opcional) |
+
+### Sobre las imágenes de esta sección
+
+A diferencia de las de la grilla, **acá no hay restricción de proporción**:
+la imagen se muestra tal cual, a ancho completo y con su alto natural. Sirve
+igual una panorámica de 1600×600 que una vertical de 700×1300 — no se recorta
+nada. Lo único a cuidar es el peso: comprime a JPG antes de subirlas.
+
+Si un producto no tiene `details`, la sección simplemente no aparece.
