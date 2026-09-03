@@ -114,7 +114,8 @@
   function mediaLayer(cls, src, alt, label) {
     if (src) {
       return '<div class="' + cls + ' has-img"><img src="' + escapeHtml(src) +
-        '" alt="' + escapeHtml(alt) + '" loading="lazy"></div>';
+        '" alt="' + escapeHtml(alt) + '" loading="lazy" ' +
+        'onerror="this.parentNode.classList.remove(\'has-img\');this.remove();"></div>';
     }
     return '<div class="' + cls + '"><span>' + escapeHtml(label) + '</span></div>';
   }
@@ -255,9 +256,16 @@
         if (!b || !b.type) return '';
         if (b.type === 'heading') return '<h4 class="detail-heading">' + escapeHtml(b.text || '') + '</h4>';
         if (b.type === 'text') return '<p class="detail-text">' + escapeHtml(b.text || '') + '</p>';
+        if (b.type === 'list') {
+          var items = Array.isArray(b.items) ? b.items : [];
+          return '<dl class="detail-list">' + items.map(function (it) {
+            return '<dt>' + escapeHtml(it.term || '') + '</dt><dd>' + escapeHtml(it.text || '') + '</dd>';
+          }).join('') + '</dl>';
+        }
         if (b.type === 'image') {
           return '<figure class="detail-image"><img src="' + escapeHtml(b.src || '') +
-            '" alt="' + escapeHtml(b.alt || '') + '" loading="lazy">' +
+            '" alt="' + escapeHtml(b.alt || '') + '" loading="lazy" ' +
+            'onerror="this.closest(\'.detail-image\').hidden = true;">' +
             (b.caption ? '<figcaption class="detail-caption">' + escapeHtml(b.caption) + '</figcaption>' : '') +
             '</figure>';
         }

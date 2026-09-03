@@ -9,11 +9,26 @@
     "hoverLabel": "img 01 — halation dctl",
     "desc": "Halation óptica calculada dentro de Resolve: la luz roja se difunde alrededor de las altas luces como en el negativo, con control de umbral, radio y tinte. Un solo nodo DCTL, sin capas ni composiciones externas.",
     "specs": [
-      ["Formato", ".dctl"],
-      ["Compatibilidad", "Resolve 17+ / macOS · Win · Linux"],
-      ["GPU", "Metal · CUDA · OpenCL"],
-      ["Peso", "1.2 MB"],
-      ["Incluye", "PDF de instalación + 3 presets"]
+      [
+        "Formato",
+        ".dctl"
+      ],
+      [
+        "Compatibilidad",
+        "Resolve 17+ / macOS · Win · Linux"
+      ],
+      [
+        "GPU",
+        "Metal · CUDA · OpenCL"
+      ],
+      [
+        "Peso",
+        "1.2 MB"
+      ],
+      [
+        "Incluye",
+        "PDF de instalación + 3 presets"
+      ]
     ],
     "downloadFile": "halation-dctl.zip"
   },
@@ -27,11 +42,26 @@
     "hoverLabel": "img 01 — film grain engine",
     "desc": "Grano procedural por canal que responde a la densidad de la imagen: crece en los medios, se contiene en las altas luces. Sin texturas externas ni archivos de video, así que no cambia con la resolución del timeline.",
     "specs": [
-      ["Formato", ".dctl"],
-      ["Compatibilidad", "Resolve 17+ / macOS · Win · Linux"],
-      ["GPU", "Metal · CUDA · OpenCL"],
-      ["Peso", "2.4 MB"],
-      ["Incluye", "6 curvas de densidad"]
+      [
+        "Formato",
+        ".dctl"
+      ],
+      [
+        "Compatibilidad",
+        "Resolve 17+ / macOS · Win · Linux"
+      ],
+      [
+        "GPU",
+        "Metal · CUDA · OpenCL"
+      ],
+      [
+        "Peso",
+        "2.4 MB"
+      ],
+      [
+        "Incluye",
+        "6 curvas de densidad"
+      ]
     ],
     "downloadFile": "film-grain-engine.zip"
   },
@@ -45,11 +75,26 @@
     "hoverLabel": "img 01 — print film pack",
     "desc": "24 LUTs .cube de emulación de película de impresión, medidas sobre tres stocks distintos. Vienen en versión display y en versión para trabajar antes del nodo de contraste.",
     "specs": [
-      ["Formato", ".cube (33 y 65 pt)"],
-      ["Compatibilidad", "Cualquier NLE con LUTs"],
-      ["Espacios", "Rec.709 · DWG · ACEScct"],
-      ["Peso", "38 MB"],
-      ["Incluye", "24 LUTs + guía de uso"]
+      [
+        "Formato",
+        ".cube (33 y 65 pt)"
+      ],
+      [
+        "Compatibilidad",
+        "Cualquier NLE con LUTs"
+      ],
+      [
+        "Espacios",
+        "Rec.709 · DWG · ACEScct"
+      ],
+      [
+        "Peso",
+        "38 MB"
+      ],
+      [
+        "Incluye",
+        "24 LUTs + guía de uso"
+      ]
     ],
     "downloadFile": "print-film-pack.zip"
   },
@@ -63,12 +108,217 @@
     "hoverLabel": "img 01 — gate weave + flicker",
     "desc": "Inestabilidad de puerta y parpadeo de proyección, animados por frame y con semilla configurable. Pensado para el final del árbol de nodos, después del grano.",
     "specs": [
-      ["Formato", ".dctl"],
-      ["Compatibilidad", "Resolve 17+ / macOS · Win · Linux"],
-      ["GPU", "Metal · CUDA · OpenCL"],
-      ["Peso", "0.9 MB"],
-      ["Incluye", "4 presets de intensidad"]
+      [
+        "Formato",
+        ".dctl"
+      ],
+      [
+        "Compatibilidad",
+        "Resolve 17+ / macOS · Win · Linux"
+      ],
+      [
+        "GPU",
+        "Metal · CUDA · OpenCL"
+      ],
+      [
+        "Peso",
+        "0.9 MB"
+      ],
+      [
+        "Incluye",
+        "4 presets de intensidad"
+      ]
     ],
     "downloadFile": "gate-weave-flicker.zip"
+  },
+  {
+    "id": 5,
+    "sku": "YEAH-DCTL-005",
+    "name": "Filter LAB FX",
+    "cat": "DCTL",
+    "price": 49990,
+    "currency": "CLP",
+    "hoverLabel": "img 01 — filter lab fx",
+    "desc": "Quince emulaciones de filtros ópticos de cámara resueltas como DCTL, cada una con control de densidad continuo. Difusión, halation, streaks anamórficos, estrellas y atmósfera — el set completo que normalmente cargarías en la matte box, dentro de Resolve y sin perder resolución.",
+    "specs": [
+      [
+        "Formato",
+        ".dctl"
+      ],
+      [
+        "Efectos",
+        "15 filtros, densidad variable"
+      ],
+      [
+        "Compatibilidad",
+        "Resolve 17+ / macOS · Win · Linux"
+      ],
+      [
+        "GPU",
+        "Metal · CUDA · OpenCL"
+      ],
+      [
+        "Licencia",
+        "Única, uso comercial ilimitado"
+      ],
+      [
+        "Incluye",
+        "15 DCTL + PDF de instalación"
+      ]
+    ],
+    "image": "img/products/filter-lab-fx-01.jpg",
+    "imageHover": "img/products/filter-lab-fx-02.jpg",
+    "gallery": [
+      "img/products/filter-lab-fx-01.jpg",
+      "img/products/filter-lab-fx-02.jpg",
+      "img/products/filter-lab-fx-difusion.jpg",
+      "img/products/filter-lab-fx-halation.jpg"
+    ],
+    "downloadFile": "filter-lab-fx.zip",
+    "details": [
+      {
+        "type": "text",
+        "text": "Un filtro óptico funciona dispersando la luz antes de que llegue al sensor: partículas suspendidas en el vidrio desvían parte de los rayos y esa dispersión es la que genera el brillo, el velo o la estrella. Filter LAB FX reproduce esa física dentro de Resolve, calculando la dispersión sobre los valores reales de la imagen en vez de superponer una capa de textura encima. La diferencia práctica: el efecto responde a dónde está la luz en tu plano, no a un PNG estirado sobre el frame."
+      },
+      {
+        "type": "text",
+        "text": "Los quince filtros vienen como archivos .dctl independientes, así que aplicás solo el que necesitás y lo combinás en el árbol de nodos como quieras. Todos tienen densidad continua, equivalente a la escala física 1/8, 1/4, 1/2, 1 y 2 de los filtros de vidrio."
+      },
+      {
+        "type": "image",
+        "src": "img/products/filter-lab-fx-02.jpg",
+        "alt": "Los 15 efectos de Filter LAB FX aplicados sobre distintos planos",
+        "caption": "Los quince efectos del pack, cada uno sobre un plano de referencia"
+      },
+      {
+        "type": "heading",
+        "text": "Difusión y bloom"
+      },
+      {
+        "type": "text",
+        "text": "Siete formas distintas de quitarle el filo digital a la imagen. Se diferencian en qué parte del rango tonal atacan y en cuánta textura conservan."
+      },
+      {
+        "type": "list",
+        "items": [
+          {
+            "term": "Black Mist",
+            "text": "Difusión con partículas oscuras: florece las altas luces y levanta apenas los negros, bajando el contraste sin comerse el detalle. Es el de uso más transversal — el que resuelve el aspecto “demasiado limpio” de una cámara digital sin que se note que hay un filtro puesto."
+          },
+          {
+            "term": "Pro Mist",
+            "text": "La misma difusión pero sin el componente que oscurece: el brillo alrededor de las luces es más abierto y luminoso, y el velo general más evidente. Rinde muy bien en interiores con fuentes prácticas en cuadro."
+          },
+          {
+            "term": "Dream FX",
+            "text": "Difusión pesada en todo el cuadro, no solo en las luces. Suaviza el detalle fino de forma pareja y deja un halo envolvente. Pensado para secuencias oníricas, recuerdos o publicidad de belleza."
+          },
+          {
+            "term": "Glimmerglass",
+            "text": "Difusión suave más un destello reflectante fino en las altas luces. Suaviza la piel y al mismo tiempo agrega un brillo cristalino en los puntos de luz — el efecto que le da un acabado de campaña a un retrato."
+          },
+          {
+            "term": "Hollywood BM",
+            "text": "Hollywood Black Magic: combina el bloom de las altas luces con un levante marcado de los negros. Es el más estilizado del grupo, con un aspecto cálido y luminoso muy identificable en cine de estudio."
+          },
+          {
+            "term": "CineBloom",
+            "text": "Bloom parejo y contenido. Saca la dureza digital conservando mejor el contraste que las brumas más pesadas, así que es el más seguro cuando el material después va a pasar por un grade fuerte."
+          },
+          {
+            "term": "Soft FX",
+            "text": "Suavizador de detalle fino: ataca la textura de la piel sin tocar prácticamente las altas luces ni el contraste general. Es el filtro de belleza puro, para cuando querés suavizar sin agregar brillo."
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "src": "img/products/filter-lab-fx-difusion.jpg",
+        "alt": "Comparativa por densidad de los filtros de difusión",
+        "caption": "Difusión comparada por densidad — de sin filtro hasta densidad 2"
+      },
+      {
+        "type": "heading",
+        "text": "Halation y streaks"
+      },
+      {
+        "type": "text",
+        "text": "El grupo que trabaja sobre las fuentes de luz puntuales: qué pasa alrededor de una luz cuando es lo bastante intensa como para desbordar."
+      },
+      {
+        "type": "list",
+        "items": [
+          {
+            "term": "Halation",
+            "text": "Emula la luz que atraviesa la emulsión, rebota en la base del negativo y vuelve a exponerla: un sangrado rojo-anaranjado alrededor de las altas luces. Con control de umbral, radio y tinte, para calibrar desde un rescoldo apenas perceptible hasta un halo de negativo forzado."
+          },
+          {
+            "term": "Streak Azul",
+            "text": "Destello horizontal azul saliendo de cada punto de luz, el rastro característico de una lente anamórfica. Da lectura de formato ancho a material esférico sin tener que cambiar de óptica."
+          },
+          {
+            "term": "Streak Oro",
+            "text": "El mismo destello horizontal en ámbar dorado. Más cálido y menos futurista que el azul; funciona bien con luz de tungsteno y escenas nocturnas de calle."
+          },
+          {
+            "term": "Star",
+            "text": "Convierte cada fuente puntual en una estrella de rayos radiales, como un filtro de rejilla grabada. La intensidad y la extensión de las puntas siguen la potencia real de la luz en el plano."
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "src": "img/products/filter-lab-fx-halation.jpg",
+        "alt": "Comparativa por densidad de halation, streaks y soft",
+        "caption": "Halation, streaks y difusión suave, por densidad creciente"
+      },
+      {
+        "type": "heading",
+        "text": "Atmósfera y carácter"
+      },
+      {
+        "type": "text",
+        "text": "Los cuatro que cambian la lectura completa del plano en vez de trabajar sobre las luces."
+      },
+      {
+        "type": "list",
+        "items": [
+          {
+            "term": "Fog",
+            "text": "Baja el contraste global con un velo lechoso parejo, imitando humedad o neblina real en el aire. A diferencia de la difusión, no florece las luces: opaca la escena entera y comprime el rango."
+          },
+          {
+            "term": "Ultra Contrast",
+            "text": "Levanta las sombras de forma uniforme usando la luz ambiente del propio plano, bajando el contraste sin agregar brillo ni halo. Es una herramienta de latitud: aplana la imagen para dejarte más margen en el grade."
+          },
+          {
+            "term": "Antique Suede",
+            "text": "Viraje cálido sepia con una difusión leve encima. Envejece el plano sin llevarlo a blanco y negro — la lectura es de material de archivo o de época."
+          },
+          {
+            "term": "Center Spot",
+            "text": "Mantiene el centro del cuadro nítido y aumenta progresivamente la difusión hacia los bordes. Dirige la mirada al sujeto por óptica en vez de por composición, con radio y caída ajustables."
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "src": "img/products/filter-lab-fx-atmosfera.jpg",
+        "alt": "Comparativa por densidad de fog, ultra contrast y antique suede",
+        "caption": "Atmósfera y carácter, comparados por densidad"
+      },
+      {
+        "type": "heading",
+        "text": "Sobre la densidad"
+      },
+      {
+        "type": "text",
+        "text": "Cada filtro se controla con un parámetro de densidad continuo que sigue la escala física del vidrio: 1/8 y 1/4 son correcciones sutiles que sobreviven a la compresión de streaming, 1/2 es el punto de uso más común, y 1 y 2 son territorio de efecto declarado. Las comparativas de arriba están hechas sobre el mismo plano para que puedas ver exactamente dónde deja de ser sutil cada uno."
+      },
+      {
+        "type": "text",
+        "text": "Al ser DCTL, el cálculo ocurre en la GPU dentro del nodo y no depende de la resolución del timeline: el mismo valor de densidad rinde igual en una proxy que en el master 4K."
+      }
+    ]
   }
 ]

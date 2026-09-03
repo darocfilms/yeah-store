@@ -470,3 +470,10 @@ p { text-wrap: pretty; }
   .modal-actions .btn-primary-dark, .modal-actions .btn-primary-lime { flex: 1 1 100%; }
   .cart-drawer { width: 100%; border-left: none; }
 }
+.detail-list { margin: 0 0 26px; max-width: 72ch; }
+.detail-list dt {
+  font-size: 14px; font-weight: 700; letter-spacing: -.005em;
+  margin: 18px 0 4px; text-transform: uppercase;
+}
+.detail-list dt:first-child { margin-top: 0; }
+.detail-list dd { margin: 0; font-size: 14.5px; line-height: 1.65; color: var(--muted-4); }
