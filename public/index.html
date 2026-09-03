@@ -96,23 +96,7 @@
     <h2>Blog</h2>
     <span class="section-count">NOTAS TÉCNICAS</span>
   </div>
-  <div class="blog-grid">
-    <a href="#blog" class="blog-card">
-      <div class="blog-thumb"><span>[ imagen del artículo ]</span></div>
-      <div class="blog-date">12.08.2026</div>
-      <h3>Cómo se comporta la halation en negativo real</h3>
-    </a>
-    <a href="#blog" class="blog-card">
-      <div class="blog-thumb"><span>[ imagen del artículo ]</span></div>
-      <div class="blog-date">29.07.2026</div>
-      <h3>DCTL o OFX: dónde conviene cada uno</h3>
-    </a>
-    <a href="#blog" class="blog-card">
-      <div class="blog-thumb"><span>[ imagen del artículo ]</span></div>
-      <div class="blog-date">04.07.2026</div>
-      <h3>Grano: el orden correcto en el árbol de nodos</h3>
-    </a>
-  </div>
+  <div class="blog-grid" id="blogGrid"></div>
 </section>
 
 <section id="faq" class="wrap section-block">
@@ -300,6 +284,23 @@
     </div>
     <div class="modal-details" id="modalDetails" hidden></div>
   </div>
+</div>
+
+<div class="overlay-scrim" id="postScrim" hidden></div>
+<div class="post-modal" id="postModal" aria-hidden="true">
+  <article class="post-inner">
+    <div class="modal-head">
+      <span class="modal-sku" id="postKicker"></span>
+      <div class="spacer"></div>
+      <button type="button" class="round-btn" id="closePostBtn" aria-label="Cerrar">×</button>
+    </div>
+    <div class="post-body">
+      <div class="post-date" id="postDate"></div>
+      <h2 id="postTitle"></h2>
+      <div id="postContent"></div>
+      <a href="#tienda" class="btn-primary-dark post-cta" id="postCta">Ver Filter LAB FX</a>
+    </div>
+  </article>
 </div>
 
 <div class="toast" id="toast" hidden>Agregado al carrito</div>

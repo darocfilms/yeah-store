@@ -1,0 +1,306 @@
+[
+  {
+    "id": 1,
+    "title": "Dónde va cada filtro en el árbol de nodos",
+    "dateLabel": "02.09.2026",
+    "kicker": "FLUJO DE TRABAJO",
+    "excerpt": "Un filtro físico actúa antes del sensor. Si lo aplicás al final de la cadena, el resultado no es el mismo — y se nota en las altas luces.",
+    "body": [
+      {
+        "type": "text",
+        "text": "La regla es una sola y sale de la física: un filtro de vidrio va montado delante del lente, así que modifica la luz antes de que toque el sensor y mucho antes de que vos toques una rueda de color. Si querés que el DCTL se comporte como el vidrio, tiene que ocupar ese mismo lugar en la cadena."
+      },
+      {
+        "type": "heading",
+        "text": "El orden que funciona"
+      },
+      {
+        "type": "text",
+        "text": "Después de la transformación de entrada — cuando el material ya está normalizado y los valores son predecibles — pero antes del grade creativo. Ahí el filtro trabaja sobre el rango completo, con las altas luces todavía intactas, y el bloom tiene de dónde alimentarse."
+      },
+      {
+        "type": "list",
+        "items": [
+          {
+            "term": "Difusión, streaks, star, center spot",
+            "text": "Van temprano, apenas normalizado el material. Son fenómenos de lente: ocurren antes que todo lo demás."
+          },
+          {
+            "term": "Halation",
+            "text": "Es la excepción interesante. No pasa en el lente sino en el negativo, cuando la luz atraviesa la emulsión y rebota en la base. Si estás emulando película, va antes del LUT de impresión, no antes del grade."
+          },
+          {
+            "term": "Fog y Ultra Contrast",
+            "text": "También temprano: imitan atmósfera y luz parásita, cosas que ya venían en la escena."
+          },
+          {
+            "term": "Antique Suede",
+            "text": "Este no es un fenómeno óptico sino un look, así que va después del grade — es un acabado, no una condición de captura."
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "La excepción práctica"
+      },
+      {
+        "type": "text",
+        "text": "Mucho colorista pone la difusión al final, en espacio de display, simplemente porque es más fácil de juzgar y de dosificar: ves el resultado final mientras movés el parámetro. Es menos fiel, y la diferencia concreta está en las altas luces — aplicado al final, el bloom se construye sobre valores ya recortados, así que en vez de desbordar suavemente se corta. Si el plano no tiene luces al límite, la diferencia es despreciable y el método rápido está perfecto."
+      },
+      {
+        "type": "text",
+        "text": "Lo que sí conviene evitar siempre es aplicar difusión antes y después en la misma cadena. No se suma de forma predecible y termina comiéndose el detalle sin que sepas cuál de los dos nodos lo hizo."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "La escala de densidad, y por qué streaming se come la sutileza",
+    "dateLabel": "28.08.2026",
+    "kicker": "DENSIDAD",
+    "excerpt": "1/8, 1/4, 1/2, 1 y 2 no son números arbitrarios: replican la escala del vidrio. Y lo que se ve bien en tu master puede desaparecer en YouTube.",
+    "body": [
+      {
+        "type": "text",
+        "text": "La escala de densidad viene directo de los filtros físicos, donde el número indica cuánta partícula difusora tiene el vidrio. Mantener la misma nomenclatura no es nostalgia: si ya sabés qué hace un Black Pro Mist 1/4 en set, sabés qué esperar acá."
+      },
+      {
+        "type": "list",
+        "items": [
+          {
+            "term": "1/8",
+            "text": "Apenas perceptible. Saca el filo digital sin que nadie pueda señalar qué cambió. Es el que usás cuando no querés que se note."
+          },
+          {
+            "term": "1/4",
+            "text": "Sutil pero visible en las altas luces. El punto de partida más seguro para trabajo comercial."
+          },
+          {
+            "term": "1/2",
+            "text": "El punto de uso más común. Se lee claramente como decisión estética sin dominar la imagen."
+          },
+          {
+            "term": "1 y 2",
+            "text": "Territorio de efecto declarado. Para secuencias oníricas, flashbacks o piezas donde la textura es el punto."
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "El problema de la compresión"
+      },
+      {
+        "type": "text",
+        "text": "La difusión produce exactamente el tipo de imagen que los códecs de streaming destruyen primero: gradientes suaves de bajo contraste alrededor de las luces. H.264 y H.265 asignan pocos bits a esas zonas porque el ojo tolera error ahí — y el halo sutil que dosificaste con precisión termina cuantizado a nada."
+      },
+      {
+        "type": "text",
+        "text": "En la práctica: si la entrega final es YouTube, Instagram o cualquier plataforma con recompresión agresiva, subí un escalón respecto de lo que se ve bien en tu master. Un 1/4 que en el timeline es perfecto puede llegar como un 1/8 apenas insinuado. Para cine o entregas con códec de alta tasa, dejalo donde te gustó."
+      },
+      {
+        "type": "heading",
+        "text": "Cómo juzgarlo bien"
+      },
+      {
+        "type": "text",
+        "text": "Miralo siempre al 100%, nunca en ajuste a ventana. Al escalar la imagen hacia abajo, el visor promedia píxeles y esconde tanto el suavizado como el grano — vas a subestimar sistemáticamente cuánta difusión pusiste. Es la causa número uno de material que llega al cliente más blando de lo que se pretendía."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Black Mist, Pro Mist o CineBloom: cuál usar y cuándo",
+    "dateLabel": "20.08.2026",
+    "kicker": "COMPARATIVA",
+    "excerpt": "Los tres suavizan, pero atacan partes distintas del rango tonal. Elegir mal es la diferencia entre una imagen con carácter y una imagen lavada.",
+    "body": [
+      {
+        "type": "text",
+        "text": "Son los tres difusores de uso más frecuente del pack y a primera vista hacen lo mismo. La diferencia real está en qué le hacen a los negros, que es lo que define si la imagen queda con cuerpo o se va a gris."
+      },
+      {
+        "type": "list",
+        "items": [
+          {
+            "term": "Black Mist",
+            "text": "Florece las altas luces y levanta apenas los negros. Ese levante mínimo es lo que da la sensación de rango de película. Es el más transversal: funciona en día, noche, interior y exterior sin pensarlo mucho."
+          },
+          {
+            "term": "Pro Mist",
+            "text": "El mismo bloom pero sin el componente que oscurece, así que el brillo alrededor de las luces es más abierto y el velo general más evidente. Brilla en interiores nocturnos con lámparas o neones en cuadro: cada fuente se convierte en un punto suave."
+          },
+          {
+            "term": "CineBloom",
+            "text": "Bloom parejo y contenido, el que mejor conserva el contraste original. Es el más conservador de los tres y el que menos compromete lo que venga después."
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "La regla práctica"
+      },
+      {
+        "type": "text",
+        "text": "Si después vas a hacer un grade fuerte, usá CineBloom: al conservar contraste te deja margen para trabajar. Si querés el look horneado y decidido desde el principio, Black Mist. Si la escena tiene fuentes de luz visibles en cuadro y querés que se sientan cálidas y envolventes, Pro Mist."
+      },
+      {
+        "type": "text",
+        "text": "Un error común es sumar dos difusores buscando más efecto. No se acumulan de forma lineal: dos a 1/4 no dan un 1/2, dan una imagen sucia donde el detalle fino ya se perdió pero el bloom todavía no llegó. Si querés más, subí la densidad de uno solo."
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Halation sin exagerar",
+    "dateLabel": "12.08.2026",
+    "kicker": "TÉCNICA",
+    "excerpt": "La halation real es sutil: se nota cuando falta, no cuando está. Umbral, radio y tinte, y los tres errores que la delatan como efecto.",
+    "body": [
+      {
+        "type": "text",
+        "text": "En película, la luz intensa atraviesa la emulsión, rebota en la base del negativo y vuelve a exponer desde atrás. Como la luz roja penetra más profundo que la azul, ese rebote llega teñido — de ahí el halo anaranjado alrededor de las altas luces. No es un brillo genérico: es rojo, tiene una fuente concreta y decae rápido."
+      },
+      {
+        "type": "heading",
+        "text": "Los tres controles"
+      },
+      {
+        "type": "list",
+        "items": [
+          {
+            "term": "Umbral",
+            "text": "Define desde qué nivel de luminancia empieza a dispararse. Si lo bajás mucho, medios tonos que no son luces empiezan a sangrar y la imagen entera se enturbia."
+          },
+          {
+            "term": "Radio",
+            "text": "Cuánto se extiende el halo. Es el control que más delata: la halation real decae en pocos píxeles. Un radio grande deja de leerse como negativo y pasa a leerse como efecto de posproducción."
+          },
+          {
+            "term": "Tinte",
+            "text": "Cuánto rojo tiene el sangrado. Distintos stocks daban distintos tonos; más ámbar lee vintage, más rojo puro lee a negativo forzado."
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "Dónde se nota y dónde no"
+      },
+      {
+        "type": "text",
+        "text": "La halation necesita altas luces con las que trabajar: prácticas en cuadro, un contraluz recortando a alguien, el borde de una ventana, reflejos especulares. En un plano de mediodía nublado con todo en medios tonos no vas a ver nada, y está bien — tampoco lo verías en película."
+      },
+      {
+        "type": "text",
+        "text": "El error más frecuente es aplicarla al final, sobre valores ya recortados. Si las altas luces están clipeadas, la halation no tiene gradiente del cual alimentarse y produce un anillo duro alrededor del blanco plano, que es exactamente lo que la delata. Aplicala antes del recorte."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Streaks anamórficos sin lente anamórfica",
+    "dateLabel": "05.08.2026",
+    "kicker": "TÉCNICA",
+    "excerpt": "Streak Azul y Streak Oro dan el destello horizontal característico. Qué hacen bien, y qué no van a poder hacer.",
+    "body": [
+      {
+        "type": "text",
+        "text": "El destello horizontal que asociamos al anamórfico sale del elemento cilíndrico frontal de esas lentes: deforma la dispersión de las fuentes puntuales en un rastro lateral. Streak Azul y Streak Oro reproducen esa dispersión sobre las luces de tu plano."
+      },
+      {
+        "type": "heading",
+        "text": "Necesitan luces puntuales"
+      },
+      {
+        "type": "text",
+        "text": "Esto es lo primero que hay que entender: si en el cuadro no hay fuentes concentradas y brillantes, el filtro no tiene de dónde sacar el destello. Un exterior día parejo no va a producir streaks por más que subas la densidad. Donde sí rinde: noche urbana, prácticas en cuadro, faros, reflejos especulares sobre metal o agua."
+      },
+      {
+        "type": "list",
+        "items": [
+          {
+            "term": "Streak Azul",
+            "text": "Lee moderno, frío, ligeramente de ciencia ficción. Funciona bien con luz de LED y neón, y con escenas de temperatura fría."
+          },
+          {
+            "term": "Streak Oro",
+            "text": "Más cálido y nostálgico. Va natural con tungsteno, sodio de alumbrado público y atardeceres."
+          },
+          {
+            "term": "Star",
+            "text": "Otro principio: en vez de un rastro lateral genera puntas radiales, como un filtro de rejilla grabada. Es mucho más visible que los streaks, así que conviene dosificarlo — un plano con estrellas en cada luz cansa rápido."
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "Qué no va a hacer"
+      },
+      {
+        "type": "text",
+        "text": "Un streak solo no convierte material esférico en anamórfico. Lo que realmente delata el formato es la forma del bokeh — ovalado en anamórfico, redondo en esférico — y el comportamiento del desenfoque en los bordes. El destello es la parte más visible del look, pero es una capa de un fenómeno más grande. Usalo como acento, no como disfraz."
+      },
+      {
+        "type": "text",
+        "text": "Un detalle que ayuda a que se sienta real: hacé que la temperatura del destello converse con la luz de la escena. Un streak azul sobre una escena de tungsteno cálido se lee inmediatamente como agregado en post."
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Cómo instalar un DCTL en DaVinci Resolve",
+    "dateLabel": "29.07.2026",
+    "kicker": "PRIMEROS PASOS",
+    "excerpt": "Copiar el archivo, reiniciar, y aplicarlo desde el nodo. Con las rutas exactas de cada sistema y qué revisar si no aparece.",
+    "body": [
+      {
+        "type": "text",
+        "text": "Un DCTL no se instala como un plug-in: es un archivo de texto con código que Resolve compila en la GPU. Solo hay que dejarlo en la carpeta donde el programa lo busca."
+      },
+      {
+        "type": "heading",
+        "text": "Dónde va el archivo"
+      },
+      {
+        "type": "list",
+        "items": [
+          {
+            "term": "macOS",
+            "text": "/Library/Application Support/Blackmagic Design/DaVinci Resolve/LUT/"
+          },
+          {
+            "term": "Windows",
+            "text": "C:\\ProgramData\\Blackmagic Design\\DaVinci Resolve\\Support\\LUT\\"
+          },
+          {
+            "term": "Linux",
+            "text": "/opt/resolve/LUT/"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "text": "Podés crear una subcarpeta dentro de LUT para mantenerlos ordenados — Resolve la lee igual y te aparecen agrupados. En el ZIP del producto viene un PDF con estas mismas rutas por si tu instalación está en una ubicación distinta a la estándar."
+      },
+      {
+        "type": "heading",
+        "text": "Cómo aplicarlo"
+      },
+      {
+        "type": "text",
+        "text": "Reiniciá Resolve para que reconstruya la lista. En la página Color, creá un nodo serial, abrí el panel de efectos y buscá DCTL dentro de ResolveFX Color. Arrastralo al nodo y elegí el archivo desde el menú desplegable del efecto. Los parámetros del filtro aparecen ahí mismo."
+      },
+      {
+        "type": "heading",
+        "text": "Si no aparece en la lista"
+      },
+      {
+        "type": "text",
+        "text": "Casi siempre es una de dos cosas: el archivo quedó en la carpeta equivocada, o Resolve no se reinició. Sin reiniciar, también podés hacer clic derecho en el panel de LUTs y elegir actualizar listas. Si sigue sin aparecer, revisá que el archivo tenga extensión .dctl real y no .dctl.txt — algunos navegadores y descompresores la agregan sin avisar."
+      },
+      {
+        "type": "text",
+        "text": "Si el nodo se pone negro o rojo al aplicarlo, no es un problema de instalación sino de compilación en tu GPU. Escribinos por WhatsApp con el modelo de tu placa y la versión de Resolve y lo revisamos."
+      }
+    ]
+  }
+]

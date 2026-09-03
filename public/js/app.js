@@ -6,6 +6,7 @@
 
   var state = {
     products: [],
+    posts: [],
     cart: loadCart(),
     filter: 'TODO',
     query: '',
@@ -100,9 +101,14 @@
 
   // ---------- rendering: chips ----------
   function renderChips() {
-    var counts = { TODO: state.products.length, DCTL: 0, LUTS: 0 };
-    state.products.forEach(function (p) { if (counts[p.cat] !== undefined) counts[p.cat]++; });
-    var cats = ['TODO', 'DCTL', 'LUTS'];
+    // Las categorías salen de los productos que existen, para que no queden
+    // chips en cero cuando se agrega o quita un producto del catálogo.
+    var counts = { TODO: state.products.length };
+    var cats = ['TODO'];
+    state.products.forEach(function (p) {
+      if (counts[p.cat] === undefined) { counts[p.cat] = 0; cats.push(p.cat); }
+      counts[p.cat]++;
+    });
     els.chips.innerHTML = cats.map(function (k) {
       var active = state.filter === k ? ' active' : '';
       return '<button type="button" class="chip' + active + '" data-filter="' + k + '">' + k + ' (' + counts[k] + ')</button>';
@@ -244,15 +250,10 @@
   }
   // Sección editorial libre debajo de la ficha: bloques de texto, títulos e
   // imágenes que se muestran en su proporción original (sin recorte).
-  function renderDetails(p) {
-    var host = $('modalDetails');
-    var blocks = Array.isArray(p.details) ? p.details : [];
-    if (!blocks.length) { host.hidden = true; host.innerHTML = ''; return; }
-    host.hidden = false;
-    host.innerHTML =
-      '<div class="modal-details-head"><h3>Detalles del producto</h3>' +
-      '<span>' + escapeHtml(p.sku) + '</span></div>' +
-      blocks.map(function (b) {
+  // Convierte una lista de bloques (título, texto, lista, imagen) en HTML.
+  // La usan tanto los detalles del producto como los artículos del blog.
+  function renderBlocks(blocks) {
+    return (Array.isArray(blocks) ? blocks : []).map(function (b) {
         if (!b || !b.type) return '';
         if (b.type === 'heading') return '<h4 class="detail-heading">' + escapeHtml(b.text || '') + '</h4>';
         if (b.type === 'text') return '<p class="detail-text">' + escapeHtml(b.text || '') + '</p>';
@@ -271,6 +272,56 @@
         }
         return '';
       }).join('');
+  }
+
+  function renderDetails(p) {
+    var host = $('modalDetails');
+    var blocks = Array.isArray(p.details) ? p.details : [];
+    if (!blocks.length) { host.hidden = true; host.innerHTML = ''; return; }
+    host.hidden = false;
+    host.innerHTML =
+      '<div class="modal-details-head"><h3>Detalles del producto</h3>' +
+      '<span>' + escapeHtml(p.sku) + '</span></div>' + renderBlocks(blocks);
+  }
+
+  // ---------- blog ----------
+  function renderBlog() {
+    if (!els.blogGrid) return;
+    els.blogGrid.innerHTML = state.posts.map(function (post) {
+      var thumb = post.image
+        ? '<div class="blog-thumb has-img"><img src="' + escapeHtml(post.image) + '" alt="" loading="lazy" ' +
+          'onerror="this.parentNode.classList.remove(\'has-img\');this.remove();"></div>'
+        : '<div class="blog-thumb"><span>[ ' + escapeHtml(post.kicker || 'nota técnica') + ' ]</span></div>';
+      return (
+        '<button type="button" class="blog-card" data-post="' + post.id + '">' +
+          thumb +
+          '<div class="blog-date">' + escapeHtml(post.dateLabel || '') + ' · ' + escapeHtml(post.kicker || '') + '</div>' +
+          '<h3>' + escapeHtml(post.title) + '</h3>' +
+          '<p class="blog-excerpt">' + escapeHtml(post.excerpt || '') + '</p>' +
+        '</button>'
+      );
+    }).join('');
+  }
+
+  function openPost(id) {
+    var post = state.posts.find(function (x) { return x.id === id; });
+    if (!post) return;
+    $('postKicker').textContent = post.kicker || 'NOTA TÉCNICA';
+    $('postDate').textContent = post.dateLabel || '';
+    $('postTitle').textContent = post.title;
+    $('postContent').innerHTML = renderBlocks(post.body);
+    els.postScrim.hidden = false;
+    els.postModal.classList.add('open');
+    els.postModal.setAttribute('aria-hidden', 'false');
+    var inner = els.postModal.querySelector('.post-inner');
+    if (inner) inner.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+  }
+  function closePost() {
+    els.postScrim.hidden = true;
+    els.postModal.classList.remove('open');
+    els.postModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
   }
 
   function renderModal() {
@@ -331,7 +382,8 @@
       stepCart: $('stepCart'), stepPay: $('stepPay'), stepDone: $('stepDone'),
       doneCheck: $('doneCheck'), doneTitle: $('doneTitle'), doneMsg: $('doneMsg'),
       productModal: $('productModal'), modalScrim: $('modalScrim'),
-      toast: $('toast'), productCountBadge: $('productCountBadge')
+      toast: $('toast'), productCountBadge: $('productCountBadge'),
+      blogGrid: $('blogGrid'), postModal: $('postModal'), postScrim: $('postScrim')
     };
   }
 
@@ -350,7 +402,8 @@
 
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') {
-        if (els.productModal.classList.contains('open')) closeModal();
+        if (els.postModal.classList.contains('open')) closePost();
+        else if (els.productModal.classList.contains('open')) closeModal();
         else if (els.cartDrawer.classList.contains('open')) closeCart();
       }
     });
@@ -402,6 +455,14 @@
       goPay();
     });
 
+    els.blogGrid.addEventListener('click', function (e) {
+      var card = e.target.closest('[data-post]');
+      if (card) openPost(Number(card.getAttribute('data-post')));
+    });
+    $('closePostBtn').addEventListener('click', closePost);
+    els.postScrim.addEventListener('click', closePost);
+    $('postCta').addEventListener('click', closePost);
+
     $('newsletterForm').addEventListener('submit', function (e) {
       e.preventDefault();
       showToast('¡Gracias! Te avisamos de los próximos drops.');
@@ -415,6 +476,11 @@
     initFaq();
     renderCartCount();
     renderTotals();
+
+    fetch('posts.json')
+      .then(function (r) { return r.json(); })
+      .then(function (posts) { state.posts = posts; renderBlog(); })
+      .catch(function (err) { console.error('[YEAH] No se pudieron cargar las notas:', err); });
 
     fetch('products.json')
       .then(function (r) { return r.json(); })
