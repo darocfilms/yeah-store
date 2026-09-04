@@ -7,15 +7,23 @@
     "price": 49990,
     "currency": "CLP",
     "hoverLabel": "img 01 — filter lab fx",
-    "desc": "Quince emulaciones de filtros ópticos de cámara resueltas como DCTL, cada una con control de densidad continuo. Difusión, halation, streaks anamórficos, estrellas y atmósfera — el set completo que normalmente cargarías en la matte box, dentro de Resolve y sin perder resolución.",
+    "desc": "Dieciséis emulaciones de filtros ópticos de cámara resueltas como DCTL, cada una con control de densidad continuo. Difusión, halation, streaks anamórficos, estrellas y atmósfera — el set completo que normalmente cargarías en la matte box, dentro de Resolve y sin perder resolución.",
     "specs": [
       [
         "Formato",
-        ".dctl"
+        ".dctl (plugin DCTL de Resolve)"
       ],
       [
         "Efectos",
-        "15 filtros, densidad variable"
+        "16 filtros ópticos · densidad 1/8 a 2"
+      ],
+      [
+        "Ajuste fino",
+        "37 controles · 4 niveles de muestreo"
+      ],
+      [
+        "Espacios de entrada",
+        "9, de Rec.709 a ACEScct y ARRI LogC3"
       ],
       [
         "Compatibilidad",
@@ -31,7 +39,7 @@
       ],
       [
         "Incluye",
-        "15 DCTL + PDF de instalación"
+        "DCTL + manual + instaladores Mac y Win"
       ]
     ],
     "image": "img/products/filter-lab-fx-01.jpg",
@@ -42,7 +50,7 @@
       "img/products/filter-lab-fx-difusion.jpg",
       "img/products/filter-lab-fx-halation.jpg"
     ],
-    "downloadFile": "filter-lab-fx.zip",
+    "downloadFile": "daroc-optics-diffusion-suite.zip",
     "details": [
       {
         "type": "text",
@@ -50,13 +58,13 @@
       },
       {
         "type": "text",
-        "text": "Los quince filtros vienen como archivos .dctl independientes, así que aplicas solo el que necesitas y lo combinas en el árbol de nodos como quieras. Todos tienen densidad continua, equivalente a la escala física 1/8, 1/4, 1/2, 1 y 2 de los filtros de vidrio."
+        "text": "Los dieciséis filtros viven en un solo archivo .dctl con un selector: eliges el filtro en «Filter» y la densidad en «Filter Grade», igual que al comprar el cristal — 1/8, 1/4, 1/2, 1 y 2. Se usa desde el plugin DCTL (Color → Effects → ResolveFX Color → DCTL), no desde la ranura LUT del nodo, porque necesita leer los píxeles vecinos para dispersar la luz. El paquete trae instaladores de doble clic para macOS y Windows."
       },
       {
         "type": "image",
         "src": "img/products/filter-lab-fx-02.jpg",
         "alt": "Los 15 efectos de Filter LAB FX aplicados sobre distintos planos",
-        "caption": "Los quince efectos del pack, cada uno sobre un plano de referencia"
+        "caption": "Los dieciséis filtros del pack, cada uno sobre un plano de referencia"
       },
       {
         "type": "heading",
@@ -74,7 +82,7 @@
             "text": "Difusión con partículas oscuras: florece las altas luces y levanta apenas los negros, bajando el contraste sin comerse el detalle. Es el de uso más transversal — el que resuelve el aspecto “demasiado limpio” de una cámara digital sin que se note que hay un filtro puesto."
           },
           {
-            "term": "Pro Mist",
+            "term": "Pro Mist White",
             "text": "La misma difusión pero sin el componente que oscurece: el brillo alrededor de las luces es más abierto y luminoso, y el velo general más evidente. Rinde muy bien en interiores con fuentes prácticas en cuadro."
           },
           {
@@ -86,15 +94,15 @@
             "text": "Difusión suave más un destello reflectante fino en las altas luces. Suaviza la piel y al mismo tiempo agrega un brillo cristalino en los puntos de luz — el efecto que le da un acabado de campaña a un retrato."
           },
           {
-            "term": "Hollywood BM",
+            "term": "Hollywood Black Magic",
             "text": "Hollywood Black Magic: combina el bloom de las altas luces con un levante marcado de los negros. Es el más estilizado del grupo, con un aspecto cálido y luminoso muy identificable en cine de estudio."
           },
           {
-            "term": "CineBloom",
+            "term": "CineBloom Pearl",
             "text": "Bloom parejo y contenido. Saca la dureza digital conservando mejor el contraste que las brumas más pesadas, así que es el más seguro cuando el material después va a pasar por un grade fuerte."
           },
           {
-            "term": "Soft FX",
+            "term": "Soft FX Beauty",
             "text": "Suavizador de detalle fino: ataca la textura de la piel sin tocar prácticamente las altas luces ni el contraste general. Es el filtro de belleza puro, para cuando quieres suavizar sin agregar brillo."
           }
         ]
@@ -117,19 +125,19 @@
         "type": "list",
         "items": [
           {
-            "term": "Halation",
+            "term": "Halation Film",
             "text": "Emula la luz que atraviesa la emulsión, rebota en la base del negativo y vuelve a exponerla: un sangrado rojo-anaranjado alrededor de las altas luces. Con control de umbral, radio y tinte, para calibrar desde un rescoldo apenas perceptible hasta un halo de negativo forzado."
           },
           {
-            "term": "Streak Azul",
+            "term": "Streak Blue Anamorphic",
             "text": "Destello horizontal azul saliendo de cada punto de luz, el rastro característico de una lente anamórfica. Da lectura de formato ancho a material esférico sin tener que cambiar de óptica."
           },
           {
-            "term": "Streak Oro",
+            "term": "Streak Gold",
             "text": "El mismo destello horizontal en ámbar dorado. Más cálido y menos futurista que el azul; funciona bien con luz de tungsteno y escenas nocturnas de calle."
           },
           {
-            "term": "Star",
+            "term": "Star Cross",
             "text": "Convierte cada fuente puntual en una estrella de rayos radiales, como un filtro de rejilla grabada. La intensidad y la extensión de las puntas siguen la potencia real de la luz en el plano."
           }
         ]
@@ -152,7 +160,7 @@
         "type": "list",
         "items": [
           {
-            "term": "Fog",
+            "term": "Fog Atmosphere",
             "text": "Baja el contraste global con un velo lechoso parejo, imitando humedad o neblina real en el aire. A diferencia de la difusión, no florece las luces: opaca la escena entera y comprime el rango."
           },
           {
@@ -164,8 +172,12 @@
             "text": "Viraje cálido sepia con una difusión leve encima. Envejece el plano sin llevarlo a blanco y negro — la lectura es de material de archivo o de época."
           },
           {
-            "term": "Center Spot",
+            "term": "Center Spot Portrait",
             "text": "Mantiene el centro del cuadro nítido y aumenta progresivamente la difusión hacia los bordes. Dirige la mirada al sujeto por óptica en vez de por composición, con radio y caída ajustables."
+          },
+          {
+            "term": "Custom Manual",
+            "text": "Una base neutra con los 37 controles vivos y sin preset encima, para diseñar tu propio filtro desde cero y guardarlo como preajuste del nodo."
           }
         ]
       },
