@@ -2,11 +2,11 @@
   {
     "id": 5,
     "sku": "YEAH-DCTL-005",
-    "name": "Filter LAB FX",
+    "name": "DAROC Optics — Diffusion Suite",
     "cat": "DCTL",
     "price": 49990,
     "currency": "CLP",
-    "hoverLabel": "img 01 — filter lab fx",
+    "hoverLabel": "img 01 — diffusion suite",
     "desc": "Dieciséis emulaciones de filtros ópticos de cámara resueltas como DCTL, cada una con control de densidad continuo. Difusión, halation, streaks anamórficos, estrellas y atmósfera — el set completo que normalmente cargarías en la matte box, dentro de Resolve y sin perder resolución.",
     "specs": [
       [
@@ -198,6 +198,195 @@
       {
         "type": "text",
         "text": "Al ser DCTL, el cálculo ocurre en la GPU dentro del nodo y no depende de la resolución del timeline: el mismo valor de densidad rinde igual en una proxy que en el master 4K."
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "sku": "YEAH-DCTL-006",
+    "name": "DAROC FX Lab",
+    "cat": "DCTL",
+    "price": 49990,
+    "currency": "CLP",
+    "hoverLabel": "img 01 — fx lab",
+    "desc": "Catorce efectos de textura y ruptura como DCTL —semitono, VHS, holograma, CRT, glitch, térmico, papel y grano— más veinticuatro plantillas de Fusion con transiciones y títulos a juego. Todo con los controles abiertos en el Inspector y corriendo en GPU, en tiempo real.",
+    "specs": [
+      [
+        "Formato",
+        ".dctl + .drfx (Fusion)"
+      ],
+      [
+        "Efectos",
+        "14 DCTL con menú propio"
+      ],
+      [
+        "Plantillas",
+        "13 efectos, 6 transiciones y 5 títulos"
+      ],
+      [
+        "Soportes",
+        "12 papeles y emulsiones en Grano y Papel"
+      ],
+      [
+        "Compatibilidad",
+        "Resolve 17+ / macOS · Win · Linux"
+      ],
+      [
+        "GPU",
+        "Metal · CUDA · OpenCL · tiempo real"
+      ],
+      [
+        "Licencia",
+        "Única, uso comercial ilimitado"
+      ],
+      [
+        "Incluye",
+        "DCTL + .drfx + referencia de parámetros"
+      ]
+    ],
+    "image": "img/products/fx-lab-01.jpg",
+    "imageHover": "img/products/fx-lab-02.jpg",
+    "gallery": [
+      "img/products/fx-lab-01.jpg",
+      "img/products/fx-lab-02.jpg",
+      "img/products/fx-lab-analogico.jpg",
+      "img/products/fx-lab-impresion.jpg"
+    ],
+    "downloadFile": "daroc-fx-lab.zip",
+    "details": [
+      {
+        "type": "text",
+        "text": "El Diffusion Suite trabaja sobre cómo entra la luz al lente. Este paquete hace lo contrario: interviene la imagen ya formada — la trama con la que se imprime, el soporte sobre el que vive, la señal por la que viaja. Es la caja de herramientas para cuando un plano necesita textura, no corrección."
+      },
+      {
+        "type": "text",
+        "text": "Los catorce efectos son archivos .dctl numerados que se instalan juntos. Aplicas el plugin DCTL una sola vez y cambias de efecto en el desplegable «DCTL List»: al elegir otro, la lista de controles se reconstruye con los suyos y nombres propios. Ninguno te obliga a cargar un menú de catorce efectos para usar uno."
+      },
+      {
+        "type": "image",
+        "src": "img/products/fx-lab-02.jpg",
+        "caption": "Los catorce efectos DCTL, cada uno sobre un plano de referencia"
+      },
+      {
+        "type": "heading",
+        "heading": "Impresión y soporte"
+      },
+      {
+        "type": "text",
+        "text": "El grupo que convierte la imagen en algo impreso: trama, tinta, papel y el desgaste de haber pasado por una máquina."
+      },
+      {
+        "type": "list",
+        "items": [
+          {
+            "term": "Semitono",
+            "text": "Trama de imprenta con cinco formas de punto —punto, línea, cuadro, cruz y trama ordenada— con ángulo y nitidez propios. Va de un tramado apenas visible a un cómic declarado."
+          },
+          {
+            "term": "Impresión Póster",
+            "text": "Cartel fotocopiado: suciedad, rayas de escáner y pérdida de sombra. La lectura es de algo que estuvo pegado en un muro."
+          },
+          {
+            "term": "Risograph",
+            "text": "Dos tintas tramadas con desregistro sobre papel, como la impresión riso: los colores nunca caen exactamente donde deberían y esa es la gracia."
+          },
+          {
+            "term": "Grano y Papel",
+            "text": "Doce soportes con su fibra, grano, moteado y tinte: de bond liso y kraft a acuarela, cartón corrugado y lienzo. Los cuatro últimos no son papeles sino emulsiones —película 400, película 1600, fotocopia y papel fotográfico mate—, sin fibra y con el grano pesado hacia los medios tonos."
+          },
+          {
+            "term": "Escáner de Puntos",
+            "text": "Nube de puntos que sigue los contornos, con forma, desorden y colores de punto y fondo separados. El plano se lee como un escaneo, no como una foto."
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "src": "img/products/fx-lab-impresion.jpg",
+        "caption": "Semitono, risograph y grano de papel sobre el mismo plano"
+      },
+      {
+        "type": "heading",
+        "heading": "Señal y ruptura"
+      },
+      {
+        "type": "text",
+        "text": "Lo que le pasa a una imagen cuando viaja por un medio que la degrada: cinta, tubo, transmisión digital."
+      },
+      {
+        "type": "list",
+        "items": [
+          {
+            "term": "VHS Intenso",
+            "text": "Ondulación por línea, bandas de tracking, sangrado de croma, nieve, ruido de cabezal y rodillo vertical. Los seis controles se mueven por separado, así que puedes tener una cinta apenas gastada o uno que ya no debería reproducirse."
+          },
+          {
+            "term": "CRT Fósforo",
+            "text": "Curvatura de pantalla, máscara de fósforo RGB, líneas de barrido y el bloom del tubo. Es una pantalla filmada, no un filtro encima."
+          },
+          {
+            "term": "Glitch Digital",
+            "text": "Desplazamiento por bloques, cortes de línea, separación RGB, ruido y posterizado. El fallo de compresión, no el de la cinta."
+          },
+          {
+            "term": "Holograma",
+            "text": "Tinte, líneas de escaneo a la deriva, separación RGB, bandas de interferencia, parpadeo y barrido. Proyección, con su inestabilidad."
+          },
+          {
+            "term": "Visión Térmica",
+            "text": "Paleta continua de hierro a arcoíris a blanco caliente, con contornos y ruido de sensor. Lee luminancia como temperatura."
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "src": "img/products/fx-lab-analogico.jpg",
+        "caption": "VHS, CRT y glitch: tres formas distintas de degradar la misma señal"
+      },
+      {
+        "type": "heading",
+        "heading": "Luz y energía"
+      },
+      {
+        "type": "text",
+        "text": "Los que agregan luz en vez de quitarla, y los dos que recortan la figura para rodearla."
+      },
+      {
+        "type": "list",
+        "items": [
+          {
+            "term": "Halación y Bloom",
+            "text": "Altas luces extraídas, estiramiento anamórfico y halo teñido. Es el hermano rápido del Halation Film del Diffusion Suite, pensado para efecto declarado y no para emulación."
+          },
+          {
+            "term": "Halo Analógico",
+            "text": "Silueta oscura sobre halo difuso con grano de película. El contorno se separa del fondo por luz, no por máscara."
+          },
+          {
+            "term": "Aura de Energía",
+            "text": "Recorta la silueta y la rodea de un campo de energía con núcleo sobreexpuesto, penacho direccional y trama de escaneo. Veintinueve controles: es el efecto más profundo del paquete."
+          },
+          {
+            "term": "Estallido Radial",
+            "text": "Rayos de luz desde un punto con la silueta recortada en negro y trama de líneas encima. El póster de concierto hecho efecto."
+          },
+          {
+            "term": "Prisma Caleidoscopio",
+            "text": "Espejado radial con giro animado y dispersión prismática. El más caro de calcular del paquete, junto con Risograph, porque toma varias muestras por píxel."
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "heading": "Transiciones y títulos"
+      },
+      {
+        "type": "text",
+        "text": "Un DCTL no puede cortar entre dos clips ni escribir texto, así que esa parte va como plantillas de Fusion que se instalan en la Effects Library de la página Edit. Seis transiciones —VHS Tracking Cut, Glitch Slice, Disolvencia Holograma, Sangrado de Tinta, Barrido de Osciloscopio y Prisma Whip— y cinco títulos con los mismos looks, con controles completos de texto y fundido de entrada y salida ajustado a la duración del clip. Trece de los efectos vienen además como nodo de Fusion, por si prefieres trabajarlos ahí."
+      },
+      {
+        "type": "text",
+        "text": "Instalación de un clic: doble clic en el instalador de tu sistema y quedan tanto los DCTL como las plantillas en su sitio. La referencia completa de cada control, con valor por defecto y rango, viene incluida en el paquete."
       }
     ]
   }

@@ -38,7 +38,7 @@ como una lista de bloques que se muestran en el orden que los escribas:
 ```json
 "details": [
   { "type": "heading", "text": "Cómo se instala" },
-  { "type": "text",    "text": "Copiá el archivo .dctl a la carpeta LUT..." },
+  { "type": "text",    "text": "Copia el archivo .dctl a la carpeta LUT..." },
   { "type": "image",
     "src": "img/products/halation-antes-despues.jpg",
     "alt": "Comparación antes y después",
@@ -63,3 +63,20 @@ igual una panorámica de 1600×600 que una vertical de 700×1300 — no se recor
 nada. Lo único a cuidar es el peso: comprime a JPG antes de subirlas.
 
 Si un producto no tiene `details`, la sección simplemente no aparece.
+
+---
+
+## Pendiente: imágenes de DAROC FX Lab
+
+`products.json` ya declara estas cuatro rutas. Mientras no existan, la tienda
+muestra el placeholder con textura diagonal — no se rompe nada, pero el
+producto se ve incompleto.
+
+| Archivo | Qué muestra |
+|---------|-------------|
+| `fx-lab-01.jpg` | Portada del pack: titular y lista de los catorce efectos |
+| `fx-lab-02.jpg` | Contact sheet: el mismo plano con los catorce tratamientos |
+| `fx-lab-impresion.jpg` | Comparación risograph / semitono / grano de papel |
+| `fx-lab-analogico.jpg` | Comparación VHS / CRT / glitch |
+
+Cuadradas, 1600×1600 como máximo, JPG progresivo calidad 82, bajo 400 KB.
