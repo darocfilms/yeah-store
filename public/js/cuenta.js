@@ -130,9 +130,15 @@
     });
   }
 
-  function mostrarError(texto) {
+  // El código solo aparece cuando el servidor falló de verdad (un 500). No le
+  // dice nada al comprador, pero convierte "algo salió mal" en algo que se
+  // puede diagnosticar sin adivinar.
+  function mostrarError(texto, codigo) {
     var m = $('cuentaMsg');
-    if (m) { m.textContent = texto; m.className = 'cuenta-msg error'; }
+    if (m) {
+      m.textContent = codigo ? texto + ' (' + codigo + ')' : texto;
+      m.className = 'cuenta-msg error';
+    }
   }
 
   function registrar(e) {
@@ -147,7 +153,7 @@
       })
     }).then(function (r) {
       btn.disabled = false; btn.textContent = 'Crear cuenta';
-      if (!r.ok) return mostrarError(r.datos.error || 'No se pudo crear la cuenta.');
+      if (!r.ok) return mostrarError(r.datos.error || 'No se pudo crear la cuenta.', r.datos.codigo);
       usuario = r.datos.usuario; pintarBotonHeader(); vista = 'perfil'; render();
     }).catch(function () {
       btn.disabled = false; btn.textContent = 'Crear cuenta';
@@ -164,7 +170,7 @@
       body: JSON.stringify({ email: $('logEmail').value, clave: $('logClave').value })
     }).then(function (r) {
       btn.disabled = false; btn.textContent = 'Entrar';
-      if (!r.ok) return mostrarError(r.datos.error || 'No se pudo iniciar sesión.');
+      if (!r.ok) return mostrarError(r.datos.error || 'No se pudo iniciar sesión.', r.datos.codigo);
       usuario = r.datos.usuario; pintarBotonHeader(); vista = 'perfil'; render();
     }).catch(function () {
       btn.disabled = false; btn.textContent = 'Entrar';
